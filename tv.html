@@ -39,6 +39,8 @@
         #bar-buffered { position: absolute; top: 0; left: 0; height: 100%; background: rgba(255, 255, 255, 0.4); width: 0%; }
         #bar-played { position: absolute; top: 0; left: 0; height: 100%; background: var(--green); width: 0%; transition: width 0.3s linear; }
         
+        #time-display { position: absolute; top: 4px; left: 10px; right: 10px; display: flex; justify-content: space-between; font-size: 14px; color: #fff; font-family: monospace; z-index: 1001; pointer-events: none; opacity: 0; transition: opacity 1s ease; }
+
         .categoria-header{ display:flex; align-items:center; justify-content:space-between; padding:0 8px; gap:10px; }
         .tituloCategoria{ flex:1; text-align:center; font-size:22px; font-weight:bold; background:linear-gradient(90deg,#00ff88,#8a2be2); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
         .cat-btn{ width:38px; height:38px; border-radius:50%; border:1px solid #8a2be2; background:#111; color:#00ff88; font-size:22px; cursor:pointer; }
@@ -83,6 +85,17 @@
     <main>
         <div id="player-container" ondblclick="toggleFullScreen()">
             <div id="smart-buffer-overlay">
+                <div class="spinner"></div>
+                <div class="progress-text" id="overlay-text">Carregando 0%</div>
+            </div>
+            <div id="custom-progress-bar">
+                <div id="bar-buffered"></div>
+                <div id="bar-played"></div>
+            </div>
+            <div id="time-display">
+                <span id="txt-atual">00:00</span>
+                <span id="txt-baixado">00:00</span>
+            </div>
             <div id="player"></div>
             <div id="iframe-overlay"></div>
         </div>
@@ -157,6 +170,16 @@
             el.classList.add('active');
             clearPlayer();
             
+            const bar = document.getElementById('custom-progress-bar');
+            bar.style.display = "block"; bar.style.opacity = "1";
+            document.getElementById('time-display').style.opacity = "1";
+            
+            clearTimeout(fadeTimeout);
+            fadeTimeout = setTimeout(() => {
+                bar.style.opacity = "0";
+                document.getElementById('time-display').style.opacity = "0";
+                setTimeout(() => { bar.style.display = "none"; }, 1000);
+            }, 5000);
 
             const workerPrefix = "https://delicate-feather-5576.futebolsemdelay.workers.dev/?url=https://ww4.embedtv.lat/";
             let urlVideo = c.qualidade === "hd" ? workerPrefix + encodeURIComponent(c.logo) : (c.qualidade === "sd" ? c.logo + ".m3u8" : c.logo);
