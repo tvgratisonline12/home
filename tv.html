@@ -18,7 +18,7 @@
         aside { width: 320px; background: var(--sidebar-bg); border-right: 1px solid rgba(138,43,226,0.3); display: flex; flex-direction: column; flex-shrink: 0; box-shadow: 10px 0 30px rgba(0,0,0,0.5); }
         main { flex-grow: 1; display: flex; align-items: center; justify-content: center; padding: 20px; background: radial-gradient(circle, #1a1a1a 0%, #111 100%); }
         
-        #player-container { width: 100%; height: 100%; background: transparent; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); position: relative; }
+        #player-container { width: 100%; height: 100%; background: #000; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); position: relative; }
         #player, .player-wrapper, iframe { width: 100% !important; height: 100% !important; border: none; display: block; }
         
         #player div[data-player], #player div[data-player] > div { width: 100% !important; height: 100% !important; }
@@ -45,7 +45,7 @@
         #bar-buffered { position: absolute; top: 0; left: 0; height: 100%; background: rgba(255, 255, 255, 0.4); width: 0%; }
         #bar-played { position: absolute; top: 0; left: 0; height: 100%; background: var(--green); width: 0%; transition: width 0.3s linear; }
         
-        #time-display { position: absolute; top: 4px; left: 10px; right: 10px; display: flex; justify-content: space-between; font-size: 14px; color: #transparent; font-family: monospace; z-index: 1001; pointer-events: none; transition: opacity 1s ease; opacity: 0; }
+        #time-display { position: absolute; top: 4px; left: 10px; right: 10px; display: flex; justify-content: space-between; font-size: 14px; color: #fff; font-family: monospace; z-index: 1001; pointer-events: none; transition: opacity 1s ease; opacity: 0; }
 
         
 
@@ -77,12 +77,11 @@ font-size:22px;cursor:pointer;
     
 #iframe-overlay{position:absolute;inset:0;z-index:1500;background:transparent;cursor:default;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;touch-action:none;}
 
-#intro-video,#tv-static{position:absolute;inset:0;width:100%;height:100%;z-index:5}
-#intro-video video{width:100%;height:100%;object-fit:cover;background:#000}
-#tv-static{display:none;background:repeating-radial-gradient(circle at center,#fff 0,#000 1px,#555 2px,#111 3px);animation:noise .08s infinite,flicker .15s infinite}
-#tv-static:before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(transparent 0,rgba(255,255,255,.04) 2px,transparent 4px)}
-@keyframes noise{from{transform:translate(0,0)}25%{transform:translate(-2px,1px)}50%{transform:translate(2px,-2px)}75%{transform:translate(-1px,2px)}to{transform:translate(0,0)}}
-@keyframes flicker{0%,100%{opacity:.95}50%{opacity:.75}}
+#welcome-screen{position:absolute;inset:0;z-index:20;background:#000;display:flex;align-items:center;justify-content:center;flex-direction:column}
+#welcome-title{font-size:64px;font-weight:700;background:linear-gradient(90deg,#00ff88,#8a2be2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;white-space:nowrap;overflow:hidden;border-right:3px solid #00ff88;width:0;animation:typing 2.5s steps(16,end) forwards,blink .8s infinite}
+#welcome-sub{margin-top:20px;font-size:26px;color:#fff;opacity:0;animation:fadeIn .8s forwards 2.6s}
+#tv-static{display:none;position:absolute;inset:0;z-index:19;background:repeating-radial-gradient(circle,#fff 0,#000 1px,#555 2px,#111 3px);animation:noise .08s infinite,flicker .15s infinite}
+@keyframes typing{from{width:0}to{width:16ch}}@keyframes blink{50%{border-color:transparent}}@keyframes fadeIn{to{opacity:1}}@keyframes noise{25%{transform:translate(-2px,1px)}50%{transform:translate(2px,-2px)}75%{transform:translate(-1px,2px)}}@keyframes flicker{50%{opacity:.75}}
 
 </style>
 </head>
@@ -169,7 +168,7 @@ function proximaCategoria(){indiceCategoria=(indiceCategoria+1)%categorias.lengt
 function categoriaAnterior(){indiceCategoria=(indiceCategoria-1+categorias.length)%categorias.length;categoriaAtual=categorias[indiceCategoria];renderList();}
 
 
-        function playCanal(c, el){const tv=document.getElementById('tv-static');if(tv)tv.remove();const intro=document.getElementById('intro-video');if(intro)intro.remove();
+        function playCanal(c, el){let s=document.getElementById('tv-static');if(s)s.remove();let w=document.getElementById('welcome-screen');if(w)w.remove();
             document.querySelectorAll('.item').forEach(i => i.classList.remove('active'));
             el.classList.add('active');
             clearPlayer();
@@ -254,18 +253,10 @@ function categoriaAnterior(){indiceCategoria=(indiceCategoria-1+categorias.lengt
 iframeOverlay.addEventListener("dblclick",toggleFullScreen);
 
 
-function iniciarIntro(){
- const player=document.getElementById("player");
- player.innerHTML=`<div id="intro-video"><video id="videoIntro" autoplay muted playsinline><source src="intro.mp4" type="video/mp4"></video></div><div id="tv-static"></div>`;
- document.getElementById("videoIntro").onended=function(){
-  document.getElementById("intro-video").style.display="none";
-  document.getElementById("tv-static").style.display="block";
- };
-}
+function iniciarTelaInicial(){const p=document.getElementById('player');p.innerHTML='<div id="tv-static"></div><div id="welcome-screen"><div id="welcome-title">TVGrátis.Online</div><div id="welcome-sub">Escolha um canal para começar</div></div>';setTimeout(()=>{let w=document.getElementById('welcome-screen');if(w){w.style.transition='opacity .8s';w.style.opacity='0';setTimeout(()=>{w.remove();document.getElementById('tv-static').style.display='block';},800);}},5000);}
 
-window.onload=function(){carregarCanaisJSON();iniciarIntro();};
+window.onload=function(){carregarCanaisJSON();iniciarTelaInicial();};
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/disable-devtool@latest/disable-devtool.min.js"></script>
     
 </body>
 </html>
