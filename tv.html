@@ -5,7 +5,7 @@
     <meta name="robots" content="noindex, nofollow">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Canais de TV</title>
-<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
     
     <style>
         :root { --bg: #111; --sidebar-bg: #151515; --purple: #8a2be2; --green: #00ff88; --text: #ffffff; }
@@ -20,11 +20,8 @@
         
         #player-container { width: 100%; height: 100%; background: #000; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); position: relative; }
         #player, .player-wrapper, iframe { width: 100% !important; height: 100% !important; border: none; display: block; }
-        
-        #player div[data-player], #player div[data-player] > div { width: 100% !important; height: 100% !important; }
 
         .brand-container { border-bottom: 1px solid #222; padding: 15px 10px; text-align: center; }
-        .nav-header { display: flex; align-items: center; justify-content: center; background: linear-gradient(90deg, var(--green), var(--purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700; font-size: 20px; letter-spacing: 1px; }
         .search-box { padding: 15px; }
         .search-box input { width: 90%; background: #000; border: 1px solid #333; padding: 12px; color: var(--green); border-radius: 8px; outline: none; font-family: 'Rajdhani'; }
         .channel-list { overflow-y: auto; flex-grow: 1; }
@@ -37,83 +34,46 @@
         #smart-buffer-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); z-index: 2000; display: none; flex-direction: column; align-items: center; justify-content: center; color: #fff; font-family: 'Rajdhani', sans-serif; }
         .spinner { width: 50px; height: 50px; border: 5px solid rgba(138,43,226,0.3); border-top-color: var(--green); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 20px; }
         @keyframes spin { to { transform: rotate(360deg); } }
-        .progress-text { font-size: 24px; font-weight: bold; color: var(--green); letter-spacing: 1px; }
-
-        /* Barra de progresso 1px com efeito de fade */
+        
         #custom-progress-bar { position: absolute; bottom: 0; left: 0; width: 100%; height: 1px; background: rgba(0, 0, 0, 0.5); z-index: 1000; display: none; transition: opacity 1s ease, height 0.2s ease; opacity: 1; }
-        #player-container:hover #custom-progress-bar { height: 3px; }
         #bar-buffered { position: absolute; top: 0; left: 0; height: 100%; background: rgba(255, 255, 255, 0.4); width: 0%; }
         #bar-played { position: absolute; top: 0; left: 0; height: 100%; background: var(--green); width: 0%; transition: width 0.3s linear; }
         
-        #time-display { position: absolute; top: 4px; left: 10px; right: 10px; display: flex; justify-content: space-between; font-size: 14px; color: #fff; font-family: monospace; z-index: 1001; pointer-events: none; transition: opacity 1s ease; opacity: 0; }
+        #time-display { position: absolute; top: 4px; left: 10px; right: 10px; display: flex; justify-content: space-between; font-size: 14px; color: #fff; font-family: monospace; z-index: 1001; pointer-events: none; opacity: 0; transition: opacity 1s ease; }
 
+        .categoria-header{ display:flex; align-items:center; justify-content:space-between; padding:0 8px; gap:10px; }
+        .tituloCategoria{ flex:1; text-align:center; font-size:22px; font-weight:bold; background:linear-gradient(90deg,#00ff88,#8a2be2); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+        .cat-btn{ width:38px; height:38px; border-radius:50%; border:1px solid #8a2be2; background:#111; color:#00ff88; font-size:22px; cursor:pointer; }
+        .cat-btn:hover{ background:#8a2be2; color:#fff; }
+
+        @media (max-width: 768px) { .channel-list { margin-bottom: 60px; } body { flex-direction: column; } main { order: 1; height: 35vh; width: 100%; padding: 0; } aside { order: 2; width: 100%; height: 65vh; border-right: none; border-top: 2px solid var(--purple); } }
         
+        #iframe-overlay{ position:absolute; inset:0; z-index:1500; background:transparent; cursor:default; }
 
-.categoria-header{
-display:flex;
-align-items:center;
-justify-content:space-between;
-padding:0 8px;
-gap:10px;
-}
-.tituloCategoria{
-flex:1;
-text-align:center;
-font-size:22px;
-font-weight:bold;
-background:linear-gradient(90deg,#00ff88,#8a2be2);
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-}
-.cat-btn{
-width:38px;height:38px;border-radius:50%;
-border:1px solid #8a2be2;background:#111;color:#00ff88;
-font-size:22px;cursor:pointer;
-}
-.cat-btn:hover{background:#8a2be2;color:#fff;}
+        /* Estilização Nova do Efeito de Ruído */
+        #welcome-screen { position: absolute; inset: 0; z-index: 20; background: #000; display: flex; align-items: center; justify-content: center; flex-direction: column; }
+        #welcome-title { font-size: 64px; font-weight: 700; background: linear-gradient(90deg,#00ff88,#8a2be2); -webkit-background-clip:text; -webkit-text-fill-color:transparent; white-space:nowrap; overflow:hidden; border-right:3px solid #00ff88; width:0; animation:typing 2.5s steps(16,end) forwards, blink .8s infinite; }
+        #welcome-sub { margin-top:20px; font-size:26px; color:#fff; opacity:0; animation:fadeIn .8s forwards 2.6s; }
+        
+        #tv-static { display: none; position: absolute; inset: 0; z-index: 19; background: #000; opacity: 0.15; 
+            background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"%3E%3Cfilter id="noise"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noise)"/%3E%3C/svg%3E');
+            animation: noise 0.2s steps(2) infinite; pointer-events: none; }
 
-
-@media (max-width: 768px) { .channel-list { margin-bottom: 60px; } body { flex-direction: column; } main { order: 1; height: 35vh; width: 100%; padding: 0; } aside { order: 2; width: 100%; height: 65vh; border-right: none; border-top: 2px solid var(--purple); } }
-    
-#iframe-overlay{position:absolute;inset:0;z-index:1500;background:transparent;cursor:default;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;touch-action:none;}
-
-#welcome-screen{position:absolute;inset:0;z-index:20;background:#000;display:flex;align-items:center;justify-content:center;flex-direction:column}
-#welcome-title{font-size:64px;font-weight:700;background:linear-gradient(90deg,#00ff88,#8a2be2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;white-space:nowrap;overflow:hidden;border-right:3px solid #00ff88;width:0;animation:typing 2.5s steps(16,end) forwards,blink .8s infinite}
-#welcome-sub{margin-top:20px;font-size:26px;color:#fff;opacity:0;animation:fadeIn .8s forwards 2.6s}
-#tv-static {
-    display: none;
-    position: absolute;
-    inset: 0;
-    z-index: 19;
-    /* Fundo de ruído mais denso */
-    background: #000;
-    opacity: 0.15;
-    /* Adicionamos uma imagem de ruído gerada via data-uri ou gradientes sobrepostos */
-    background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"%3E%3Cfilter id="noise"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noise)"/%3E%3C/svg%3E');
-    animation: noise 0.2s steps(2) infinite;
-    pointer-events: none;
-}
-
-@keyframes noise {
-    0% { transform: translate(0, 0); }
-    10% { transform: translate(-5%, -5%); }
-    20% { transform: translate(-10%, 5%); }
-    30% { transform: translate(5%, -10%); }
-    40% { transform: translate(-5%, 15%); }
-    50% { transform: translate(-10%, 5%); }
-    100% { transform: translate(0, 0); }
-}
-
-</style>
+        @keyframes typing{from{width:0}to{width:16ch}}
+        @keyframes blink{50%{border-color:transparent}}
+        @keyframes fadeIn{to{opacity:1}}
+        @keyframes noise { 0% { transform: translate(0, 0); } 10% { transform: translate(-5%, -5%); } 20% { transform: translate(-10%, 5%); } 30% { transform: translate(5%, -10%); } 40% { transform: translate(-5%, 15%); } 50% { transform: translate(-10%, 5%); } 100% { transform: translate(0, 0); } }
+    </style>
 </head>
 <body>
     <aside>
         <div class="brand-container">
-<div class="categoria-header">
-<button class="cat-btn" onclick="categoriaAnterior()">❮</button>
-<div class="tituloCategoria"><span id="categoriaAtual">Todos</span></div>
-<button class="cat-btn" onclick="proximaCategoria()">❯</button>
-</div></div>
+            <div class="categoria-header">
+                <button class="cat-btn" onclick="categoriaAnterior()">❮</button>
+                <div class="tituloCategoria"><span id="categoriaAtual">Todos</span></div>
+                <button class="cat-btn" onclick="proximaCategoria()">❯</button>
+            </div>
+        </div>
         <div class="search-box"><input type="text" id="filter" placeholder="🔍 Buscar canal..." onkeyup="filterList()"></div>
         <div class="channel-list" id="contentList"></div>
     </aside>
@@ -141,7 +101,6 @@ font-size:22px;cursor:pointer;
     </main>
 
     <script>
-        
         let canaisRaw=[];let categorias=[];let categoriaAtual="Todos";let indiceCategoria=0;
         let isSmartBuffering = false;
         let objBufferTarget = 30; 
@@ -159,10 +118,10 @@ font-size:22px;cursor:pointer;
                 const response = await fetch('45s84e1sfer.json');
                 if (!response.ok) throw new Error('Falha');
                 canaisRaw=await response.json();
-const s=new Set(["Todos"]);
-canaisRaw.forEach(c=>{(c.categorias||[]).forEach(x=>{if(x!="Todos")s.add(x);});});
-categorias=[...s];
-renderList();
+                const s=new Set(["Todos"]);
+                canaisRaw.forEach(c=>{(c.categorias||[]).forEach(x=>{if(x!="Todos")s.add(x);});});
+                categorias=[...s];
+                renderList();
             } catch (error) { document.getElementById('contentList').innerHTML = `<div class="item" style="color:red; text-align:center;">Erro ao Ler a Lista de Canais</div>`; }
         }
 
@@ -173,34 +132,36 @@ renderList();
         }
 
         function renderList(){
-document.getElementById("categoriaAtual").innerText=categoriaAtual;
-const l=document.getElementById('contentList');l.innerHTML='';
-const lista=canaisRaw.filter(c=>categoriaAtual==="Todos"||(c.categorias||[]).includes(categoriaAtual));
-lista.forEach((item,idx)=>{
-const div=document.createElement('div');
-div.className='item';
-div.innerHTML=`<span class="channel-number">${(idx+1).toString().padStart(2,'0')}</span><span>${item.canal||"Canal"}</span>`;
-div.onclick=()=>playCanal(item,div);
-div.ondblclick=()=>{playCanal(item,div);toggleFullScreen();};
-l.appendChild(div);
-});
-}
-function proximaCategoria(){indiceCategoria=(indiceCategoria+1)%categorias.length;categoriaAtual=categorias[indiceCategoria];renderList();}
-function categoriaAnterior(){indiceCategoria=(indiceCategoria-1+categorias.length)%categorias.length;categoriaAtual=categorias[indiceCategoria];renderList();}
+            document.getElementById("categoriaAtual").innerText=categoriaAtual;
+            const l=document.getElementById('contentList');l.innerHTML='';
+            const lista=canaisRaw.filter(c=>categoriaAtual==="Todos"||(c.categorias||[]).includes(categoriaAtual));
+            lista.forEach((item,idx)=>{
+                const div=document.createElement('div');
+                div.className='item';
+                div.innerHTML=`<span class="channel-number">${(idx+1).toString().padStart(2,'0')}</span><span>${item.canal||"Canal"}</span>`;
+                div.onclick=()=>playCanal(item,div);
+                l.appendChild(div);
+            });
+        }
+        
+        function proximaCategoria(){indiceCategoria=(indiceCategoria+1)%categorias.length;categoriaAtual=categorias[indiceCategoria];renderList();}
+        function categoriaAnterior(){indiceCategoria=(indiceCategoria-1+categorias.length)%categorias.length;categoriaAtual=categorias[indiceCategoria];renderList();}
 
-
-        function playCanal(c, el){let s=document.getElementById('tv-static');if(s)s.remove();let w=document.getElementById('welcome-screen');if(w)w.remove();
+        function playCanal(c, el){
+            let s=document.getElementById('tv-static');
+            if(s) s.remove();
+            let w=document.getElementById('welcome-screen');
+            if(w) w.remove();
+            
             document.querySelectorAll('.item').forEach(i => i.classList.remove('active'));
             el.classList.add('active');
             clearPlayer();
             
-            // Re-exibir barra ao clicar
             const bar = document.getElementById('custom-progress-bar');
             bar.style.display = "block";
             bar.style.opacity = "1";
             document.getElementById('time-display').style.opacity = "1";
             
-            // Iniciar contagem de 5s para sumir
             clearTimeout(fadeTimeout);
             fadeTimeout = setTimeout(() => {
                 bar.style.opacity = "0";
@@ -208,22 +169,8 @@ function categoriaAnterior(){indiceCategoria=(indiceCategoria-1+categorias.lengt
                 setTimeout(() => { bar.style.display = "none"; }, 1000);
             }, 5000);
 
-            // Define o prefixo do seu Worker
             const workerPrefix = "https://delicate-feather-5576.futebolsemdelay.workers.dev/?url=https://ww4.embedtv.lat/";
-            
-            let urlVideo = c.logo;
-
-            if (c.qualidade === "hd") {
-                // Qualidade HD: Worker na frente, NADA no final
-                urlVideo = workerPrefix + encodeURIComponent(c.logo);
-            } else if (c.qualidade === "sd") {
-                // Qualidade SD: NADA na frente, adiciona .m3u8 no final
-                urlVideo = c.logo + ".m3u8";
-            } else {
-                // Caso padrão (se não for nem hd nem sd), apenas usa o logo
-                urlVideo = c.logo;
-            }
-
+            let urlVideo = c.qualidade === "hd" ? workerPrefix + encodeURIComponent(c.logo) : (c.qualidade === "sd" ? c.logo + ".m3u8" : c.logo);
             document.getElementById("player").innerHTML=`<iframe src="${urlVideo}" allowfullscreen allow="autoplay; fullscreen" style="width:100%;height:100%;border:none;"></iframe>`;
         }
 
@@ -231,53 +178,24 @@ function categoriaAnterior(){indiceCategoria=(indiceCategoria-1+categorias.lengt
 
         function filterList(){
             let v = document.getElementById('filter').value.toLowerCase();
-            document.querySelectorAll('.item').forEach(el => {
-                el.style.display = el.innerText.toLowerCase().includes(v) ? 'flex' : 'none';
-            });
+            document.querySelectorAll('.item').forEach(el => { el.style.display = el.innerText.toLowerCase().includes(v) ? 'flex' : 'none'; });
         }
 
-        setInterval(() => {
-            const video = document.querySelector('video');
-            const overlay = document.getElementById('smart-buffer-overlay');
-            const progressBar = document.getElementById('custom-progress-bar');
-            
-            if (video) {
-                let atual = video.currentTime;
-                let baixado = (video.buffered.length > 0) ? video.buffered.end(video.buffered.length - 1) : 0;
-                
-                document.getElementById('txt-atual').innerText = formatTime(atual);
-                document.getElementById('txt-baixado').innerText = formatTime(baixado);
-
-                if (isSmartBuffering) {
-                    overlay.style.display = "flex";
-                    let folga = (baixado - atual);
-                    let p = Math.min(100, Math.round((folga / objBufferTarget) * 100));
-                    if (p > maxPercentReached) maxPercentReached = p;
-                    document.getElementById('overlay-text').innerText = `Carregando ${maxPercentReached}%`;
-                    if (folga >= objBufferTarget || (baixado > 0 && folga > 20 && video.readyState === 4)) {
-                        isSmartBuffering = false; 
-                        overlay.style.display = "none"; 
-                        video.play(); 
-                    }
+        function iniciarTelaInicial() {
+            const p = document.getElementById('player');
+            p.innerHTML = `<div id="tv-static"></div><div id="welcome-screen"><div id="welcome-title">TVGrátis.Online</div><div id="welcome-sub">Escolha um canal para começar</div></div>`;
+            document.getElementById('tv-static').style.display = 'block';
+            setTimeout(() => {
+                let w = document.getElementById('welcome-screen');
+                if (w) {
+                    w.style.transition = 'opacity 0.8s';
+                    w.style.opacity = '0';
+                    setTimeout(() => { w.remove(); document.getElementById('tv-static').style.opacity = '0.15'; }, 800);
                 }
+            }, 5000);
+        }
 
-                let duracao = video.duration;
-                if (duracao && duracao !== Infinity) {
-                    document.getElementById('bar-buffered').style.width = (baixado / duracao * 100) + "%";
-                    document.getElementById('bar-played').style.width = (atual / duracao * 100) + "%";
-                }
-            }
-        }, 500);
-
-        const iframeOverlay=document.getElementById("iframe-overlay");
-["click","mousedown","mouseup","mousemove","touchstart","touchmove","touchend","contextmenu","wheel"].forEach(function(evt){iframeOverlay.addEventListener(evt,function(e){e.preventDefault();e.stopPropagation();},{passive:false});});
-iframeOverlay.addEventListener("dblclick",toggleFullScreen);
-
-
-function iniciarTelaInicial(){const p=document.getElementById('player');p.innerHTML='<div id="tv-static"></div><div id="welcome-screen"><div id="welcome-title">TVGrátis.Online</div><div id="welcome-sub">Escolha um canal para começar</div></div>';setTimeout(()=>{let w=document.getElementById('welcome-screen');if(w){w.style.transition='opacity .8s';w.style.opacity='0';setTimeout(()=>{w.remove();document.getElementById('tv-static').style.display='block';},800);}},5000);}
-
-window.onload=function(){carregarCanaisJSON();iniciarTelaInicial();};
+        window.onload=function(){carregarCanaisJSON();iniciarTelaInicial();};
     </script>
-    
 </body>
 </html>
