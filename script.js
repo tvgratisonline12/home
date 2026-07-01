@@ -110,16 +110,3 @@ let canaisRaw=[];let categorias=[];let categoriaAtual="Todos";let indiceCategori
 
         window.onload=function(){carregarCanaisJSON();iniciarTelaInicial();};
 
-        (function() {
-    // Domínio permitido
-    var dominioPermitido = "tvgratis.online";
-    
-    // Verifica se o hostname atual é diferente do permitido (e não é localhost para você testar)
-    if (window.location.hostname !== dominioPermitido && window.location.hostname !== "localhost") {
-        // Redireciona para o domínio correto ou para uma página de aviso
-        window.location.href = "https://tvgratis.online"; 
-        
-        // Ou, se preferir bloquear totalmente o acesso:
-        // document.body.innerHTML = "<h1>Acesso negado. Este conteúdo pertence a tvgratis.online</h1>";
-    }
-})();
