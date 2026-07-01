@@ -1,0 +1,58 @@
+addEventListener('fetch', event => {
+  event.respondWith(handleRequest(event.request));
+});
+
+async function handleRequest(request) {
+  const url = new URL(request.url);
+  const targetUrl = url.searchParams.get("url");
+
+  if (!targetUrl) {
+    return new Response("Erro: Adicione ?url=LINK_DO_SITE", { status: 400 });
+  }
+
+  const response = await fetch(targetUrl, {
+    headers: {
+      'Referer': targetUrl,
+      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36'
+    }
+  });
+
+  let body = await response.text();
+
+  // Limpeza de Scripts de Ads
+  body = body.replace(/<script[^>]*src=["']([^"']*(aclib|popads|ad-server|propeller|adcash)[^"']*)["'][^>]*><\/script>/gi, '');
+  
+  // Limpeza de Overlay transparente
+  body = body.replace(/<div[^>]*znid=["'][^0-9]*["'][^>]*><\/div>/gi, '');
+
+  // Script de Play Universal
+  const scriptAutoPlay = `
+    <script>
+      (function() {
+        function tentarDarPlay() {
+          const btn = document.querySelector('.play-wrapper') || document.querySelector('[class*="play"]');
+          if (btn) btn.click();
+          const videos = document.querySelectorAll('video');
+          videos.forEach(v => {
+            if (v.paused) v.play().catch(e => {});
+          });
+        }
+        let tentativas = 0;
+        const intervalo = setInterval(() => {
+          tentarDarPlay();
+          tentativas++;
+          if (tentativas > 10) clearInterval(intervalo);
+        }, 800);
+      })();
+    </script>
+  `;
+  
+  body = body.replace('</body>', scriptAutoPlay + '</body>');
+
+  return new Response(body, {
+    headers: { 
+      'Content-Type': 'text/html; charset=UTF-8',
+      'Access-Control-Allow-Origin': '*'
+    }
+  });
+}
