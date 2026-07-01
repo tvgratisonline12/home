@@ -26,7 +26,7 @@
         .search-box input { width: 90%; background: #000; border: 1px solid #333; padding: 12px; color: var(--green); border-radius: 8px; outline: none; font-family: 'Rajdhani'; }
         .channel-list { overflow-y: auto; flex-grow: 1; }
         
-        .item { padding: 12px 15px; margin: 5px 10px; background: #1a1a1a; border-radius: 8px; display: flex; align-items: center; font-size: 14px; font-weight: 600; cursor: pointer; border-left: 4px solid transparent; user-select: none; transition: 0.2s; }
+        .item { padding: 12px 15px; margin: 5px 10px; background: #1a1a1a; border-radius: 8px; display: flex; align-items: center; font-size: 16px; font-weight: 600; cursor: pointer; border-left: 4px solid transparent; user-select: none; transition: 0.2s; }
         .item:hover { background: rgba(34,34,34,0.7); transform: translateX(5px); }
         .item.active { border-left-color: var(--green); background: rgba(138,43,226,0.15); color: var(--green); }
         .channel-number { min-width: 30px; font-size: 11px; color: var(--purple); margin-right: 12px; background: #000; padding: 2px 6px; border-radius: 4px; text-align: center; }
@@ -50,20 +50,23 @@
         
         #iframe-overlay{ position:absolute; inset:0; z-index:1500; background:transparent; cursor:default; }
 
-        /* Estilização Nova com Máscara para evitar transbordamento */
-        #welcome-screen { position: absolute; inset: 0; z-index: 20; background: #000; display: flex; align-items: center; justify-content: center; flex-direction: column; }
-        #welcome-title { font-size: 64px; font-weight: 700; background: linear-gradient(90deg,#00ff88,#8a2be2); -webkit-background-clip:text; -webkit-text-fill-color:transparent; white-space:nowrap; overflow:hidden; border-right:3px solid #00ff88; width:0; animation:typing 2.5s steps(16,end) forwards, blink .8s infinite; }
-        #welcome-sub { margin-top:20px; font-size:26px; color:#fff; opacity:0; animation:fadeIn .8s forwards 2.6s; }
+        /* Estilização Centralizada e Responsiva */
+        #welcome-screen { position: absolute; inset: 0; z-index: 20; background: #000; display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center; padding: 20px; }
+        #welcome-title { font-size: 48px; font-weight: 700; background: linear-gradient(90deg,#00ff88,#8a2be2); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+        #welcome-sub { margin-top:20px; font-size:20px; color:#fff; opacity:0; }
         
         #noise-container { display: none; position: absolute; inset: 0; z-index: 19; background: #000; overflow: hidden; pointer-events: none; }
         #tv-static { position: absolute; top: -50px; left: -50px; right: -50px; bottom: -50px; opacity: 0.15;
             background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"%3E%3Cfilter id="noise"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noise)"/%3E%3C/svg%3E');
             animation: noise 0.2s linear infinite; }
 
-        @keyframes typing{from{width:0}to{width:16ch}}
-        @keyframes blink{50%{border-color:transparent}}
         @keyframes fadeIn{to{opacity:1}}
-        @keyframes noise { 0% { transform: translate(0, 0); } 10% { transform: translate(-5px, -5px); } 20% { transform: translate(-10px, 5px); } 30% { transform: translate(5px, -10px); } 40% { transform: translate(-5px, 15px); } 50% { transform: translate(-10px, 5px); } 100% { transform: translate(0, 0); } }
+        @keyframes noise { 0% { transform: translate(0, 0); } 10% { transform: translate(-5px, -5px); } 100% { transform: translate(0, 0); } }
+
+        @media (max-width: 768px) {
+            #welcome-title { font-size: 32px; }
+            #welcome-sub { font-size: 16px; }
+        }
     </style>
 </head>
 <body>
@@ -173,7 +176,13 @@
 
         function iniciarTelaInicial() {
             const p = document.getElementById('player');
-            p.innerHTML = `<div id="noise-container"><div id="tv-static"></div></div><div id="welcome-screen"><div id="welcome-title">TVGrátis.Online</div><div id="welcome-sub">Escolha um canal para começar</div></div>`;
+            p.innerHTML = `
+                <div id="noise-container"><div id="tv-static"></div></div>
+                <div id="welcome-screen">
+                    <div id="welcome-title">TVGrátis.Online</div>
+                    <div id="welcome-sub" style="animation: fadeIn 1s forwards 0.5s">Escolha um canal para começar</div>
+                </div>
+            `;
             document.getElementById('noise-container').style.display = 'block';
             setTimeout(() => {
                 let w = document.getElementById('welcome-screen');
@@ -185,20 +194,6 @@
         }
 
         window.onload=function(){carregarCanaisJSON();iniciarTelaInicial();};
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/disable-devtool@latest/disable-devtool.min.js"></script>
-    <script>
-        DisableDevtool({
-            md5: '8865f3a072045558837311100572d427',
-            url: 'bloqueado.html',
-            tk_name: 'adblock_key',
-            debug: false,
-            disableMenu: true,
-            disableSelect: true,
-            disableCopy: true,
-            disableCut: true,
-            disablePaste: true
-        });
     </script>
 </body>
 </html>
