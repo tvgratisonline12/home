@@ -80,8 +80,29 @@ font-size:22px;cursor:pointer;
 #welcome-screen{position:absolute;inset:0;z-index:20;background:#000;display:flex;align-items:center;justify-content:center;flex-direction:column}
 #welcome-title{font-size:64px;font-weight:700;background:linear-gradient(90deg,#00ff88,#8a2be2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;white-space:nowrap;overflow:hidden;border-right:3px solid #00ff88;width:0;animation:typing 2.5s steps(16,end) forwards,blink .8s infinite}
 #welcome-sub{margin-top:20px;font-size:26px;color:#fff;opacity:0;animation:fadeIn .8s forwards 2.6s}
-#tv-static{display:none;position:absolute;inset:0;z-index:19;background:repeating-radial-gradient(circle,#fff 0,#000 1px,#555 2px,#111 3px);animation:noise .08s infinite,flicker .15s infinite}
-@keyframes typing{from{width:0}to{width:16ch}}@keyframes blink{50%{border-color:transparent}}@keyframes fadeIn{to{opacity:1}}@keyframes noise{25%{transform:translate(-2px,1px)}50%{transform:translate(2px,-2px)}75%{transform:translate(-1px,2px)}}@keyframes flicker{50%{opacity:.75}}
+#tv-static {
+    display: none;
+    position: absolute;
+    inset: 0;
+    z-index: 19;
+    /* Fundo de ruído mais denso */
+    background: #000;
+    opacity: 0.15;
+    /* Adicionamos uma imagem de ruído gerada via data-uri ou gradientes sobrepostos */
+    background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"%3E%3Cfilter id="noise"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noise)"/%3E%3C/svg%3E');
+    animation: noise 0.2s steps(2) infinite;
+    pointer-events: none;
+}
+
+@keyframes noise {
+    0% { transform: translate(0, 0); }
+    10% { transform: translate(-5%, -5%); }
+    20% { transform: translate(-10%, 5%); }
+    30% { transform: translate(5%, -10%); }
+    40% { transform: translate(-5%, 15%); }
+    50% { transform: translate(-10%, 5%); }
+    100% { transform: translate(0, 0); }
+}
 
 </style>
 </head>
