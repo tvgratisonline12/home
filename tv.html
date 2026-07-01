@@ -127,14 +127,33 @@
         }
 
         function renderList(){
-            document.getElementById("categoriaAtual").innerText=categoriaAtual;
-            const l=document.getElementById('contentList');l.innerHTML='';
-            const lista=canaisRaw.filter(c=>categoriaAtual==="Todos"||(c.categorias||[]).includes(categoriaAtual));
-            lista.forEach((item,idx)=>{
-                const div=document.createElement('div');
-                div.className='item';
-                div.innerHTML=`<span class="channel-number">${(idx+1).toString().padStart(2,'0')}</span><span>${item.canal||"Canal"}</span>`;
-                div.onclick=()=>playCanal(item,div);
+            document.getElementById("categoriaAtual").innerText = categoriaAtual;
+            const l = document.getElementById('contentList');
+            l.innerHTML = '';
+            const lista = canaisRaw.filter(c => categoriaAtual === "Todos" || (c.categorias || []).includes(categoriaAtual));
+            
+            lista.forEach((item, idx) => {
+                const div = document.createElement('div');
+                div.className = 'item';
+                div.innerHTML = `<span class="channel-number">${(idx+1).toString().padStart(2,'0')}</span><span>${item.canal||"Canal"}</span>`;
+                
+                // Clique simples para carregar o canal
+                div.onclick = () => playCanal(item, div);
+                
+                // Clique duplo para carregar o canal E colocar em tela cheia
+                div.ondblclick = () => {
+                    playCanal(item, div);
+                    // Pequeno atraso para garantir que o iframe já tenha sido renderizado no DOM
+                    setTimeout(() => {
+                        const c = document.getElementById('player-container');
+                        if (!document.fullscreenElement) {
+                            c.requestFullscreen().catch(err => {
+                                console.log("Erro ao tentar tela cheia: " + err.message);
+                            });
+                        }
+                    }, 200);
+                };
+                
                 l.appendChild(div);
             });
         }
