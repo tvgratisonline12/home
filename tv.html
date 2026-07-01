@@ -4,70 +4,11 @@
     <meta charset="UTF-8">
     <meta name="robots" content="noindex, nofollow">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
     <title>Canais de TV</title>
+
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
-    
-    <style>
-        :root { --bg: #111; --sidebar-bg: #151515; --purple: #8a2be2; --green: #00ff88; --text: #ffffff; }
-        body { background-color: var(--bg); color: var(--text); font-family: 'Rajdhani', sans-serif; margin: 0; display: flex; height: 100vh; overflow: hidden; }
-        
-        ::-webkit-scrollbar { width: 5px; }
-        ::-webkit-scrollbar-track { background: #111; }
-        ::-webkit-scrollbar-thumb { background: var(--purple); border-radius: 10px; }
-        
-        aside { width: 320px; background: var(--sidebar-bg); border-right: 1px solid rgba(138,43,226,0.3); display: flex; flex-direction: column; flex-shrink: 0; box-shadow: 10px 0 30px rgba(0,0,0,0.5); }
-        main { flex-grow: 1; display: flex; align-items: center; justify-content: center; padding: 20px; background: radial-gradient(circle, #1a1a1a 0%, #111 100%); }
-        
-        #player-container { width: 100%; height: 100%; background: #000; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); position: relative; }
-        #player, .player-wrapper, iframe { width: 100% !important; height: 100% !important; border: none; display: block; }
-
-        .brand-container { border-bottom: 1px solid #222; padding: 15px 10px; text-align: center; }
-        .search-box { padding: 15px; }
-        .search-box input { width: 90%; background: #000; border: 1px solid #333; padding: 12px; color: var(--green); border-radius: 8px; outline: none; font-family: 'Rajdhani'; }
-        .channel-list { overflow-y: auto; flex-grow: 1; }
-        
-        .item { padding: 12px 15px; margin: 5px 10px; background: #1a1a1a; border-radius: 8px; display: flex; align-items: center; font-size: 14px; font-weight: 600; cursor: pointer; border-left: 4px solid transparent; user-select: none; transition: 0.2s; }
-        .item:hover { background: rgba(34,34,34,0.7); transform: translateX(5px); }
-        .item.active { border-left-color: var(--green); background: rgba(138,43,226,0.15); color: var(--green); }
-        .channel-number { min-width: 30px; font-size: 11px; color: var(--purple); margin-right: 12px; background: #000; padding: 2px 6px; border-radius: 4px; text-align: center; }
-        
-        #smart-buffer-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); z-index: 2000; display: none; flex-direction: column; align-items: center; justify-content: center; color: #fff; font-family: 'Rajdhani', sans-serif; }
-        .spinner { width: 50px; height: 50px; border: 5px solid rgba(138,43,226,0.3); border-top-color: var(--green); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 20px; }
-        @keyframes spin { to { transform: rotate(360deg); } }
-        
-        #custom-progress-bar { position: absolute; bottom: 0; left: 0; width: 100%; height: 1px; background: rgba(0, 0, 0, 0.5); z-index: 1000; display: none; transition: opacity 1s ease, height 0.2s ease; opacity: 1; }
-        #bar-buffered { position: absolute; top: 0; left: 0; height: 100%; background: rgba(255, 255, 255, 0.4); width: 0%; }
-        #bar-played { position: absolute; top: 0; left: 0; height: 100%; background: var(--green); width: 0%; transition: width 0.3s linear; }
-        
-        #time-display { position: absolute; top: 4px; left: 10px; right: 10px; display: flex; justify-content: space-between; font-size: 14px; color: #fff; font-family: monospace; z-index: 1001; pointer-events: none; opacity: 0; transition: opacity 1s ease; }
-
-        .categoria-header{ display:flex; align-items:center; justify-content:space-between; padding:0 8px; gap:10px; }
-        .tituloCategoria{ flex:1; text-align:center; font-size:22px; font-weight:bold; background:linear-gradient(90deg,#00ff88,#8a2be2); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-        .cat-btn{ width:38px; height:38px; border-radius:50%; border:1px solid #8a2be2; background:#111; color:#00ff88; font-size:22px; cursor:pointer; }
-        .cat-btn:hover{ background:#8a2be2; color:#fff; }
-
-        @media (max-width: 768px) { .channel-list { margin-bottom: 60px; } body { flex-direction: column; } main { order: 1; height: 35vh; width: 100%; padding: 0; } aside { order: 2; width: 100%; height: 65vh; border-right: none; border-top: 2px solid var(--purple); } }
-        
-        #iframe-overlay{ position:absolute; inset:0; z-index:1500; background:transparent; cursor:default; }
-
-        /* Estilização Centralizada e Responsiva */
-        #welcome-screen { position: absolute; inset: 0; z-index: 20; background: #000; display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center; padding: 20px; }
-        #welcome-title { font-size: 48px; font-weight: 700; background: linear-gradient(90deg,#00ff88,#8a2be2); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-        #welcome-sub { margin-top:20px; font-size:20px; color:#fff; opacity:0; }
-        
-        #noise-container { display: none; position: absolute; inset: 0; z-index: 19; background: #000; overflow: hidden; pointer-events: none; }
-        #tv-static { position: absolute; top: -50px; left: -50px; right: -50px; bottom: -50px; opacity: 0.15;
-            background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"%3E%3Cfilter id="noise"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noise)"/%3E%3C/svg%3E');
-            animation: noise 0.2s linear infinite; }
-
-        @keyframes fadeIn{to{opacity:1}}
-        @keyframes noise { 0% { transform: translate(0, 0); } 10% { transform: translate(-5px, -5px); } 100% { transform: translate(0, 0); } }
-
-        @media (max-width: 768px) {
-            #welcome-title { font-size: 32px; }
-            #welcome-sub { font-size: 16px; }
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <aside>
@@ -101,119 +42,7 @@
         </div>
     </main>
 
-    <script>
-        let canaisRaw=[];let categorias=[];let categoriaAtual="Todos";let indiceCategoria=0;
-        let isSmartBuffering = false;
-        let objBufferTarget = 30; 
-        let maxPercentReached = 0;
-        let fadeTimeout;
-        
-        async function carregarCanaisJSON() {
-            try {
-                const response = await fetch('45s84e1sfer.json');
-                if (!response.ok) throw new Error('Falha');
-                canaisRaw=await response.json();
-                const s=new Set(["Todos"]);
-                canaisRaw.forEach(c=>{(c.categorias||[]).forEach(x=>{if(x!="Todos")s.add(x);});});
-                categorias=[...s];
-                renderList();
-            } catch (error) { document.getElementById('contentList').innerHTML = `<div class="item" style="color:red; text-align:center;">Erro ao Ler a Lista de Canais</div>`; }
-        }
-
-        function toggleFullScreen(){
-            const c = document.getElementById('player-container');
-            if(!document.fullscreenElement) c.requestFullscreen();
-            else document.exitFullscreen();
-        }
-
-        function renderList(){
-            document.getElementById("categoriaAtual").innerText = categoriaAtual;
-            const l = document.getElementById('contentList');
-            l.innerHTML = '';
-            const lista = canaisRaw.filter(c => categoriaAtual === "Todos" || (c.categorias || []).includes(categoriaAtual));
-            
-            lista.forEach((item, idx) => {
-                const div = document.createElement('div');
-                div.className = 'item';
-                div.innerHTML = `<span class="channel-number">${(idx+1).toString().padStart(2,'0')}</span><span>${item.canal||"Canal"}</span>`;
-                
-                // Clique simples para carregar o canal
-                div.onclick = () => playCanal(item, div);
-                
-                // Clique duplo para carregar o canal E colocar em tela cheia
-                div.ondblclick = () => {
-                    playCanal(item, div);
-                    // Pequeno atraso para garantir que o iframe já tenha sido renderizado no DOM
-                    setTimeout(() => {
-                        const c = document.getElementById('player-container');
-                        if (!document.fullscreenElement) {
-                            c.requestFullscreen().catch(err => {
-                                console.log("Erro ao tentar tela cheia: " + err.message);
-                            });
-                        }
-                    }, 200);
-                };
-                
-                l.appendChild(div);
-            });
-        }
-        
-        function proximaCategoria(){indiceCategoria=(indiceCategoria+1)%categorias.length;categoriaAtual=categorias[indiceCategoria];renderList();}
-        function categoriaAnterior(){indiceCategoria=(indiceCategoria-1+categorias.length)%categorias.length;categoriaAtual=categorias[indiceCategoria];renderList();}
-
-        function playCanal(c, el){
-            let nc=document.getElementById('noise-container'); if(nc) nc.remove();
-            let s=document.getElementById('tv-static'); if(s) s.remove();
-            let w=document.getElementById('welcome-screen'); if(w) w.remove();
-            
-            document.querySelectorAll('.item').forEach(i => i.classList.remove('active'));
-            el.classList.add('active');
-            clearPlayer();
-            
-            const bar = document.getElementById('custom-progress-bar');
-            bar.style.display = "block"; bar.style.opacity = "1";
-            document.getElementById('time-display').style.opacity = "1";
-            
-            clearTimeout(fadeTimeout);
-            fadeTimeout = setTimeout(() => {
-                bar.style.opacity = "0";
-                document.getElementById('time-display').style.opacity = "0";
-                setTimeout(() => { bar.style.display = "none"; }, 1000);
-            }, 5000);
-
-            const workerPrefix = "https://delicate-feather-5576.futebolsemdelay.workers.dev/?url=https://ww4.embedtv.lat/";
-            let urlVideo = c.qualidade === "hd" ? workerPrefix + encodeURIComponent(c.logo) : (c.qualidade === "sd" ? c.logo + ".m3u8" : c.logo);
-            document.getElementById("player").innerHTML=`<iframe src="${urlVideo}" allowfullscreen allow="autoplay; fullscreen" style="width:100%;height:100%;border:none;"></iframe>`;
-        }
-
-        function clearPlayer(){document.getElementById("player").innerHTML="";document.getElementById("smart-buffer-overlay").style.display="none";isSmartBuffering=false;}
-
-        function filterList(){
-            let v = document.getElementById('filter').value.toLowerCase();
-            document.querySelectorAll('.item').forEach(el => { el.style.display = el.innerText.toLowerCase().includes(v) ? 'flex' : 'none'; });
-        }
-
-        function iniciarTelaInicial() {
-            const p = document.getElementById('player');
-            p.innerHTML = `
-                <div id="noise-container"><div id="tv-static"></div></div>
-                <div id="welcome-screen">
-                    <div id="welcome-title">TVGrátis.Online</div>
-                    <div id="welcome-sub" style="animation: fadeIn 1s forwards 0.5s">Escolha um canal para começar</div>
-                </div>
-            `;
-            document.getElementById('noise-container').style.display = 'block';
-            setTimeout(() => {
-                let w = document.getElementById('welcome-screen');
-                if (w) {
-                    w.style.transition = 'opacity 0.8s'; w.style.opacity = '0';
-                    setTimeout(() => { w.remove(); document.getElementById('tv-static').style.opacity = '0.15'; }, 800);
-                }
-            }, 5000);
-        }
-
-        window.onload=function(){carregarCanaisJSON();iniciarTelaInicial();};
-    </script>
+   <script src="script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/disable-devtool@latest/disable-devtool.min.js"></script>
     <script>
         DisableDevtool({
