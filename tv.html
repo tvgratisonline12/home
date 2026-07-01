@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
 
-    <script src="protecao.js"></script>
+    <script src="player.js"></script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -24,8 +24,8 @@
     <meta property="og:type" content="website">
     <meta property="og:title" content="TV Grátis - Canais de TV Online">
     <meta property="og:description" content="Assista canais de TV online gratuitamente, sem anúncios e sem cadastro.">
-    <meta property="og:image" content="https://SEUDOMINIO.com/imagens/capa.jpg">
-    <meta property="og:url" content="https://SEUDOMINIO.com/">
+    <meta property="og:image" content="https://tvgratis.online/logo.png">
+    <meta property="og:url" content="https://tvgratis.online/">
     <meta property="og:locale" content="pt_BR">
     <meta property="og:site_name" content="TV Grátis">
 
@@ -33,7 +33,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="TV Grátis">
     <meta name="twitter:description" content="Assista canais de TV online gratuitamente.">
-    <meta name="twitter:image" content="https://SEUDOMINIO.com/imagens/capa.jpg">
+    <meta name="twitter:image" content="https://tvgratis.online/logo.png">
 
     <!-- Tema do navegador -->
     <meta name="theme-color" content="#111111">
@@ -56,7 +56,7 @@
       "@context":"https://schema.org",
       "@type":"WebSite",
       "name":"TV Grátis",
-      "url":"https://SEUDOMINIO.com",
+      "url":"https://tvgratis.online",
       "description":"Assista canais de TV online gratuitamente, sem cadastro e diretamente do navegador."
     }
     </script>
@@ -81,33 +81,23 @@
                 <div class="spinner"></div>
                 <div class="progress-text" id="overlay-text">Carregando 0%</div>
             </div>
+            
             <div id="custom-progress-bar">
                 <div id="bar-buffered"></div>
                 <div id="bar-played"></div>
             </div>
+
             <div id="time-display">
                 <span id="txt-atual">00:00</span>
                 <span id="txt-baixado">00:00</span>
             </div>
+            
             <div id="player"></div>
             <div id="iframe-overlay"></div>
         </div>
     </main>
 
-    <script src="script.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/disable-devtool@latest/disable-devtool.min.js"></script>
-    <script>
-        DisableDevtool({
-            md5: '8865f3a072045558837311100572d427',
-            url: 'bloqueado.html',
-            tk_name: 'adblock_key',
-            debug: false,
-            disableMenu: true,
-            disableSelect: true,
-            disableCopy: true,
-            disableCut: true,
-            disablePaste: true
-        });
-    </script>
+   <script src="channels.js"></script>
+    
 </body>
 </html>
