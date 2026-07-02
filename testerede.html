@@ -1,60 +1,14 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <title>Player Teste - Rede de Canais</title>
-    <style>
-        body { margin: 0; background: #000; display: flex; justify-content: center; align-items: center; height: 100vh; }
-        #container { width: 800px; height: 450px; position: relative; }
-        #site-iframe { width: 100%; height: 100%; border: none; }
-        
-        /* Camada para forçar o clique e o play */
-        #click-overlay {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: transparent; z-index: 999; cursor: pointer;
-        }
-    </style>
-</head>
-<body>
-
-<div id="container">
-    <div id="click-overlay"></div>
+<div id="player-container">
     <iframe id="site-iframe" 
             src="https://redecanaistv.plus/player3/ch.php?canal=gloobinho" 
-            allow="autoplay; encrypted-media; fullscreen" 
-            allowfullscreen>
+            allow="autoplay; fullscreen" 
+            style="width:100%; height:450px; border:none;">
     </iframe>
 </div>
 
 <script>
-    const overlay = document.getElementById('click-overlay');
-    const iframe = document.getElementById('site-iframe');
-
-    overlay.addEventListener('click', function() {
-        // 1. Esconde a camada de clique
-        overlay.style.display = 'none';
-
-        // 2. Tenta injetar o script de play via injeção de evento
-        // Como o site deles usa ofuscação pesada, vamos tentar forçar o clique no botão de play
-        try {
-            // Acessa o DOM do iframe (Se eles não tiverem proibido via header)
-            const iframeDoc = iframe.contentWindow.document;
-            
-            // Procura o botão de play do player deles (geralmente class 'play-wrapper' ou 'vjs-play-control')
-            const playBtn = iframeDoc.querySelector('.play-wrapper') || iframeDoc.querySelector('.vjs-big-play-button');
-            if (playBtn) playBtn.click();
-            
-            // Força o vídeo também
-            const video = iframeDoc.querySelector('video');
-            if (video) {
-                video.muted = false;
-                video.play();
-            }
-        } catch(e) {
-            console.log("CORS/Security Block: Não conseguimos tocar no DOM do iframe. O site está protegido.");
-        }
-    });
+    // Injeção via Tampermonkey (para o usuário)
+    // Se o seu site não pode injetar no iframe por causa do CORS, 
+    // a única solução para o seu usuário é instalar uma extensão 
+    // de "AdBlock" no navegador dele.
 </script>
-
-</body>
-</html>
