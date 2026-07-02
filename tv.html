@@ -3,85 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TV Grátis - Assista Canais de TV Online Grátis e Ao Vivo</title>
-    
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
-
+    <title>TV Grátis - Canais Online</title>
     <style>
-        /* CSS Temporário para o Aviso FHD */
+        /* CSS Integrado */
+        body { margin: 0; background: #111; color: white; font-family: 'Rajdhani', sans-serif; height: 100vh; display: flex; }
+        aside { width: 300px; background: #1a1a1a; display: flex; flex-direction: column; }
+        main { flex: 1; position: relative; }
+        
+        .item { padding: 15px; border-bottom: 1px solid #333; cursor: pointer; display: flex; align-items: center; }
+        .item:hover { background: #222; }
+        .item.active { background: #444; }
+        .canal-fhd { border-left: 4px solid red !important; color: #ff4d4d !important; }
+        
+        #player-container { width: 100%; height: 100%; position: relative; background: #000; }
+        #player { width: 100%; height: 100%; }
+        
         #iframe-overlay-aviso {
-            display: none;
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: #000;
-            z-index: 10000;
-            color: white;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            font-family: 'Rajdhani', sans-serif;
+            display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: #000; z-index: 10000; color: white; flex-direction: column;
+            align-items: center; justify-content: center; text-align: center;
         }
-        .canal-fhd { border-left: 4px solid #ff0000 !important; color: #ff4d4d !important; }
     </style>
 </head>
 <body>
+
     <aside>
-        <div class="brand-container">
-            <div class="categoria-header">
-                <button class="cat-btn" onclick="categoriaAnterior()">❮</button>
-                <div class="tituloCategoria"><span id="categoriaAtual">Todos</span></div>
-                <button class="cat-btn" onclick="proximaCategoria()">❯</button>
-            </div>
-        </div>
         <div class="search-box"><input type="text" id="filter" placeholder="🔍 Buscar canal..." onkeyup="filterList()"></div>
         <div class="channel-list" id="contentList"></div>
     </aside>
     
     <main>
-        <div id="player-container" ondblclick="toggleFullScreen()">
+        <div id="player-container">
             <div id="iframe-overlay-aviso">
                 <h2 style="color:red">AVISO IMPORTANTE</h2>
                 <p>Este canal contém anúncios de terceiros que não controlamos.</p>
                 <p>O player será liberado em <span id="contador">10</span> segundos...</p>
             </div>
-
-            <div id="smart-buffer-overlay">
-                <div class="spinner"></div>
-                <div class="progress-text" id="overlay-text">Carregando 0%</div>
-            </div>
-            
-            <div id="custom-progress-bar">
-                <div id="bar-buffered"></div>
-                <div id="bar-played"></div>
-            </div>
-
-            <div id="time-display">
-                <span id="txt-atual">00:00</span>
-                <span id="txt-baixado">00:00</span>
-            </div>
-            
             <div id="player"></div>
-            <div id="iframe-overlay"></div>
         </div>
     </main>
 
-    <script src="channels.js"></script>
-    <script src="player.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/disable-devtool@latest/disable-devtool.min.js"></script>
-
     <script>
-        // Lógica do Aviso Temporário
+        // --- LÓGICA DO PLAYER ---
+        let canaisRaw = [];
+        let aguardandoFHD = false;
+
+        // Simulando carregamento do JSON (Substitua pela url do seu arquivo)
+        async function carregarCanais() {
+            // Para testar, estou usando um exemplo. Mude para '45s84e1sfer.json'
+            canaisRaw = [
+                {"canal": "GLOOBINHO", "logo": "https://redecanaistv.plus/player3/ch.php?canal=gloobinho", "qualidade": "fhd"}
+            ];
+            renderList();
+        }
+
+        function renderList() {
+            const l = document.getElementById('contentList');
+            canaisRaw.forEach((item, idx) => {
+                const div = document.createElement('div');
+                div.className = 'item';
+                if (item.qualidade === "fhd") div.classList.add('canal-fhd');
+                div.innerHTML = `<span>${item.canal}</span>`;
+                div.onclick = () => playCanal(item, div);
+                l.appendChild(div);
+            });
+        }
+
+        function playCanal(c, el) {
+            if (aguardandoFHD) return;
+            if (c.qualidade === "fhd") {
+                aguardandoFHD = true;
+                exibirAvisoFHD();
+                setTimeout(() => {
+                    injetarPlayer(c);
+                    aguardandoFHD = false;
+                }, 10000);
+            } else {
+                injetarPlayer(c);
+            }
+        }
+
         function exibirAvisoFHD() {
             const avisoDiv = document.getElementById('iframe-overlay-aviso');
             const contadorSpan = document.getElementById('contador');
             let segundos = 10;
-
             avisoDiv.style.display = 'flex';
             contadorSpan.innerText = segundos;
-
             const intervalo = setInterval(() => {
                 segundos--;
                 contadorSpan.innerText = segundos;
@@ -92,8 +99,11 @@
             }, 1000);
         }
 
-        // Função que você deve chamar no seu player.js ao clicar no canal
-        // Exemplo: if(canal.qualidade === 'fhd') exibirAvisoFHD();
+        function injetarPlayer(c) {
+            document.getElementById("player").innerHTML = `<iframe src="${c.logo}" allowfullscreen allow="autoplay; fullscreen" style="width:100%;height:100%;border:none;"></iframe>`;
+        }
+
+        window.onload = carregarCanais;
     </script>
 </body>
 </html>
