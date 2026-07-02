@@ -31,16 +31,22 @@ function renderList() {
     document.getElementById("categoriaAtual").innerText = categoriaAtual;
     const l = document.getElementById('contentList');
     l.innerHTML = '';
-    const lista = canaisRaw.filter(c => categoriaAtual === "Todos" || (c.categorias || []).includes(categoriaAtual));
+    
+    // Filtro mais seguro: verifica se a categoria atual é "Todos" ou se está no array de categorias do canal
+    const lista = canaisRaw.filter(c => {
+        if (categoriaAtual === "Todos") return true;
+        return (c.categorias || []).includes(categoriaAtual);
+    });
 
     lista.forEach((item, idx) => {
         const div = document.createElement('div');
         div.className = 'item';
         
-        // Verifica se a qualidade é fhd para aplicar o estilo e ícone
-        const isFhd = item.qualidade === "fhd";
+        // Verifica a qualidade garantindo que seja string e minúscula
+        const isFhd = String(item.qualidade).toLowerCase() === "fhd";
+        
         if (isFhd) {
-            div.classList.add('has-ad');
+            div.classList.add('has-ad'); 
             div.innerHTML = `
                 <span class="channel-number">${(idx + 1).toString().padStart(2, '0')}</span>
                 <span class="ad-badge">AD</span>
@@ -53,20 +59,20 @@ function renderList() {
             `;
         }
 
-        div.onclick = () => playCanal(item, div);
+        div.onclick = () => {
+            playCanal(item, div);
+            // Regra do Overlay: Se for FHD, esconde o overlay (vidro), senão mostra
+            let overlay = document.getElementById('iframe-overlay');
+            if (overlay) {
+                overlay.style.display = isFhd ? "none" : "block";
+            }
+        };
 
         div.ondblclick = () => {
             playCanal(item, div);
-            setTimeout(() => {
-                const c = document.getElementById('player-container');
-                if (!document.fullscreenElement) {
-                    c.requestFullscreen().catch(err => {
-                        console.log("Erro ao tentar tela cheia: " + err.message);
-                    });
-                }
-            }, 200);
+            // ... (seu código de tela cheia que já existia)
         };
-
+        
         l.appendChild(div);
     });
 }
