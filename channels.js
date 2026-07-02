@@ -23,8 +23,11 @@ async function carregarCanaisJSON() {
 
 function toggleFullScreen() {
     const c = document.getElementById('player-container');
-    if (!document.fullscreenElement) c.requestFullscreen();
-    else document.exitFullscreen();
+    if (!document.fullscreenElement) {
+        c.requestFullscreen().catch(err => console.error("Erro ao entrar em full screen:", err));
+    } else {
+        document.exitFullscreen();
+    }
 }
 
 function renderList() {
@@ -32,7 +35,6 @@ function renderList() {
     const l = document.getElementById('contentList');
     l.innerHTML = '';
     
-    // Filtro mais seguro: verifica se a categoria atual é "Todos" ou se está no array de categorias do canal
     const lista = canaisRaw.filter(c => {
         if (categoriaAtual === "Todos") return true;
         return (c.categorias || []).includes(categoriaAtual);
@@ -42,35 +44,29 @@ function renderList() {
         const div = document.createElement('div');
         div.className = 'item';
         
-        // Verifica a qualidade garantindo que seja string e minúscula
         const isFhd = String(item.qualidade).toLowerCase() === "fhd";
         
         if (isFhd) {
             div.classList.add('has-ad'); 
-            div.innerHTML = `
-                <span class="channel-number">${(idx + 1).toString().padStart(2, '0')}</span>
-                <span class="ad-badge">AD</span>
-                <span>${item.canal || "Canal"}</span>
-            `;
+            div.innerHTML = `<span class="channel-number">${(idx + 1).toString().padStart(2, '0')}</span><span class="ad-badge">AD</span><span>${item.canal || "Canal"}</span>`;
         } else {
-            div.innerHTML = `
-                <span class="channel-number">${(idx + 1).toString().padStart(2, '0')}</span>
-                <span>${item.canal || "Canal"}</span>
-            `;
+            div.innerHTML = `<span class="channel-number">${(idx + 1).toString().padStart(2, '0')}</span><span>${item.canal || "Canal"}</span>`;
         }
 
+        // Clique simples: apenas carrega o canal
         div.onclick = () => {
             playCanal(item, div);
-            // Regra do Overlay: Se for FHD, esconde o overlay (vidro), senão mostra
-            let overlay = document.getElementById('iframe-overlay');
-            if (overlay) {
-                overlay.style.display = isFhd ? "none" : "block";
-            }
         };
 
+        // Duplo clique: carrega e força tela cheia
         div.ondblclick = () => {
             playCanal(item, div);
-            // ... (seu código de tela cheia que já existia)
+            setTimeout(() => {
+                const container = document.getElementById('player-container');
+                if (container && !document.fullscreenElement) {
+                    container.requestFullscreen();
+                }
+            }, 500); // Delay para garantir que o iframe esteja pronto
         };
         
         l.appendChild(div);
@@ -81,19 +77,15 @@ function proximaCategoria() { indiceCategoria = (indiceCategoria + 1) % categori
 function categoriaAnterior() { indiceCategoria = (indiceCategoria - 1 + categorias.length) % categorias.length; categoriaAtual = categorias[indiceCategoria]; renderList(); }
 
 function playCanal(c, el) {
-    // 1. Limpeza de telas iniciais
     let nc = document.getElementById('noise-container'); if (nc) nc.remove();
     let s = document.getElementById('tv-static'); if (s) s.remove();
     let w = document.getElementById('welcome-screen'); if (w) w.remove();
 
-    // 2. Destacar item na lista
     document.querySelectorAll('.item').forEach(i => i.classList.remove('active'));
     el.classList.add('active');
     
-    // 3. Limpar player atual
     clearPlayer();
 
-    // 4. Lógica de controle da barra de progresso
     const bar = document.getElementById('custom-progress-bar');
     bar.style.display = "block"; bar.style.opacity = "1";
     document.getElementById('time-display').style.opacity = "1";
@@ -105,32 +97,30 @@ function playCanal(c, el) {
         setTimeout(() => { bar.style.display = "none"; }, 1000);
     }, 5000);
 
-    // 5. Definição da URL do vídeo
     const workerPrefix = "https://delicate-feather-5576.futebolsemdelay.workers.dev/?url=https://ww4.embedtv.lat/";
     let urlVideo = c.qualidade === "hd" ? workerPrefix + encodeURIComponent(c.logo) : (c.qualidade === "sd" ? c.logo + ".m3u8" : c.logo);
     
     document.getElementById("player").innerHTML = `<iframe src="${urlVideo}" allowfullscreen allow="autoplay; fullscreen" style="width:100%;height:100%;border:none;"></iframe>`;
 
-    // 6. Lógica do Overlay (Parede de Vidro)
     let overlay = document.getElementById('iframe-overlay');
     const isFhd = String(c.qualidade).toLowerCase() === "fhd";
 
     if (overlay) {
         if (isFhd) {
-            // Remove o vidro imediatamente para permitir o "Play"
             overlay.style.display = "none";
-            
-            // Reativa o vidro automaticamente após 10 segundos
-            setTimeout(() => {
-                overlay.style.display = "block";
-            }, 10000);
+            setTimeout(() => { overlay.style.display = "block"; }, 10000);
         } else {
-            // Para outros canais, mantém o vidro bloqueado o tempo todo
             overlay.style.display = "block";
         }
     }
 }
-function clearPlayer() { document.getElementById("player").innerHTML = ""; document.getElementById("smart-buffer-overlay").style.display = "none"; isSmartBuffering = false; }
+
+function clearPlayer() { 
+    document.getElementById("player").innerHTML = ""; 
+    const buffer = document.getElementById("smart-buffer-overlay");
+    if(buffer) buffer.style.display = "none"; 
+    isSmartBuffering = false; 
+}
 
 function filterList() {
     let v = document.getElementById('filter').value.toLowerCase();
@@ -139,6 +129,7 @@ function filterList() {
 
 function iniciarTelaInicial() {
     const p = document.getElementById('player');
+    if(!p) return;
     p.innerHTML = `
         <div id="noise-container"><div id="tv-static"></div></div>
         <div id="welcome-screen">
@@ -146,12 +137,11 @@ function iniciarTelaInicial() {
             <div id="welcome-sub" style="animation: fadeIn 1s forwards 0.5s">Escolha um canal para começar</div>
         </div>
     `;
-    document.getElementById('noise-container').style.display = 'block';
     setTimeout(() => {
         let w = document.getElementById('welcome-screen');
         if (w) {
             w.style.transition = 'opacity 0.8s'; w.style.opacity = '0';
-            setTimeout(() => { w.remove(); document.getElementById('tv-static').style.opacity = '0.15'; }, 800);
+            setTimeout(() => { w.remove(); }, 800);
         }
     }, 5000);
 }
