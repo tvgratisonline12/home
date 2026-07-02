@@ -27,7 +27,7 @@ function toggleFullScreen() {
     else document.exitFullscreen();
 }
 
-funfunction renderList() {
+function renderList() { // Corrigido de funfunction para function
     document.getElementById("categoriaAtual").innerText = categoriaAtual;
     const l = document.getElementById('contentList');
     l.innerHTML = '';
@@ -40,33 +40,34 @@ funfunction renderList() {
         
         const isFhd = String(item.qualidade).toLowerCase() === "fhd";
         
-        // Mantém a cor normal, adiciona apenas o badge se for FHD
         div.innerHTML = `
             <span class="channel-number">${(idx + 1).toString().padStart(2, '0')}</span>
             ${isFhd ? '<span class="ad-badge">AD</span>' : ''}
             <span>${item.canal || "Canal"}</span>
         `;
 
-        // Clique simples: Toca o canal
+        // Clique simples
         div.onclick = () => playCanal(item, div);
         
-        // Clique duplo: Toca o canal E coloca em tela cheia
-        div.ondblclick = () => {
-            playCanal(item, div);
-            setTimeout(() => {
-                const c = document.getElementById('player-container');
-                if (c && !document.fullscreenElement) {
-                    c.requestFullscreen().catch(err => {
-                        console.log("Erro ao tentar tela cheia: " + err.message);
-                    });
+        // Clique duplo corrigido
+        div.ondblclick = async () => {
+            // 1. Primeiro tenta colocar em tela cheia imediatamente
+            const container = document.getElementById('player-container');
+            if (container && !document.fullscreenElement) {
+                try {
+                    await container.requestFullscreen();
+                } catch (e) {
+                    console.log("Erro ao solicitar tela cheia:", e);
                 }
-            }, 300); // Pequeno atraso para garantir que o iframe carregou
+            }
+            
+            // 2. Depois carrega o canal
+            playCanal(item, div);
         };
         
         l.appendChild(div);
     });
 }
-
 function proximaCategoria() { indiceCategoria = (indiceCategoria + 1) % categorias.length; categoriaAtual = categorias[indiceCategoria]; renderList(); }
 function categoriaAnterior() { indiceCategoria = (indiceCategoria - 1 + categorias.length) % categorias.length; categoriaAtual = categorias[indiceCategoria]; renderList(); }
 
