@@ -27,7 +27,7 @@ function toggleFullScreen() {
     else document.exitFullscreen();
 }
 
-function renderList() {
+funfunction renderList() {
     document.getElementById("categoriaAtual").innerText = categoriaAtual;
     const l = document.getElementById('contentList');
     l.innerHTML = '';
