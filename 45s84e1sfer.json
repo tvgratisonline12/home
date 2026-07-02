@@ -56,6 +56,7 @@
   {"canal": "GLOBO SP", "logo": "globosp", "qualidade": "hd", "categorias": ["Todos", "Aberto"]},
   {"canal": "GLOBOPLAY NOVELAS", "logo": "globonovelas", "qualidade": "hd", "categorias": ["Todos", "Filmes e Séries"]},
   {"canal": "GLOOB", "logo": "gloob", "qualidade": "hd", "categorias": ["Todos", "Infantil"]},
+  {"canal": "GLOOBINHO", "logo": "https://redecanaistv.uk/player3/ch.php?canal=gloobinho", "qualidade": "hd", "categorias": ["Todos", "Infantil"]},
   {"canal": "GNT", "logo": "gnt", "qualidade": "hd", "categorias": ["Todos", "Lifestyle"]},
   {"canal": "HBO", "logo": "hbo", "qualidade": "hd", "categorias": ["Todos", "Filmes e Séries"]},
   {"canal": "HBO 2", "logo": "hbo2", "qualidade": "hd", "categorias": ["Todos", "Filmes e Séries"]},
