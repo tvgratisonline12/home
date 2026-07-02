@@ -53,116 +53,60 @@
         @keyframes fadeIn{to{opacity:1}}
         @keyframes noise { 0% { transform: translate(0, 0); } 10% { transform: translate(-5px, -5px); } 100% { transform: translate(0, 0); } }
 
-         /* ---------- CANAIS FHD ---------- */
-
-.item.fhd{
-
-    color:#ff4040;
-
-    border-left:4px solid #ff0000;
-
+        /* ---------- ESTILIZAÇÃO DE CANAIS COM ANÚNCIO (FHD) ---------- */
+.item.has-ad {
+    background-color: rgba(255, 64, 64, 0.15); /* Fundo vermelho bem transparente */
+    border-left: 4px solid #ff4040;
+    color: #ffcccc;
 }
 
-.item.fhd:hover{
-
-    background:#320909;
-
+.item.has-ad:hover {
+    background-color: rgba(255, 64, 64, 0.3);
 }
 
-.item.fhd.active{
-
-    background:#4d0d0d;
-
-    color:#ff7070;
-
+.item.has-ad.active {
+    background-color: rgba(255, 64, 64, 0.4);
+    color: #ff4040;
 }
 
-/* ---------- CAMADA ---------- */
-
-#iframe-overlay{
-
-    position:absolute;
-
-    inset:0;
-
-    z-index:1500;
-
-    display:block;
-
-    background:transparent;
-
+/* Badge de AD que vai dentro do item */
+.ad-badge {
+    background-color: #ff4040;
+    color: #fff;
+    font-size: 9px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-right: 10px;
+    font-weight: 800;
+    display: inline-block;
+    text-transform: uppercase;
 }
 
-/* ---------- AVISO ---------- */
-
-#fhd-warning{
-
-    position:absolute;
-
-    inset:0;
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-    background:rgba(0,0,0,.80);
-
+/* ---------- AVISO (Modal) ---------- */
+#fhd-warning {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0,0,0,.85);
+    z-index: 3000; /* Garante que fique acima de tudo */
 }
 
-.fhd-box{
-
-    width:min(520px,90%);
-
-    background:#161616;
-
-    border:2px solid #ff2f2f;
-
-    border-radius:14px;
-
-    padding:30px;
-
-    text-align:center;
-
-    color:#fff;
-
-    box-shadow:0 0 30px rgba(255,0,0,.45);
-
+.fhd-box {
+    width: min(520px, 90%);
+    background: #161616;
+    border: 2px solid #ff2f2f;
+    border-radius: 14px;
+    padding: 30px;
+    text-align: center;
+    color: #fff;
+    box-shadow: 0 0 30px rgba(255,0,0,.45);
 }
 
-.fhd-title{
-
-    font-size:28px;
-
-    font-weight:bold;
-
-    color:#ff4040;
-
-    margin-bottom:20px;
-
-}
-
-.fhd-text{
-
-    line-height:1.7;
-
-    font-size:18px;
-
-}
-
-#fhd-timer{
-
-    margin-top:25px;
-
-    font-size:38px;
-
-    font-weight:bold;
-
-    color:#00ff88;
-
-}
-
+.fhd-title { font-size: 28px; font-weight: bold; color: #ff4040; margin-bottom: 20px; }
+.fhd-text { line-height: 1.7; font-size: 18px; }
+#fhd-timer { margin-top: 25px; font-size: 38px; font-weight: bold; color: #00ff88; }
         @media (max-width: 768px) {
             #welcome-title { font-size: 32px; }
             #welcome-sub { font-size: 16px; }
