@@ -81,14 +81,19 @@ function proximaCategoria() { indiceCategoria = (indiceCategoria + 1) % categori
 function categoriaAnterior() { indiceCategoria = (indiceCategoria - 1 + categorias.length) % categorias.length; categoriaAtual = categorias[indiceCategoria]; renderList(); }
 
 function playCanal(c, el) {
+    // 1. Limpeza de telas iniciais
     let nc = document.getElementById('noise-container'); if (nc) nc.remove();
     let s = document.getElementById('tv-static'); if (s) s.remove();
     let w = document.getElementById('welcome-screen'); if (w) w.remove();
 
+    // 2. Destacar item na lista
     document.querySelectorAll('.item').forEach(i => i.classList.remove('active'));
     el.classList.add('active');
+    
+    // 3. Limpar player atual
     clearPlayer();
 
+    // 4. Lógica de controle da barra de progresso
     const bar = document.getElementById('custom-progress-bar');
     bar.style.display = "block"; bar.style.opacity = "1";
     document.getElementById('time-display').style.opacity = "1";
@@ -100,11 +105,31 @@ function playCanal(c, el) {
         setTimeout(() => { bar.style.display = "none"; }, 1000);
     }, 5000);
 
+    // 5. Definição da URL do vídeo
     const workerPrefix = "https://delicate-feather-5576.futebolsemdelay.workers.dev/?url=https://ww4.embedtv.lat/";
     let urlVideo = c.qualidade === "hd" ? workerPrefix + encodeURIComponent(c.logo) : (c.qualidade === "sd" ? c.logo + ".m3u8" : c.logo);
+    
     document.getElementById("player").innerHTML = `<iframe src="${urlVideo}" allowfullscreen allow="autoplay; fullscreen" style="width:100%;height:100%;border:none;"></iframe>`;
-}
 
+    // 6. Lógica do Overlay (Parede de Vidro)
+    let overlay = document.getElementById('iframe-overlay');
+    const isFhd = String(c.qualidade).toLowerCase() === "fhd";
+
+    if (overlay) {
+        if (isFhd) {
+            // Remove o vidro imediatamente para permitir o "Play"
+            overlay.style.display = "none";
+            
+            // Reativa o vidro automaticamente após 10 segundos
+            setTimeout(() => {
+                overlay.style.display = "block";
+            }, 10000);
+        } else {
+            // Para outros canais, mantém o vidro bloqueado o tempo todo
+            overlay.style.display = "block";
+        }
+    }
+}
 function clearPlayer() { document.getElementById("player").innerHTML = ""; document.getElementById("smart-buffer-overlay").style.display = "none"; isSmartBuffering = false; }
 
 function filterList() {
