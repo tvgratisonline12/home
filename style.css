@@ -53,6 +53,116 @@
         @keyframes fadeIn{to{opacity:1}}
         @keyframes noise { 0% { transform: translate(0, 0); } 10% { transform: translate(-5px, -5px); } 100% { transform: translate(0, 0); } }
 
+         /* ---------- CANAIS FHD ---------- */
+
+.item.fhd{
+
+    color:#ff4040;
+
+    border-left:4px solid #ff0000;
+
+}
+
+.item.fhd:hover{
+
+    background:#320909;
+
+}
+
+.item.fhd.active{
+
+    background:#4d0d0d;
+
+    color:#ff7070;
+
+}
+
+/* ---------- CAMADA ---------- */
+
+#iframe-overlay{
+
+    position:absolute;
+
+    inset:0;
+
+    z-index:1500;
+
+    display:block;
+
+    background:transparent;
+
+}
+
+/* ---------- AVISO ---------- */
+
+#fhd-warning{
+
+    position:absolute;
+
+    inset:0;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:rgba(0,0,0,.80);
+
+}
+
+.fhd-box{
+
+    width:min(520px,90%);
+
+    background:#161616;
+
+    border:2px solid #ff2f2f;
+
+    border-radius:14px;
+
+    padding:30px;
+
+    text-align:center;
+
+    color:#fff;
+
+    box-shadow:0 0 30px rgba(255,0,0,.45);
+
+}
+
+.fhd-title{
+
+    font-size:28px;
+
+    font-weight:bold;
+
+    color:#ff4040;
+
+    margin-bottom:20px;
+
+}
+
+.fhd-text{
+
+    line-height:1.7;
+
+    font-size:18px;
+
+}
+
+#fhd-timer{
+
+    margin-top:25px;
+
+    font-size:38px;
+
+    font-weight:bold;
+
+    color:#00ff88;
+
+}
+
         @media (max-width: 768px) {
             #welcome-title { font-size: 32px; }
             #welcome-sub { font-size: 16px; }
