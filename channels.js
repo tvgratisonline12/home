@@ -32,45 +32,35 @@ function renderList() {
     const l = document.getElementById('contentList');
     l.innerHTML = '';
     
-    // Filtro mais seguro: verifica se a categoria atual é "Todos" ou se está no array de categorias do canal
-    const lista = canaisRaw.filter(c => {
-        if (categoriaAtual === "Todos") return true;
-        return (c.categorias || []).includes(categoriaAtual);
-    });
+    const lista = canaisRaw.filter(c => categoriaAtual === "Todos" || (c.categorias || []).includes(categoriaAtual));
 
     lista.forEach((item, idx) => {
         const div = document.createElement('div');
         div.className = 'item';
         
-        // Verifica a qualidade garantindo que seja string e minúscula
         const isFhd = String(item.qualidade).toLowerCase() === "fhd";
         
-        if (isFhd) {
-            div.classList.add('has-ad'); 
-            div.innerHTML = `
-                <span class="channel-number">${(idx + 1).toString().padStart(2, '0')}</span>
-                <span class="ad-badge">AD</span>
-                <span>${item.canal || "Canal"}</span>
-            `;
-        } else {
-            div.innerHTML = `
-                <span class="channel-number">${(idx + 1).toString().padStart(2, '0')}</span>
-                <span>${item.canal || "Canal"}</span>
-            `;
-        }
+        // Mantém a cor normal, adiciona apenas o badge se for FHD
+        div.innerHTML = `
+            <span class="channel-number">${(idx + 1).toString().padStart(2, '0')}</span>
+            ${isFhd ? '<span class="ad-badge">AD</span>' : ''}
+            <span>${item.canal || "Canal"}</span>
+        `;
 
-        div.onclick = () => {
-            playCanal(item, div);
-            // Regra do Overlay: Se for FHD, esconde o overlay (vidro), senão mostra
-            let overlay = document.getElementById('iframe-overlay');
-            if (overlay) {
-                overlay.style.display = isFhd ? "none" : "block";
-            }
-        };
-
+        // Clique simples: Toca o canal
+        div.onclick = () => playCanal(item, div);
+        
+        // Clique duplo: Toca o canal E coloca em tela cheia
         div.ondblclick = () => {
             playCanal(item, div);
-            // ... (seu código de tela cheia que já existia)
+            setTimeout(() => {
+                const c = document.getElementById('player-container');
+                if (c && !document.fullscreenElement) {
+                    c.requestFullscreen().catch(err => {
+                        console.log("Erro ao tentar tela cheia: " + err.message);
+                    });
+                }
+            }, 300); // Pequeno atraso para garantir que o iframe carregou
         };
         
         l.appendChild(div);
