@@ -2,20 +2,24 @@ let canaisRaw = [];
 let categorias = [];
 let categoriaAtual = 'Todos';
 let indiceCategoria = 0;
-let overlayTimeout;
+
+// --- FUNÇÕES DE CARREGAMENTO E RENDERIZAÇÃO ---
 
 async function carregarCanaisJSON() {
     try {
         const response = await fetch('https://tvgratis.online/45s84e1free.json');
         if (!response.ok) throw new Error('Falha');
         canaisRaw = await response.json();
+        
         const s = new Set(['Todos']);
-        canaisRaw.forEach(c => { (c.categorias || []).forEach(x => { if (x != "Todos") s.add(x); }); });
+        canaisRaw.forEach(c => { 
+            (c.categorias || []).forEach(x => { if (x !== "Todos") s.add(x); }); 
+        });
         categorias = [...s];
         renderList();
     } catch (error) {
         const list = document.getElementById('contentList');
-        if (list) list.innerHTML = `<div class="item" style="color:red; text-align:center;">Erro ao Ler Lista</div>`;
+        if (list) list.innerHTML = `<div class="item" style="color:red; text-align:center;">Erro ao ler canais</div>`;
     }
 }
 
@@ -38,13 +42,19 @@ function renderList() {
             ${isSpecial ? `<span class="ad-badge" style="background-color:${item.qualidade === '4k' ? 'gold' : 'red'}; color:black; padding:0 4px; border-radius:3px; margin-right:5px; font-size:10px; font-weight:bold;">${item.qualidade.toUpperCase()}</span>` : ''}
             <span>${item.canal || "Canal"}</span>
         `;
-        
         div.onclick = () => playCanal(item, div);
         l.appendChild(div);
     });
 }
 
+// --- PLAYER E LÓGICA DE CANAIS ---
+
 function playCanal(c, el) {
+    // Remove elementos da tela inicial
+    const nc = document.getElementById('noise-container'); if (nc) nc.remove();
+    const s = document.getElementById('tv-static'); if (s) s.remove();
+    const w = document.getElementById('welcome-screen'); if (w) w.remove();
+    
     document.querySelectorAll('.item').forEach(i => i.classList.remove('active'));
     el.classList.add('active');
     
@@ -58,7 +68,6 @@ function playCanal(c, el) {
     let urlVideo;
     const qual = String(c.qualidade).toLowerCase();
 
-    // Lógica de URL
     if (qual === "4k") {
         urlVideo = prefixo4k + c.logo;
     } else if (qual === "fhd") {
@@ -69,22 +78,7 @@ function playCanal(c, el) {
         urlVideo = c.logo;
     }
 
-    // Montagem do Iframe com injeção de CSS para ocultar anúncios/modais
-    // O CSS tenta injetar via string no estilo se possível, ou usamos overlay
     playerDiv.innerHTML = `<iframe id="main-iframe" src="${urlVideo}" allowfullscreen allow="autoplay; fullscreen" style="width:100%;height:100%;border:none;"></iframe>`;
-
-    // Regra 4K: Bloqueia interação após 10 segundos
-    if (qual === "4k") {
-        playerDiv.style.position = "relative";
-        setTimeout(() => {
-            if (!document.getElementById('blocker-4k')) {
-                const blocker = document.createElement('div');
-                blocker.id = 'blocker-4k';
-                blocker.style.cssText = "position:absolute; top:0; left:0; width:100%; height:100%; z-index:9999; background:transparent; cursor:not-allowed;";
-                playerDiv.appendChild(blocker);
-            }
-        }, 10000);
-    }
 }
 
 function clearPlayer() {
@@ -92,6 +86,37 @@ function clearPlayer() {
     if (p) p.innerHTML = "";
 }
 
+// --- EFEITOS DE TELA INICIAL ---
+
+function iniciarTelaInicial() {
+    const p = document.getElementById('player');
+    if (!p) return;
+    p.innerHTML = `
+        <div id="noise-container"><div id="tv-static"></div></div>
+        <div id="welcome-screen">
+            <div id="welcome-title">TVGrátis.Online</div>
+            <div id="welcome-sub" style="animation: fadeIn 1s forwards 0.5s">Escolha um canal para começar</div>
+        </div>
+    `;
+}
+
+// --- CATEGORIAS ---
+
+function proximaCategoria() {
+    if (categorias.length === 0) return;
+    indiceCategoria = (indiceCategoria + 1) % categorias.length;
+    categoriaAtual = categorias[indiceCategoria];
+    renderList();
+}
+
+function categoriaAnterior() {
+    if (categorias.length === 0) return;
+    indiceCategoria = (indiceCategoria - 1 + categorias.length) % categorias.length;
+    categoriaAtual = categorias[indiceCategoria];
+    renderList();
+}
+
 window.onload = function() {
     carregarCanaisJSON();
+    iniciarTelaInicial();
 };
