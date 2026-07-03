@@ -7,11 +7,10 @@ let overlayTimeout;
 // --- 1. CARREGAMENTO DO JSON ---
 async function carregarCanaisJSON() {
     try {
-        const response = await fetch('https://tvgratis.online/45s84e1free.json');
+        const response = await fetch('https://tvgratis.online/45s84e1sfer.json');
         if (!response.ok) throw new Error('Falha');
         canaisRaw = await response.json();
         
-        // Extração dinâmica de categorias
         const s = new Set(['Todos']);
         canaisRaw.forEach(c => { 
             if (c.categorias && Array.isArray(c.categorias)) {
@@ -22,7 +21,7 @@ async function carregarCanaisJSON() {
         renderList();
     } catch (error) {
         const contentList = document.getElementById('contentList');
-        if (contentList) contentList.innerHTML = `<div class="item" style="color:red; text-align:center;">Erro ao Ler a Lista de Canais</div>`;
+        if (contentList) contentList.innerHTML = `<div class="item" style="color:red; text-align:center;">Erro ao Ler a Lista</div>`;
     }
 }
 
@@ -46,15 +45,7 @@ function renderList() {
             ${isSpecial ? '<span class="ad-badge" style="background-color:red; color:white; padding:0 4px; border-radius:3px; margin-right:5px; font-size:10px; font-weight:bold;">AD</span>' : ''}
             <span>${item.canal || "Canal"}</span>
         `;
-        
         div.onclick = () => playCanal(item, div);
-        div.ondblclick = () => {
-            playCanal(item, div);
-            setTimeout(() => {
-                const c = document.getElementById('player-container');
-                if (c && !document.fullscreenElement) c.requestFullscreen();
-            }, 300);
-        };
         l.appendChild(div);
     });
 }
@@ -69,6 +60,7 @@ function playCanal(c, el) {
     el.classList.add('active');
     clearPlayer();
     
+    const playerDiv = document.getElementById("player");
     const workerHD = "https://open.tvgratisonline12.workers.dev/?url=https://ww4.embedtv.lat/";
     const workerFHD = "https://redecanaistv.uk/player3/ch.php?canal=";
     const prefixo4k = "https://embedcanaisdetv.xyz/e/index.php?canal=";
@@ -76,7 +68,6 @@ function playCanal(c, el) {
     let urlVideo;
     const qual = String(c.qualidade).toLowerCase();
 
-    // Lógica das URLs
     if (qual === "4k") {
         urlVideo = prefixo4k + c.logo;
     } else if (qual === "fhd") {
@@ -89,37 +80,41 @@ function playCanal(c, el) {
         urlVideo = c.logo;
     }
 
-    // Injeção do iframe
-    document.getElementById("player").innerHTML = `<iframe src="${urlVideo}" allowfullscreen allow="autoplay; fullscreen" style="width:100%;height:100%;border:none;pointer-events:auto;"></iframe>`;
+    // Injeção do iframe com a div de overlay para clique duplo
+    playerDiv.innerHTML = `
+        <div id="wrapper-container" style="position:relative; width:100%; height:100%;">
+            <iframe id="main-iframe" src="${urlVideo}" allowfullscreen allow="autoplay; fullscreen" style="width:100%;height:100%;border:none;"></iframe>
+            <div id="click-overlay" style="position:absolute; top:0; left:0; width:100%; height:100%; background:transparent; z-index:10; cursor:pointer;"></div>
+        </div>
+    `;
 
-    const overlay = document.getElementById('iframe-overlay');
-    const isSpecial = ['fhd', 'ad'].includes(qual);
-
-    if (overlay) {
-        overlay.ondblclick = () => {
-            const container = document.getElementById('player-container');
-            if (container && !document.fullscreenElement) container.requestFullscreen();
-            else if (document.fullscreenElement) document.exitFullscreen();
+    // Lógica do clique duplo no overlay para tela cheia
+    const overlay = document.getElementById('click-overlay');
+    const container = document.getElementById('player-container');
+    if (overlay && container) {
+        let clickCount = 0;
+        overlay.onclick = () => {
+            clickCount++;
+            if (clickCount === 2) {
+                if (!document.fullscreenElement) container.requestFullscreen();
+                else document.exitFullscreen();
+                clickCount = 0;
+            }
+            setTimeout(() => { clickCount = 0; }, 300);
         };
+    }
 
-        clearTimeout(overlayTimeout);
-        
-        if (isSpecial) {
-            overlay.style.setProperty('display', 'block', 'important');
-            exibirAvisoBonito();
-            setTimeout(() => {
-                const aviso = document.getElementById('aviso-bonito');
-                if (aviso) aviso.remove();
-                overlay.style.setProperty('display', 'none', 'important');
-                
-                overlayTimeout = setTimeout(() => {
-                    overlay.style.setProperty('display', 'block', 'important');
-                }, 10000);
-            }, 5000);
-        } else {
-            // Para 4K e outros, o overlay fica escondido para permitir cliques
-            overlay.style.setProperty('display', 'none', 'important');
-        }
+    // Lógica de overlay de aviso para FHD/AD
+    const iframeOverlay = document.getElementById('iframe-overlay'); // Se existir no seu HTML
+    const isSpecial = ['fhd', 'ad'].includes(qual);
+    if (iframeOverlay && isSpecial) {
+        iframeOverlay.style.display = 'block';
+        exibirAvisoBonito();
+        setTimeout(() => {
+            const aviso = document.getElementById('aviso-bonito');
+            if (aviso) aviso.remove();
+            iframeOverlay.style.display = 'none';
+        }, 5000);
     }
 }
 
@@ -142,8 +137,6 @@ function exibirAvisoBonito() {
 function clearPlayer() {
     const p = document.getElementById("player");
     if (p) p.innerHTML = "";
-    const sb = document.getElementById("smart-buffer-overlay");
-    if (sb) sb.style.display = "none";
 }
 
 function iniciarTelaInicial() {
@@ -158,7 +151,7 @@ function iniciarTelaInicial() {
     `;
 }
 
-// --- 5. NAVEGAÇÃO CATEGORIAS ---
+// --- 5. NAVEGAÇÃO DE CATEGORIAS ---
 function proximaCategoria() {
     if (categorias.length === 0) return;
     indiceCategoria = (indiceCategoria + 1) % categorias.length;
