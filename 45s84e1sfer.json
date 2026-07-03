@@ -11,6 +11,7 @@
   {"canal": "BAND SP", "logo": "bandsp", "qualidade": "hd", "categorias": ["Todos", "Aberto"]},
   {"canal": "BAND SPORTS", "logo": "bandsports", "qualidade": "hd", "categorias": ["Todos", "Esporte"]},
   {"canal": "BENFICA TV PT", "logo": "pt_benficatv", "qualidade": "hd", "categorias": ["Todos", "Portugal", "Esporte"]},
+  {"canal": "BOX KIDS TV", "logo": "https://redecanaistv.uk/player3/ch.php?canal=boxkidstv", "qualidade": "fhd", "categorias": ["Todos", "Infantil"]},
   {"canal": "CANAL 11 PT", "logo": "pt_canal11", "qualidade": "hd", "categorias": ["Todos", "Portugal", "Esporte"]},
   {"canal": "CANÇÃO NOVA", "logo": "cancaonova", "qualidade": "hd", "categorias": ["Todos", "Aberto"]},
   {"canal": "CARTOON NETWORK", "logo": "cartoonnetwork", "qualidade": "hd", "categorias": ["Todos", "Infantil"]},
