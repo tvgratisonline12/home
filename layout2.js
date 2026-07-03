@@ -65,7 +65,7 @@ function playCanal(c, el) {
     const playerDiv = document.getElementById("player");
     const workerHD = "https://open.tvgratisonline12.workers.dev/?url=https://ww4.embedtv.lat/";
     const workerFHD = "https://redecanaistv.uk/player3/ch.php?canal=";
-    const prefixo4k = "https://embedcanaisdetv.xyz/e/index.php?canal=";
+    const prefixo4k = "https://embedcanaisdetv.com/";
     
     let urlVideo;
     const qual = String(c.qualidade).toLowerCase();
@@ -84,20 +84,23 @@ function playCanal(c, el) {
 
     playerDiv.innerHTML = `<iframe id="main-iframe" src="${urlVideo}" allowfullscreen allow="autoplay; fullscreen" style="width:100%;height:100%;border:none;"></iframe>`;
 
-    // Regra dos 10 segundos para 4K
+    // Nova Regra 4K: Liberado por 10s, bloqueado depois
     if (qual === "4k") {
-        const blocker = document.createElement('div');
-        blocker.id = 'blocker-4k';
-        blocker.style.cssText = "position:absolute; top:0; left:0; width:100%; height:100%; z-index:99; background:transparent; cursor:wait;";
         playerDiv.style.position = "relative";
-        playerDiv.appendChild(blocker);
-
+        
         setTimeout(() => {
-            const b = document.getElementById('blocker-4k');
-            if (b) b.remove();
-        }, 10000);
+            // Verifica se o bloqueador já não existe para não duplicar
+            if (!document.getElementById('blocker-4k')) {
+                const blocker = document.createElement('div');
+                blocker.id = 'blocker-4k';
+                // background transparente para cobrir o player e impedir cliques
+                blocker.style.cssText = "position:absolute; top:0; left:0; width:100%; height:100%; z-index:99; background:transparent;";
+                playerDiv.appendChild(blocker);
+            }
+        }, 10000); // Aguarda 10 segundos e insere a camada
     }
 
+    // Lógica existente de overlay para fhd/ad
     const overlay = document.getElementById('iframe-overlay');
     if (overlay) {
         overlay.ondblclick = () => {
