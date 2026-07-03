@@ -3,7 +3,6 @@ let categorias = [];
 let categoriaAtual = 'Todos';
 let indiceCategoria = 0;
 let overlayTimeout;
-let fadeTimeout;
 
 async function carregarCanaisJSON() {
     try {
@@ -16,7 +15,7 @@ async function carregarCanaisJSON() {
         renderList();
     } catch (error) {
         const list = document.getElementById('contentList');
-        if (list) list.innerHTML = `<div class="item" style="color:red; text-align:center;">Erro ao Ler a Lista de Canais</div>`;
+        if (list) list.innerHTML = `<div class="item" style="color:red; text-align:center;">Erro ao Ler Lista</div>`;
     }
 }
 
@@ -41,22 +40,11 @@ function renderList() {
         `;
         
         div.onclick = () => playCanal(item, div);
-        div.ondblclick = () => {
-            playCanal(item, div);
-            setTimeout(() => {
-                const c = document.getElementById('player-container');
-                if (c && !document.fullscreenElement) c.requestFullscreen();
-            }, 300);
-        };
         l.appendChild(div);
     });
 }
 
 function playCanal(c, el) {
-    let nc = document.getElementById('noise-container'); if (nc) nc.remove();
-    let s = document.getElementById('tv-static'); if (s) s.remove();
-    let w = document.getElementById('welcome-screen'); if (w) w.remove();
-    
     document.querySelectorAll('.item').forEach(i => i.classList.remove('active'));
     el.classList.add('active');
     
@@ -70,118 +58,40 @@ function playCanal(c, el) {
     let urlVideo;
     const qual = String(c.qualidade).toLowerCase();
 
+    // Lógica de URL
     if (qual === "4k") {
         urlVideo = prefixo4k + c.logo;
     } else if (qual === "fhd") {
         urlVideo = workerFHD + c.logo;
     } else if (qual === "hd") {
         urlVideo = workerHD + encodeURIComponent(c.logo);
-    } else if (qual === "sd") {
-        urlVideo = c.logo + ".m3u8";
     } else {
         urlVideo = c.logo;
     }
 
+    // Montagem do Iframe com injeção de CSS para ocultar anúncios/modais
+    // O CSS tenta injetar via string no estilo se possível, ou usamos overlay
     playerDiv.innerHTML = `<iframe id="main-iframe" src="${urlVideo}" allowfullscreen allow="autoplay; fullscreen" style="width:100%;height:100%;border:none;"></iframe>`;
 
-    // Nova Regra 4K: Liberado por 10s, bloqueado depois
+    // Regra 4K: Bloqueia interação após 10 segundos
     if (qual === "4k") {
         playerDiv.style.position = "relative";
-        
         setTimeout(() => {
-            // Verifica se o bloqueador já não existe para não duplicar
             if (!document.getElementById('blocker-4k')) {
                 const blocker = document.createElement('div');
                 blocker.id = 'blocker-4k';
-                // background transparente para cobrir o player e impedir cliques
-                blocker.style.cssText = "position:absolute; top:0; left:0; width:100%; height:100%; z-index:99; background:transparent;";
+                blocker.style.cssText = "position:absolute; top:0; left:0; width:100%; height:100%; z-index:9999; background:transparent; cursor:not-allowed;";
                 playerDiv.appendChild(blocker);
             }
-        }, 10000); // Aguarda 10 segundos e insere a camada
+        }, 10000);
     }
-
-    // Lógica existente de overlay para fhd/ad
-    const overlay = document.getElementById('iframe-overlay');
-    if (overlay) {
-        overlay.ondblclick = () => {
-            const container = document.getElementById('player-container');
-            if (container && !document.fullscreenElement) container.requestFullscreen();
-            else if (document.fullscreenElement) document.exitFullscreen();
-        };
-
-        const isSpecial = ['fhd', 'ad'].includes(qual);
-        clearTimeout(overlayTimeout);
-        overlay.style.setProperty('display', 'block', 'important');
-
-        if (isSpecial) {
-            exibirAvisoBonito();
-            setTimeout(() => {
-                const aviso = document.getElementById('aviso-bonito');
-                if (aviso) aviso.remove();
-                overlay.style.setProperty('display', 'none', 'important');
-                overlayTimeout = setTimeout(() => {
-                    overlay.style.setProperty('display', 'block', 'important');
-                }, 10000);
-            }, 4000);
-        }
-    }
-}
-
-function proximaCategoria() {
-    if (categorias.length === 0) return;
-    indiceCategoria = (indiceCategoria + 1) % categorias.length;
-    categoriaAtual = categorias[indiceCategoria];
-    renderList();
-}
-
-function categoriaAnterior() {
-    if (categorias.length === 0) return;
-    indiceCategoria = (indiceCategoria - 1 + categorias.length) % categorias.length;
-    categoriaAtual = categorias[indiceCategoria];
-    renderList();
-}
-
-function exibirAvisoBonito() {
-    const playerContainer = document.getElementById('player-container');
-    const aviso = document.createElement('div');
-    aviso.id = 'aviso-bonito';
-    aviso.style.cssText = `
-        position: absolute; top: 0%; left: 0%; width: 100%; height: 100%;
-        display: flex; flex-direction: column; align-items: center;
-        justify-content: center; z-index: 100; text-align: center;
-        font-family: 'Segoe UI', sans-serif; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    `;
-    aviso.innerHTML = `
-        <div id="noise-container"><div id="tv-static"></div></div>
-        <div id="welcome-screen">
-            <div id="welcome-title">Aviso Importante</div>
-            <div id="welcome-sub" style="animation: fadeIn 1s forwards 0.5s">Este canal contém anúncios.<br>
-            Caso uma nova janela abra, <b>feche-a</b> <br> e retorne ao site para continuar assistindo</div>
-        </div>
-    `;
-    playerContainer.appendChild(aviso);
 }
 
 function clearPlayer() {
     const p = document.getElementById("player");
     if (p) p.innerHTML = "";
-    const sb = document.getElementById("smart-buffer-overlay");
-    if (sb) sb.style.display = "none";
-}
-
-function iniciarTelaInicial() {
-    const p = document.getElementById('player');
-    if (!p) return;
-    p.innerHTML = `
-        <div id="noise-container"><div id="tv-static"></div></div>
-        <div id="welcome-screen">
-            <div id="welcome-title">TVGrátis.Online</div>
-            <div id="welcome-sub" style="animation: fadeIn 1s forwards 0.5s">Escolha um canal para começar</div>
-        </div>
-    `;
 }
 
 window.onload = function() {
     carregarCanaisJSON();
-    iniciarTelaInicial();
 };
