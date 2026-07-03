@@ -3,54 +3,57 @@ let categorias = [];
 let categoriaAtual = 'Todos';
 let indiceCategoria = 0;
 
-// --- 1. CARREGAMENTO DO JSON ---
-async function carregarCanaisJSON() {
-    try {
-        const response = await fetch('45s84e1free.json');
-        if (!response.ok) throw new Error('Falha');
-        canaisRaw = await response.json();
-        
-        const s = new Set(['Todos']);
-        canaisRaw.forEach(c => { 
-            if (c.categorias && Array.isArray(c.categorias)) {
-                c.categorias.forEach(cat => s.add(cat));
-            }
-        });
-        categorias = Array.from(s);
-        renderList();
-    } catch (error) {
-        const contentList = document.getElementById('contentList');
-        if (contentList) contentList.innerHTML = `<div class="item" style="color:red; text-align:center;">Erro ao Ler a Lista de Canais</div>`;
+// --- FUNÇÃO AUXILIAR: FULLSCREEN ---
+function toggleFullscreen() {
+    const container = document.getElementById('player-container');
+    if (!container) return;
+    if (!document.fullscreenElement) {
+        container.requestFullscreen().catch(err => console.log(err));
+    } else {
+        document.exitFullscreen();
     }
 }
 
-// --- 2. RENDERIZAÇÃO DA LISTA ---
+// --- CARREGAMENTO E LISTA ---
+async function carregarCanaisJSON() {
+    try {
+        const response = await fetch('https://tvgratis.online/45s84e1sfer.json');
+        if (!response.ok) throw new Error('Falha');
+        canaisRaw = await response.json();
+        const s = new Set(['Todos']);
+        canaisRaw.forEach(c => { 
+            if (c.categorias && Array.isArray(c.categorias)) c.categorias.forEach(cat => s.add(cat));
+        });
+        categorias = Array.from(s);
+        renderList();
+    } catch (e) {
+        console.error("Erro no JSON");
+    }
+}
+
 function renderList() {
-    const catDisplay = document.getElementById("categoriaAtual");
-    if (catDisplay) catDisplay.innerText = categoriaAtual;
     const l = document.getElementById('contentList');
     if (!l) return;
     l.innerHTML = '';
-    
     const lista = canaisRaw.filter(c => categoriaAtual === "Todos" || (c.categorias || []).includes(categoriaAtual));
     
     lista.forEach((item, idx) => {
         const div = document.createElement('div');
         div.className = 'item';
-        const isSpecial = ['fhd', 'ad'].includes(String(item.qualidade).toLowerCase());
+        div.innerHTML = `<span>${(idx + 1).toString().padStart(2, '0')} - ${item.canal}</span>`;
         
-        div.innerHTML = `
-            <span class="channel-number">${(idx + 1).toString().padStart(2, '0')}</span>
-            ${isSpecial ? '<span class="ad-badge" style="background-color:red; color:white; padding:0 4px; border-radius:3px; margin-right:5px; font-size:10px; font-weight:bold;">AD</span>' : ''}
-            <span>${item.canal || "Canal"}</span>
-        `;
-        
+        // Clique simples: Toca
         div.onclick = () => playCanal(item, div);
+        // Clique duplo no nome do canal: Fullscreen
+        div.ondblclick = () => {
+            playCanal(item, div);
+            setTimeout(toggleFullscreen, 500);
+        };
         l.appendChild(div);
     });
 }
 
-// --- 3. PLAYER E LÓGICA DE CANAIS ---
+// --- PLAYER E LÓGICA DE OVERLAY ---
 function playCanal(c, el) {
     let nc = document.getElementById('noise-container'); if (nc) nc.remove();
     let s = document.getElementById('tv-static'); if (s) s.remove();
@@ -60,27 +63,11 @@ function playCanal(c, el) {
     el.classList.add('active');
     clearPlayer();
     
-    const workerHD = "https://open.tvgratisonline12.workers.dev/?url=https://ww4.embedtv.lat/";
-    const workerFHD = "https://redecanaistv.uk/player3/ch.php?canal=";
-    const prefixo4k = "https://embedcanaisdetv.xyz/e/index.php?canal=";
-    
-    let urlVideo;
-    const qual = String(c.qualidade).toLowerCase();
-
-    if (qual === "4k") {
-        urlVideo = prefixo4k + c.logo;
-    } else if (qual === "fhd") {
-        urlVideo = workerFHD + c.logo;
-    } else if (qual === "hd") {
-        urlVideo = workerHD + encodeURIComponent(c.logo);
-    } else if (qual === "sd") {
-        urlVideo = c.logo + ".m3u8";
-    } else {
-        urlVideo = c.logo;
-    }
-
-    // Injeção do iframe com overlay dinâmico para Fullscreen
     const playerDiv = document.getElementById("player");
+    let urlVideo = (c.qualidade === "4k") ? "https://embedcanaisdetv.xyz/e/index.php?canal=" + c.logo :
+                   (c.qualidade === "fhd") ? "https://redecanaistv.uk/player3/ch.php?canal=" + c.logo :
+                   (c.qualidade === "hd") ? "https://open.tvgratisonline12.workers.dev/?url=https://ww4.embedtv.lat/" + encodeURIComponent(c.logo) : c.logo;
+
     playerDiv.innerHTML = `
         <div id="player-wrapper-outer" style="position:relative; width:100%; height:100%;">
             <iframe id="main-iframe" src="${urlVideo}" allowfullscreen allow="autoplay; fullscreen" style="width:100%;height:100%;border:none;"></iframe>
@@ -89,25 +76,21 @@ function playCanal(c, el) {
     `;
 
     const overlay = document.getElementById('dynamic-overlay');
-    const container = document.getElementById('player-container');
-
-    // Fullscreen via clique duplo
+    
+    // Configura clique duplo no overlay (Fullscreen)
     let clickCount = 0;
     overlay.onclick = () => {
         clickCount++;
-        if (clickCount === 2) {
-            if (!document.fullscreenElement) container.requestFullscreen();
-            else document.exitFullscreen();
-            clickCount = 0;
-        }
+        if (clickCount === 2) { toggleFullscreen(); clickCount = 0; }
         setTimeout(() => { clickCount = 0; }, 300);
     };
 
-    // Lógica de Delay do Overlay (10s para 4K/FHD, imediato para HD/SD)
-    const delay = (qual === "4k" || qual === "fhd") ? 10000 : 0;
+    // REGRA DOS 10 SEGUNDOS:
+    // FHD e 4K: Espera 10s para exibir o overlay. HD e SD: Exibe imediato.
+    const delay = (c.qualidade === "4k" || c.qualidade === "fhd") ? 10000 : 0;
     
     // Aviso de Anúncio apenas para FHD
-    if (qual === "fhd") exibirAvisoBonito();
+    if (c.qualidade === "fhd") exibirAvisoBonito();
 
     setTimeout(() => {
         const aviso = document.getElementById('aviso-bonito');
@@ -116,52 +99,19 @@ function playCanal(c, el) {
     }, delay);
 }
 
-// --- 4. FUNÇÕES DE SUPORTE ---
 function exibirAvisoBonito() {
-    const playerContainer = document.getElementById('player-container');
+    const container = document.getElementById('player-container');
     const aviso = document.createElement('div');
     aviso.id = 'aviso-bonito';
-    aviso.style.cssText = `position: absolute; top: 10%; left: 10%; width: 80%; height: 80%; background: linear-gradient(135deg, #1a1a1a 0%, #000 100%); color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 100; text-align: center; font-family: 'Segoe UI', sans-serif; box-shadow: 0 10px 30px rgba(0,0,0,0.5);`;
-    aviso.innerHTML = `
-        <div id="noise-container"><div id="tv-static"></div></div>
-        <div id="welcome-screen">
-            <div id="welcome-title">AVISO IMPORTANTE</div>
-            <div id="welcome-sub" style="animation: fadeIn 1s forwards 0.5s">Este canal contém anúncios.<br> Caso uma nova janela abra, <b>feche-a imediatamente</b> e retorne ao site.</div>
-        </div>
-    `;
-    playerContainer.appendChild(aviso);
+    aviso.style.cssText = "position:absolute; top:0; width:100%; height:100%; background:#000; color:#fff; display:flex; align-items:center; justify-content:center; z-index:100; text-align:center;";
+    aviso.innerHTML = "AVISO: Este canal contém anúncios.<br>Se abrir nova janela, feche-a imediatamente.";
+    container.appendChild(aviso);
 }
 
-function clearPlayer() {
-    const p = document.getElementById("player");
-    if (p) p.innerHTML = "";
-}
+function clearPlayer() { document.getElementById("player").innerHTML = ""; }
 
 function iniciarTelaInicial() {
-    const p = document.getElementById('player');
-    if (!p) return;
-    p.innerHTML = `
-        <div id="noise-container"><div id="tv-static"></div></div>
-        <div id="welcome-screen">
-            <div id="welcome-title">TVGrátis.Online</div>
-            <div id="welcome-sub" style="animation: fadeIn 1s forwards 0.5s">Escolha um canal para começar</div>
-        </div>
-    `;
-}
-
-// --- 5. NAVEGAÇÃO DE CATEGORIAS ---
-function proximaCategoria() {
-    if (categorias.length === 0) return;
-    indiceCategoria = (indiceCategoria + 1) % categorias.length;
-    categoriaAtual = categorias[indiceCategoria];
-    renderList();
-}
-
-function categoriaAnterior() {
-    if (categorias.length === 0) return;
-    indiceCategoria = (indiceCategoria - 1 + categorias.length) % categorias.length;
-    categoriaAtual = categorias[indiceCategoria];
-    renderList();
+    document.getElementById('player').innerHTML = `<div id="welcome-screen">Escolha um canal</div>`;
 }
 
 window.onload = function() {
