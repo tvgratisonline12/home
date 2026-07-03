@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Teste de Player Limpo</title>
+    <style>
+        body { margin: 0; background: #000; display: flex; justify-content: center; align-items: center; height: 100vh; }
+        .player-container { width: 100%; max-width: 800px; height: 500px; position: relative; }
+        iframe { width: 100%; height: 100%; border: none; }
+    </style>
+</head>
+<body>
+
+    <div class="player-container">
+        <iframe id="canalIframe" 
+                src="https://embedcanaisdetv.xyz/e/index.php?canal=getv" 
+                allow="autoplay; fullscreen; encrypted-media" 
+                allowfullscreen></iframe>
+    </div>
+
+    <script>
+        const iframe = document.getElementById('canalIframe');
+
+        iframe.onload = function() {
+            try {
+                // Tenta injetar o CSS diretamente dentro do iframe
+                // Isso só funcionará se o site de destino não tiver uma política de segurança (CSP) muito rígida
+                const css = `
+                    <style>
+                        .vip-modal-overlay, .vip-modal-content, #vipModal { 
+                            display: none !important; 
+                        }
+                    </style>`;
+                
+                iframe.contentDocument.head.insertAdjacentHTML('beforeend', css);
+                console.log("CSS injetado com sucesso!");
+            } catch (e) {
+                console.warn("Não foi possível acessar o iframe devido a restrições de segurança (CORS/CSP).");
+                console.warn("O modal ainda pode aparecer.");
+            }
+        };
+    </script>
+
+</body>
+</html>
