@@ -3,8 +3,7 @@ let categorias = [];
 let categoriaAtual = 'Todos';
 let indiceCategoria = 0;
 
-// --- FUNÇÕES DE CARREGAMENTO E RENDERIZAÇÃO ---
-
+// --- CARREGAMENTO DO JSON ---
 async function carregarCanaisJSON() {
     try {
         const response = await fetch('https://tvgratis.online/45s84e1free.json');
@@ -19,10 +18,11 @@ async function carregarCanaisJSON() {
         renderList();
     } catch (error) {
         const list = document.getElementById('contentList');
-        if (list) list.innerHTML = `<div class="item" style="color:red; text-align:center;">Erro ao ler canais</div>`;
+        if (list) list.innerHTML = `<div class="item" style="color:red; text-align:center;">Erro ao ler lista</div>`;
     }
 }
 
+// --- RENDERIZAÇÃO DA LISTA ---
 function renderList() {
     const catDisplay = document.getElementById("categoriaAtual");
     if (catDisplay) catDisplay.innerText = categoriaAtual;
@@ -47,8 +47,7 @@ function renderList() {
     });
 }
 
-// --- PLAYER E LÓGICA DE CANAIS ---
-
+// --- PLAYER E LÓGICA DE EXECUÇÃO ---
 function playCanal(c, el) {
     // Remove elementos da tela inicial
     const nc = document.getElementById('noise-container'); if (nc) nc.remove();
@@ -68,6 +67,7 @@ function playCanal(c, el) {
     let urlVideo;
     const qual = String(c.qualidade).toLowerCase();
 
+    // Lógica de URL
     if (qual === "4k") {
         urlVideo = prefixo4k + c.logo;
     } else if (qual === "fhd") {
@@ -78,7 +78,12 @@ function playCanal(c, el) {
         urlVideo = c.logo;
     }
 
-    playerDiv.innerHTML = `<iframe id="main-iframe" src="${urlVideo}" allowfullscreen allow="autoplay; fullscreen" style="width:100%;height:100%;border:none;"></iframe>`;
+    // O style="pointer-events: auto;" garante que o iframe capture o clique sem camadas sobrepostas
+    playerDiv.innerHTML = `<iframe id="main-iframe" src="${urlVideo}" allowfullscreen allow="autoplay; fullscreen" style="width:100%;height:100%;border:none;pointer-events:auto;"></iframe>`;
+
+    // Limpeza de qualquer resto de overlay caso tenha ficado no DOM
+    const blocker = document.getElementById('blocker-4k');
+    if (blocker) blocker.remove();
 }
 
 function clearPlayer() {
@@ -87,7 +92,6 @@ function clearPlayer() {
 }
 
 // --- EFEITOS DE TELA INICIAL ---
-
 function iniciarTelaInicial() {
     const p = document.getElementById('player');
     if (!p) return;
@@ -100,8 +104,7 @@ function iniciarTelaInicial() {
     `;
 }
 
-// --- CATEGORIAS ---
-
+// --- NAVEGAÇÃO DE CATEGORIAS ---
 function proximaCategoria() {
     if (categorias.length === 0) return;
     indiceCategoria = (indiceCategoria + 1) % categorias.length;
@@ -116,6 +119,7 @@ function categoriaAnterior() {
     renderList();
 }
 
+// --- INICIALIZAÇÃO ---
 window.onload = function() {
     carregarCanaisJSON();
     iniciarTelaInicial();
