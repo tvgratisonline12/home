@@ -87,7 +87,7 @@
   {"canal": "RECORD MG", "logo": "recordmg", "qualidade": "hd", "categorias": ["Todos", "Abertos"]},
   {"canal": "RECORD RJ", "logo": "recordrj", "qualidade": "hd", "categorias": ["Todos", "Abertos"]},
   {"canal": "RECORD SP", "logo": "recordsp", "qualidade": "hd", "categorias": ["Todos", "Abertos"]},
-  {"canal": "REDE BRASIL", "logo": "https://redebrasil.nuvemplay.live/hls/stream", "qualidade": "sd", "categorias": ["Todos", "Abertod"]},
+  {"canal": "REDE BRASIL", "logo": "https://redebrasil.nuvemplay.live/hls/stream", "qualidade": "sd", "categorias": ["Todos", "Abertos"]},
   {"canal": "REDETV PR", "logo": "https://tv01.zas.media:1936/redetvparana/redetvparana/chunklist_w207761227", "qualidade": "sd", "categorias": ["Todos", "Abertos"]},
   {"canal": "RETRO CARTOON", "logo": "https://stmv1.video.brstream.com.br/retrotv/retrotv/chunklist_w329696462", "qualidade": "sd", "categorias": ["Todos", "Infantil"]},
   {"canal": "SBT RJ", "logo": "sbtrj", "qualidade": "hd", "categorias": ["Todos", "Abertos"]},
