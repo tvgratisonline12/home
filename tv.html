@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+
+    <script src="player.js"></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SEO -->
+    <title>TV Grátis - Assista Canais de TV Online Grátis e Ao Vivo</title>
+
+    <meta name="description" content="Assista canais de TV online grátis e ao vivo. Plataforma gratuita, sem propagandas, sem cadastro e sem custos. Diversos canais disponíveis para assistir diretamente pelo navegador.">
+
+    <meta name="keywords" content="tv grátis, canais de tv, tv online, assistir tv online, canais ao vivo, tv ao vivo, televisão online, streaming grátis, assistir canais grátis">
+
+    <meta name="author" content="TV Grátis">
+
+    <meta name="robots" content="index, follow">
+
+    <link rel="canonical" href="https://tvgratis.online/">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="TV Grátis - Canais de TV Online">
+    <meta property="og:description" content="Assista canais de TV online gratuitamente, sem anúncios e sem cadastro.">
+    <meta property="og:image" content="https://tvgratis.online/logo.png">
+    <meta property="og:url" content="https://tvgratis.online/">
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:site_name" content="TV Grátis">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="TV Grátis">
+    <meta name="twitter:description" content="Assista canais de TV online gratuitamente.">
+    <meta name="twitter:image" content="https://tvgratis.online/logo.png">
+
+    <!-- Tema do navegador -->
+    <meta name="theme-color" content="#111111">
+
+    <!-- Favicon -->
+    <link rel="icon" href="favicon.ico">
+
+    <!-- Fonte -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Dados Estruturados -->
+    <script type="application/ld+json">
+    {
+      "@context":"https://schema.org",
+      "@type":"WebSite",
+      "name":"TV Grátis",
+      "url":"https://tvgratis.online",
+      "description":"Assista canais de TV online gratuitamente, sem cadastro e diretamente do navegador."
+    }
+    </script>
+
+</head>
+<body>
+    <aside>
+        <div class="brand-container">
+            <div class="categoria-header">
+                <button class="cat-btn" onclick="categoriaAnterior()">❮</button>
+                <div class="tituloCategoria"><span id="categoriaAtual">Todos</span></div>
+                <button class="cat-btn" onclick="proximaCategoria()">❯</button>
+            </div>
+        </div>
+        <div class="search-box"><input type="text" id="filter" placeholder="🔍 Buscar canal..." onkeyup="filterList()"></div>
+        <div class="channel-list" id="contentList"></div>
+    </aside>
+    
+    <main>
+        <div id="player-container" ondblclick="toggleFullScreen()">
+            <div id="smart-buffer-overlay">
+                <div class="spinner"></div>
+                <div class="progress-text" id="overlay-text">Carregando 0%</div>
+            </div>
+            
+            <div id="custom-progress-bar">
+                <div id="bar-buffered"></div>
+                <div id="bar-played"></div>
+            </div>
+
+            <div id="time-display">
+                <span id="txt-atual">00:00</span>
+                <span id="txt-baixado">00:00</span>
+            </div>
+            
+            <div id="player"></div>
+            <div id="iframe-overlay"></div>
+        </div>
+    </main>
+
+   <script src="layout2.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/disable-devtool@latest/disable-devtool.min.js"></script>
+    <script>
+       function _0x29ac(){var _0x3056a5=['361074kqNWwU','24052IPXlFT','887480piZMIu','8865f3a072045558837311100572d427','adblock_key','4866666oSlLJm','1eCVXxF','8IHcoRF','1966676bEIaIU','2685840Prynoz','399978CzoNuO'];_0x29ac=function(){return _0x3056a5;};return _0x29ac();}function _0x4b4d(_0x45a851,_0x2b302e){_0x45a851=_0x45a851-0x101;var _0x29acb7=_0x29ac();var _0x4b4d30=_0x29acb7[_0x45a851];return _0x4b4d30;}var _0x5595ff=_0x4b4d;(function(_0x199155,_0x13bf77){var _0x5a6687=_0x4b4d,_0xac71d9=_0x199155();while(!![]){try{var _0x1bf65a=parseInt(_0x5a6687(0x104))/0x1*(-parseInt(_0x5a6687(0x10a))/0x2)+parseInt(_0x5a6687(0x107))/0x3+parseInt(_0x5a6687(0x106))/0x4+-parseInt(_0x5a6687(0x10b))/0x5+-parseInt(_0x5a6687(0x103))/0x6+parseInt(_0x5a6687(0x109))/0x7+-parseInt(_0x5a6687(0x105))/0x8*(-parseInt(_0x5a6687(0x108))/0x9);if(_0x1bf65a===_0x13bf77)break;else _0xac71d9['push'](_0xac71d9['shift']());}catch(_0x24645e){_0xac71d9['push'](_0xac71d9['shift']());}}}(_0x29ac,0x75c24),DisableDevtool({'md5':_0x5595ff(0x101),'url':'bloqueado.html','tk_name':_0x5595ff(0x102),'debug':![],'disableMenu':!![],'disableSelect':!![],'disableCopy':!![],'disableCut':!![],'disablePaste':!![]}));
+    </script>
+</body>
+</html>
