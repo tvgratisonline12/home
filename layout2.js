@@ -2,27 +2,24 @@ let canaisRaw = [];
 let categorias = [];
 let categoriaAtual = 'Todos';
 let indiceCategoria = 0;
+let overlayTimeout;
+let fadeTimeout;
 
-// --- CARREGAMENTO DO JSON ---
 async function carregarCanaisJSON() {
     try {
-        const response = await fetch('https://tvgratis.online/45s84e1free.json');
+        const response = await fetch('https://tvgratis.online/45s84e1sfer.json');
         if (!response.ok) throw new Error('Falha');
         canaisRaw = await response.json();
-        
         const s = new Set(['Todos']);
-        canaisRaw.forEach(c => { 
-            (c.categorias || []).forEach(x => { if (x !== "Todos") s.add(x); }); 
-        });
+        canaisRaw.forEach(c => { (c.categorias || []).forEach(x => { if (x != "Todos") s.add(x); }); });
         categorias = [...s];
         renderList();
     } catch (error) {
-        const list = document.getElementById('contentList');
-        if (list) list.innerHTML = `<div class="item" style="color:red; text-align:center;">Erro ao ler lista</div>`;
+        const contentList = document.getElementById('contentList');
+        if (contentList) contentList.innerHTML = `<div class="item" style="color:red; text-align:center;">Erro ao Ler a Lista de Canais</div>`;
     }
 }
 
-// --- RENDERIZAÇÃO DA LISTA ---
 function renderList() {
     const catDisplay = document.getElementById("categoriaAtual");
     if (catDisplay) catDisplay.innerText = categoriaAtual;
@@ -35,31 +32,35 @@ function renderList() {
     lista.forEach((item, idx) => {
         const div = document.createElement('div');
         div.className = 'item';
-        const isSpecial = ['fhd', 'ad', '4k'].includes(String(item.qualidade).toLowerCase());
+        const isSpecial = ['fhd', 'ad'].includes(String(item.qualidade).toLowerCase());
         
         div.innerHTML = `
             <span class="channel-number">${(idx + 1).toString().padStart(2, '0')}</span>
-            ${isSpecial ? `<span class="ad-badge" style="background-color:${item.qualidade === '4k' ? 'gold' : 'red'}; color:black; padding:0 4px; border-radius:3px; margin-right:5px; font-size:10px; font-weight:bold;">${item.qualidade.toUpperCase()}</span>` : ''}
+            ${isSpecial ? '<span class="ad-badge" style="background-color:red; color:white; padding:0 4px; border-radius:3px; margin-right:5px; font-size:10px; font-weight:bold;">AD</span>' : ''}
             <span>${item.canal || "Canal"}</span>
         `;
+        
         div.onclick = () => playCanal(item, div);
+        div.ondblclick = () => {
+            playCanal(item, div);
+            setTimeout(() => {
+                const c = document.getElementById('player-container');
+                if (c && !document.fullscreenElement) c.requestFullscreen();
+            }, 300);
+        };
         l.appendChild(div);
     });
 }
 
-// --- PLAYER E LÓGICA DE EXECUÇÃO ---
 function playCanal(c, el) {
-    // Remove elementos da tela inicial
-    const nc = document.getElementById('noise-container'); if (nc) nc.remove();
-    const s = document.getElementById('tv-static'); if (s) s.remove();
-    const w = document.getElementById('welcome-screen'); if (w) w.remove();
+    let nc = document.getElementById('noise-container'); if (nc) nc.remove();
+    let s = document.getElementById('tv-static'); if (s) s.remove();
+    let w = document.getElementById('welcome-screen'); if (w) w.remove();
     
     document.querySelectorAll('.item').forEach(i => i.classList.remove('active'));
     el.classList.add('active');
-    
     clearPlayer();
     
-    const playerDiv = document.getElementById("player");
     const workerHD = "https://open.tvgratisonline12.workers.dev/?url=https://ww4.embedtv.lat/";
     const workerFHD = "https://redecanaistv.uk/player3/ch.php?canal=";
     const prefixo4k = "https://embedcanaisdetv.xyz/e/index.php?canal=";
@@ -67,31 +68,83 @@ function playCanal(c, el) {
     let urlVideo;
     const qual = String(c.qualidade).toLowerCase();
 
-    // Lógica de URL
+    // Lógica das URLs
     if (qual === "4k") {
         urlVideo = prefixo4k + c.logo;
     } else if (qual === "fhd") {
         urlVideo = workerFHD + c.logo;
     } else if (qual === "hd") {
         urlVideo = workerHD + encodeURIComponent(c.logo);
+    } else if (qual === "sd") {
+        urlVideo = c.logo + ".m3u8";
     } else {
         urlVideo = c.logo;
     }
 
-    // O style="pointer-events: auto;" garante que o iframe capture o clique sem camadas sobrepostas
-    playerDiv.innerHTML = `<iframe id="main-iframe" src="${urlVideo}" allowfullscreen allow="autoplay; fullscreen" style="width:100%;height:100%;border:none;pointer-events:auto;"></iframe>`;
+    document.getElementById("player").innerHTML = `<iframe src="${urlVideo}" allowfullscreen allow="autoplay; fullscreen" style="width:100%;height:100%;border:none;"></iframe>`;
 
-    // Limpeza de qualquer resto de overlay caso tenha ficado no DOM
-    const blocker = document.getElementById('blocker-4k');
-    if (blocker) blocker.remove();
+    const overlay = document.getElementById('iframe-overlay');
+    // Apenas FHD e AD acionam o aviso de anúncio
+    const isSpecial = ['fhd', 'ad'].includes(qual);
+
+    if (overlay) {
+        overlay.ondblclick = () => {
+            const container = document.getElementById('player-container');
+            if (container && !document.fullscreenElement) container.requestFullscreen();
+            else if (document.fullscreenElement) document.exitFullscreen();
+        };
+
+        clearTimeout(overlayTimeout);
+        overlay.style.setProperty('display', 'block', 'important');
+
+        // Se for especial (FHD ou AD), exibe o aviso. Se for 4K ou outro, não exibe.
+        if (isSpecial) {
+            exibirAvisoBonito();
+            setTimeout(() => {
+                const aviso = document.getElementById('aviso-bonito');
+                if (aviso) aviso.remove();
+                overlay.style.setProperty('display', 'none', 'important');
+                
+                overlayTimeout = setTimeout(() => {
+                    overlay.style.setProperty('display', 'block', 'important');
+                }, 10000);
+            }, 5000);
+        } else {
+            // Para 4K, escondemos o overlay logo após carregar (sem mostrar aviso)
+            overlay.style.setProperty('display', 'none', 'important');
+        }
+    }
+}
+
+function exibirAvisoBonito() {
+    const playerContainer = document.getElementById('player-container');
+    const aviso = document.createElement('div');
+    aviso.id = 'aviso-bonito';
+    aviso.style.cssText = `
+        position: absolute; top: 10%; left: 10%; width: 80%; height: 80%;
+        background: linear-gradient(135deg, #1a1a1a 0%, #000 100%);
+        color: #fff; display: flex; flex-direction: column; align-items: center;
+        justify-content: center; z-index: 100; text-align: center;
+        font-family: 'Segoe UI', sans-serif; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    `;
+    aviso.innerHTML = `
+        <div id="noise-container"><div id="tv-static"></div></div>
+        <div id="welcome-screen">
+            <div id="welcome-title">AVISO IMPORTANTE</div>
+            <div id="welcome-sub" style="animation: fadeIn 1s forwards 0.5s">Este canal contém anúncios.<br>
+            Caso uma nova janela abra, <b>feche-a imediatamente</b> <br> e retorne ao site para continuar assistindo.</div>
+        </div>
+    `;
+    playerContainer.appendChild(aviso);
 }
 
 function clearPlayer() {
     const p = document.getElementById("player");
     if (p) p.innerHTML = "";
+    const sb = document.getElementById("smart-buffer-overlay");
+    if (sb) sb.style.display = "none";
 }
 
-// --- EFEITOS DE TELA INICIAL ---
 function iniciarTelaInicial() {
     const p = document.getElementById('player');
     if (!p) return;
@@ -104,22 +157,6 @@ function iniciarTelaInicial() {
     `;
 }
 
-// --- NAVEGAÇÃO DE CATEGORIAS ---
-function proximaCategoria() {
-    if (categorias.length === 0) return;
-    indiceCategoria = (indiceCategoria + 1) % categorias.length;
-    categoriaAtual = categorias[indiceCategoria];
-    renderList();
-}
-
-function categoriaAnterior() {
-    if (categorias.length === 0) return;
-    indiceCategoria = (indiceCategoria - 1 + categorias.length) % categorias.length;
-    categoriaAtual = categorias[indiceCategoria];
-    renderList();
-}
-
-// --- INICIALIZAÇÃO ---
 window.onload = function() {
     carregarCanaisJSON();
     iniciarTelaInicial();
