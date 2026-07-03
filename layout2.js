@@ -2,16 +2,14 @@ let canaisRaw = [];
 let categorias = [];
 let categoriaAtual = 'Todos';
 let indiceCategoria = 0;
-let overlayTimeout;
 
 // --- 1. CARREGAMENTO DO JSON ---
 async function carregarCanaisJSON() {
     try {
-        const response = await fetch('https://tvgratis.online/45s84e1free.json');
+        const response = await fetch('45s84e1free.json');
         if (!response.ok) throw new Error('Falha');
         canaisRaw = await response.json();
         
-        // Extração dinâmica de categorias
         const s = new Set(['Todos']);
         canaisRaw.forEach(c => { 
             if (c.categorias && Array.isArray(c.categorias)) {
@@ -48,13 +46,6 @@ function renderList() {
         `;
         
         div.onclick = () => playCanal(item, div);
-        div.ondblclick = () => {
-            playCanal(item, div);
-            setTimeout(() => {
-                const c = document.getElementById('player-container');
-                if (c && !document.fullscreenElement) c.requestFullscreen();
-            }, 300);
-        };
         l.appendChild(div);
     });
 }
@@ -76,7 +67,6 @@ function playCanal(c, el) {
     let urlVideo;
     const qual = String(c.qualidade).toLowerCase();
 
-    // Lógica das URLs
     if (qual === "4k") {
         urlVideo = prefixo4k + c.logo;
     } else if (qual === "fhd") {
@@ -89,38 +79,41 @@ function playCanal(c, el) {
         urlVideo = c.logo;
     }
 
-    // Injeção do iframe
-    document.getElementById("player").innerHTML = `<iframe src="${urlVideo}" allowfullscreen allow="autoplay; fullscreen" style="width:100%;height:100%;border:none;pointer-events:auto;"></iframe>`;
+    // Injeção do iframe com overlay dinâmico para Fullscreen
+    const playerDiv = document.getElementById("player");
+    playerDiv.innerHTML = `
+        <div id="player-wrapper-outer" style="position:relative; width:100%; height:100%;">
+            <iframe id="main-iframe" src="${urlVideo}" allowfullscreen allow="autoplay; fullscreen" style="width:100%;height:100%;border:none;"></iframe>
+            <div id="dynamic-overlay" style="position:absolute; top:0; left:0; width:100%; height:100%; background:transparent; z-index:50; display:none; cursor:pointer;"></div>
+        </div>
+    `;
 
-    const overlay = document.getElementById('iframe-overlay');
-    const isSpecial = ['fhd', 'ad'].includes(qual);
+    const overlay = document.getElementById('dynamic-overlay');
+    const container = document.getElementById('player-container');
 
-    if (overlay) {
-        overlay.ondblclick = () => {
-            const container = document.getElementById('player-container');
-            if (container && !document.fullscreenElement) container.requestFullscreen();
-            else if (document.fullscreenElement) document.exitFullscreen();
-        };
-
-        clearTimeout(overlayTimeout);
-        
-        if (isSpecial) {
-            overlay.style.setProperty('display', 'block', 'important');
-            exibirAvisoBonito();
-            setTimeout(() => {
-                const aviso = document.getElementById('aviso-bonito');
-                if (aviso) aviso.remove();
-                overlay.style.setProperty('display', 'none', 'important');
-                
-                overlayTimeout = setTimeout(() => {
-                    overlay.style.setProperty('display', 'block', 'important');
-                }, 10000);
-            }, 5000);
-        } else {
-            // Para 4K e outros, o overlay fica escondido para permitir cliques
-            overlay.style.setProperty('display', 'none', 'important');
+    // Fullscreen via clique duplo
+    let clickCount = 0;
+    overlay.onclick = () => {
+        clickCount++;
+        if (clickCount === 2) {
+            if (!document.fullscreenElement) container.requestFullscreen();
+            else document.exitFullscreen();
+            clickCount = 0;
         }
-    }
+        setTimeout(() => { clickCount = 0; }, 300);
+    };
+
+    // Lógica de Delay do Overlay (10s para 4K/FHD, imediato para HD/SD)
+    const delay = (qual === "4k" || qual === "fhd") ? 10000 : 0;
+    
+    // Aviso de Anúncio apenas para FHD
+    if (qual === "fhd") exibirAvisoBonito();
+
+    setTimeout(() => {
+        const aviso = document.getElementById('aviso-bonito');
+        if (aviso) aviso.remove();
+        overlay.style.setProperty('display', 'block', 'important');
+    }, delay);
 }
 
 // --- 4. FUNÇÕES DE SUPORTE ---
@@ -142,8 +135,6 @@ function exibirAvisoBonito() {
 function clearPlayer() {
     const p = document.getElementById("player");
     if (p) p.innerHTML = "";
-    const sb = document.getElementById("smart-buffer-overlay");
-    if (sb) sb.style.display = "none";
 }
 
 function iniciarTelaInicial() {
@@ -158,7 +149,7 @@ function iniciarTelaInicial() {
     `;
 }
 
-// --- 5. NAVEGAÇÃO CATEGORIAS ---
+// --- 5. NAVEGAÇÃO DE CATEGORIAS ---
 function proximaCategoria() {
     if (categorias.length === 0) return;
     indiceCategoria = (indiceCategoria + 1) % categorias.length;
