@@ -45,7 +45,7 @@
   {"canal": "EURONEWS PT", "logo": "https://598c4b93.wurl.com/manifest/f36d25e7e52f1ba8d7e56eb859c636563214f541/UGxleF9FdXJvbmV3c1BvcnR1Z3Vlc19ITFM/8373d13c-8b0a-4a19-a563-557d120eb2e0/2", "qualidade": "sd", "categorias": ["Todos", "Notícias", "Portugal"]},
   {"canal": "FIFA PLUS", "logo": "https://c2657533.wurl.com/manifest/f36d25e7e52f1ba8d7e56eb859c636563214f541/UGxleC1icl9GSUZBUGx1c1BvcnR1Z3Vlc2VfSExT/69990f05-27bd-4bb7-a081-a14d6aa5ecf2/3", "qualidade": "sd", "categorias": ["Todos", "Esporte"]},
   {"canal": "FOOD NETWORK", "logo": "foodnetwork", "qualidade": "hd", "categorias": ["Todos", "Lifestyle"]},
-  {"canal": "GETV", "logo": "https://redecanaistv.uk/player3/ch.php?canal=getv", "qualidade": "fhd", "categorias": ["Todos", "Esportes"]},
+  {"canal": "GE TV", "logo": "https://redecanaistv.uk/player3/ch.php?canal=getv", "qualidade": "fhd", "categorias": ["Todos", "Esportes"]},
   {"canal": "GLOBO AM", "logo": "globoam", "qualidade": "hd", "categorias": ["Todos", "Aberto"]},
   {"canal": "GLOBO CE", "logo": "globoce", "qualidade": "hd", "categorias": ["Todos", "Aberto"]},
   {"canal": "GLOBO ES", "logo": "globoes", "qualidade": "hd", "categorias": ["Todos", "Aberto"]},
