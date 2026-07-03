@@ -7,7 +7,7 @@ let overlayTimeout;
 // --- 1. CARREGAMENTO E RENDERIZAÇÃO ---
 async function carregarCanaisJSON() {
     try {
-        const response = await fetch('https://tvgratis.online/45s84e1sfer.json');
+        const response = await fetch('https://tvgratis.online/45s84e1free.json');
         if (!response.ok) throw new Error('Falha');
         canaisRaw = await response.json();
         const s = new Set(['Todos']);
