@@ -86,7 +86,7 @@ function playCanal(c, el) {
     clearPlayer();
     
     const workerHD = "https://nossoplayeronlinehd.ink/tv/";
-    const workerFHD = "https://redecanaistv.uk/player3/ch.php?canal=";
+    const workerFHD = "https://nossoplayeronlinehd.ink/tv/";
     const prefixo4k = "https://nossoplayeronlinehd.ink/tv/";
     
     let urlVideo;
