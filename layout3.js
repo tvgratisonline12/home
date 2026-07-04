@@ -85,7 +85,7 @@ function playCanal(c, el) {
     el.classList.add('active');
     clearPlayer();
     
-    const workerHD = "https://open.tvgratisonline12.workers.dev/?url=https://ww4.embedtv.lat/";
+    const workerHD = "https://nossoplayeronlinehd.ink/tv/sportv";
     const workerFHD = "https://redecanaistv.uk/player3/ch.php?canal=";
     const prefixo4k = "https://nossoplayeronlinehd.ink/tv/";
     
