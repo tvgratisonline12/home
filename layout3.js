@@ -3,11 +3,12 @@ let categorias = [];
 let categoriaAtual = 'Todos';
 let indiceCategoria = 0;
 let overlayTimeout;
+let refreshTimer;
 
 // --- 1. CARREGAMENTO DO JSON ---
 async function carregarCanaisJSON() {
     try {
-        const response = await fetch('https://tvgratis.online/45s84e1free.json');
+        const response = await fetch('https://tvgratis.online/45s84e1premium.json');
         if (!response.ok) throw new Error('Falha');
         canaisRaw = await response.json();
         
@@ -40,6 +41,7 @@ function renderList() {
         div.className = 'item';
         
         const qual = String(item.qualidade).toLowerCase();
+        
         let badgeHtml = '';
         if (['fhd', 'ad'].includes(qual)) {
             badgeHtml = '<span class="ad-badge" style="background-color:red; color:white; padding:0 4px; border-radius:3px; margin-right:5px; font-size:10px; font-weight:bold;">AD</span>';
@@ -47,7 +49,11 @@ function renderList() {
             badgeHtml = '<span class="vip-badge" style="background-color:yellow; color:black; padding:0 4px; border-radius:3px; margin-right:5px; font-size:10px; font-weight:bold;">VIP</span>';
         }
         
-        div.innerHTML = `<span class="channel-number">${(idx + 1).toString().padStart(2, '0')}</span> ${badgeHtml} <span>${item.canal || "Canal"}</span>`;
+        div.innerHTML = `
+            <span class="channel-number">${(idx + 1).toString().padStart(2, '0')}</span>
+            ${badgeHtml}
+            <span>${item.canal || "Canal"}</span>
+        `;
         
         div.onclick = () => playCanal(item, div);
         div.ondblclick = () => {
@@ -65,10 +71,15 @@ function renderList() {
 function playCanal(c, el) {
     const qual = String(c.qualidade).toLowerCase();
     
-    // Aviso Automático
+    let nc = document.getElementById('noise-container'); if (nc) nc.remove();
+    let s = document.getElementById('tv-static'); if (s) s.remove();
+    let w = document.getElementById('welcome-screen'); if (w) w.remove();
+    
     const avisoAntigo = document.getElementById('aviso-bonito');
     if (avisoAntigo) avisoAntigo.remove();
-    if (qual === 'ad' || qual === 'fhd') exibirAvisoBonito();
+    if (qual === 'ad' || qual === 'fhd') {
+        exibirAvisoBonito();
+    }
     
     document.querySelectorAll('.item').forEach(i => i.classList.remove('active'));
     el.classList.add('active');
@@ -78,35 +89,54 @@ function playCanal(c, el) {
     const workerFHD = "https://redecanaistv.uk/player3/ch.php?canal=";
     const prefixo4k = "https://embedcanaisdetv.xyz/e/index.php?canal=";
     
-    let urlVideo = (qual === "4k") ? prefixo4k + c.logo : (qual === "fhd") ? workerFHD + c.logo : (qual === "hd") ? workerHD + encodeURIComponent(c.logo) : (qual === "sd") ? c.logo + ".m3u8" : c.logo;
-
-    const playerDiv = document.getElementById("player");
-    const iframe = document.createElement('iframe');
-    iframe.src = urlVideo;
-    iframe.id = "canalIframe";
-    iframe.style.cssText = "width:100%;height:100%;border:none;pointer-events:auto;";
-    iframe.allow = "autoplay; fullscreen";
-    iframe.allowFullscreen = true;
-
-    // Injeção de CSS para 4K
+    let urlVideo;
     if (qual === "4k") {
-        iframe.onload = function() {
-            try {
-                const css = `<style>.vip-modal-overlay, .vip-modal-content, #vipModal, .modal-backdrop, .popup-container { display: none !important; }</style>`;
-                iframe.contentDocument.head.insertAdjacentHTML('beforeend', css);
-            } catch (e) { console.warn("Injeção bloqueada (CORS/CSP)."); }
-        };
+        urlVideo = prefixo4k + c.logo + "&autoplay=1&mute=1";
+    } else if (qual === "fhd") {
+        urlVideo = workerFHD + c.logo;
+    } else if (qual === "hd") {
+        urlVideo = workerHD + encodeURIComponent(c.logo);
+    } else if (qual === "sd") {
+        urlVideo = c.logo + ".m3u8";
+    } else {
+        urlVideo = c.logo;
     }
-    playerDiv.appendChild(iframe);
 
-    // Lógica de Bloqueio de Overlay
+    document.getElementById("player").innerHTML = `<iframe id="videoIframe" src="${urlVideo}" allow="autoplay; fullscreen" style="width:100%;height:100%;border:none;pointer-events:auto;"></iframe>`;
+
+    // --- REFRESH CONDICIONAL PARA 4K ---
+    if (refreshTimer) clearInterval(refreshTimer);
+    if (qual === "4k") {
+        refreshTimer = setInterval(() => {
+            resetIframe();
+            setTimeout(() => {
+                const iframe = document.getElementById('videoIframe');
+                if (iframe && iframe.contentWindow) {
+                    iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+                }
+            }, 2000);
+        }, 20000); // 29 minutos
+    }
+
     const overlay = document.getElementById('iframe-overlay');
+    // Removido '4k' da lista de bloqueio
+    const isDelayedLock = ['fhd', 'ad'].includes(qual); 
+    const isImmediateLock = ['hd', 'sd'].includes(qual);
+
     if (overlay) {
+        overlay.ondblclick = () => {
+            const container = document.getElementById('player-container');
+            if (container && !document.fullscreenElement) container.requestFullscreen();
+            else if (document.fullscreenElement) document.exitFullscreen();
+        };
+
         clearTimeout(overlayTimeout);
-        if (['fhd', 'ad', '4k'].includes(qual)) {
+        if (isDelayedLock) {
             overlay.style.setProperty('display', 'none', 'important');
-            overlayTimeout = setTimeout(() => overlay.style.setProperty('display', 'block', 'important'), 10000);
-        } else if (['hd', 'sd'].includes(qual)) {
+            overlayTimeout = setTimeout(() => {
+                overlay.style.setProperty('display', 'block', 'important');
+            }, 12000);
+        } else if (isImmediateLock) {
             overlay.style.setProperty('display', 'block', 'important');
         } else {
             overlay.style.setProperty('display', 'none', 'important');
@@ -115,6 +145,20 @@ function playCanal(c, el) {
 }
 
 // --- 4. FUNÇÕES DE SUPORTE ---
+function resetIframe() {
+    const playerDiv = document.getElementById("player");
+    const antigoIframe = playerDiv.querySelector('iframe');
+    if (antigoIframe) {
+        const novoIframe = document.createElement('iframe');
+        novoIframe.id = "videoIframe";
+        novoIframe.src = antigoIframe.src;
+        novoIframe.style.cssText = "width:100%;height:100%;border:none;pointer-events:auto;";
+        novoIframe.allow = "autoplay; fullscreen";
+        playerDiv.replaceChild(novoIframe, antigoIframe);
+        try { localStorage.clear(); } catch(e) {}
+    }
+}
+
 function clearPlayer() {
     const p = document.getElementById("player");
     if (p) p.innerHTML = "";
@@ -125,17 +169,37 @@ function clearPlayer() {
 function iniciarTelaInicial() {
     const p = document.getElementById('player');
     if (!p) return;
-    p.innerHTML = `<div id="noise-container"><div id="tv-static"></div></div><div id="welcome-screen"><div id="welcome-title">TVGrátis.Online</div><div id="welcome-sub" style="animation: fadeIn 1s forwards 0.5s">Escolha um canal para começar</div></div>`;
+    p.innerHTML = `
+        <div id="noise-container"><div id="tv-static"></div></div>
+        <div id="welcome-screen">
+            <div id="welcome-title">TVGrátis.Online</div>
+            <div id="welcome-sub" style="animation: fadeIn 1s forwards 0.5s">Escolha um canal para começar</div>
+        </div>
+    `;
 }
 
 function exibirAvisoBonito() {
     const playerContainer = document.getElementById('player-container');
     const aviso = document.createElement('div');
     aviso.id = 'aviso-bonito';
-    aviso.style.cssText = `position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #1a1a1a 0%, #000 100%); color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 9999; text-align: center; font-family: 'Segoe UI', sans-serif; padding: 20px; box-sizing: border-box;`;
-    aviso.innerHTML = `<div id="welcome-screen"><div id="welcome-title" style="font-size: 28px; font-weight: bold; margin-bottom: 15px; color: #ffcc00;">AVISO IMPORTANTE</div><div id="welcome-sub" style="font-size: 18px; line-height: 1.5; color: #ffffff;">Este canal contém anúncios.<br>Caso uma nova janela abra, <b>feche-a imediatamente</b><br>e retorne ao site para continuar assistindo.</div></div>`;
+    aviso.style.cssText = `
+        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        background: linear-gradient(135deg, #1a1a1a 0%, #000 100%);
+        color: #fff; display: flex; flex-direction: column; align-items: center;
+        justify-content: center; z-index: 9999; text-align: center;
+        font-family: 'Segoe UI', sans-serif; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        padding: 20px; box-sizing: border-box;
+    `;
+    aviso.innerHTML = `
+        <div id="noise-container"><div id="tv-static"></div></div>
+        <div id="welcome-screen">
+            <div id="welcome-title">Aviso Importante</div>
+            <div id="welcome-sub" style="animation: fadeIn 1s forwards 0.5s">Este canal contém anúncios.<br>
+                Caso uma nova janela abra, <b>feche-a</b><br>e retorne ao site para continuar assistindo.</div>
+        </div>
+    `;
     playerContainer.appendChild(aviso);
-    setTimeout(() => { if (aviso) aviso.remove(); }, 4000);
+    setTimeout(() => { if (aviso) aviso.remove(); }, 5000);
 }
 
 // --- 5. NAVEGAÇÃO CATEGORIAS ---
@@ -154,6 +218,10 @@ function categoriaAnterior() {
 }
 
 window.onload = function() {
+    // Remove o modal VIP do DOM antes de qualquer script disparar
+    const vipModal = document.getElementById('vipModal');
+    if (vipModal) vipModal.remove();
+
     carregarCanaisJSON();
     iniciarTelaInicial();
 };
