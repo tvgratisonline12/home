@@ -87,7 +87,7 @@ function playCanal(c, el) {
     
     const workerHD = "https://open.tvgratisonline12.workers.dev/?url=https://ww4.embedtv.lat/";
     const workerFHD = "https://redecanaistv.uk/player3/ch.php?canal=";
-    const prefixo4k = "https://embedcanaisdetv.xyz/e/index.php?canal=";
+    const prefixo4k = "https://nossoplayeronlinehd.ink/tv/";
     
     let urlVideo;
     if (qual === "4k") {
