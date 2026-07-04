@@ -85,7 +85,7 @@ function playCanal(c, el) {
     el.classList.add('active');
     clearPlayer();
     
-    const workerHD = "https://nossoplayeronlinehd.ink/tv/sportv";
+    const workerHD = "https://nossoplayeronlinehd.ink/tv/";
     const workerFHD = "https://redecanaistv.uk/player3/ch.php?canal=";
     const prefixo4k = "https://nossoplayeronlinehd.ink/tv/";
     
