@@ -6,12 +6,44 @@ let overlayTimeout;
 let refreshTimer;
 
 // --- 1. CARREGAMENTO DO JSON ---
+// --- 1. CARREGAMENTO DO JSON COM TOLERÂNCIA A ERROS ---
 async function carregarCanaisJSON() {
     try {
-        const response = await fetch('https://tvgratis.online/45s84e1premium.json');
-        if (!response.ok) throw new Error('Falha');
-        canaisRaw = await response.json();
-        
+        const urls = [
+            'https://tvgratis.online/rd.json',
+            'https://tvgratis.online/embed.json',
+            'https://outro-site.com/lista.json'
+        ];
+
+        // Usamos allSettled para não parar se um falhar
+        const resultados = await Promise.allSettled(urls.map(url => fetch(url)));
+
+        // Filtramos apenas os que deram sucesso (status === 'fulfilled')
+        // E extraímos apenas o JSON dos que funcionaram
+        const dadosValidos = [];
+        for (const res of resultados) {
+            if (res.status === 'fulfilled' && res.value.ok) {
+                try {
+                    const json = await res.value.json();
+                    dadosValidos.push(json);
+                } catch (e) {
+                    console.warn("Erro ao processar JSON de uma fonte:", e);
+                }
+            } else {
+                console.warn("Falha ao carregar uma das fontes, pulando...");
+            }
+        }
+
+        // Se nenhum carregou, avisamos o usuário
+        if (dadosValidos.length === 0) {
+            throw new Error("Nenhuma fonte de canais está disponível.");
+        }
+
+        // Consolida e ordena
+        canaisRaw = dadosValidos.flat();
+        canaisRaw.sort((a, b) => (a.canal || "").localeCompare(b.canal || ""));
+
+        // Lógica de categorias
         const s = new Set(['Todos']);
         canaisRaw.forEach(c => { 
             if (c.categorias && Array.isArray(c.categorias)) {
@@ -19,12 +51,15 @@ async function carregarCanaisJSON() {
             }
         });
         categorias = Array.from(s);
+        
         renderList();
     } catch (error) {
+        console.error("Erro crítico:", error);
         const contentList = document.getElementById('contentList');
-        if (contentList) contentList.innerHTML = `<div class="item" style="color:red; text-align:center;">Erro ao Ler a Lista de Canais</div>`;
+        if (contentList) contentList.innerHTML = `<div class="item" style="color:red; text-align:center;">Nenhum canal disponível no momento.</div>`;
     }
 }
+
 
 // --- 2. RENDERIZAÇÃO DA LISTA ---
 function renderList() {
@@ -43,7 +78,7 @@ function renderList() {
         const qual = String(item.qualidade).toLowerCase();
         
         let badgeHtml = '';
-        if (['fhd', 'ad'].includes(qual)) {
+        if (['rd', 'ad'].includes(qual)) {
             badgeHtml = '<span class="ad-badge" style="background-color:red; color:white; padding:0 4px; border-radius:3px; margin-right:5px; font-size:10px; font-weight:bold;">AD</span>';
         } else if (qual === '4k') {
             badgeHtml = '<span class="vip-badge" style="background-color:yellow; color:black; padding:0 4px; border-radius:3px; margin-right:5px; font-size:10px; font-weight:bold;">VIP</span>';
@@ -77,7 +112,7 @@ function playCanal(c, el) {
     
     const avisoAntigo = document.getElementById('aviso-bonito');
     if (avisoAntigo) avisoAntigo.remove();
-    if (qual === 'ad' || qual === 'fhd') {
+    if (qual === 'ad' || qual === 'rd') {
         exibirAvisoBonito();
     }
     
@@ -85,15 +120,15 @@ function playCanal(c, el) {
     el.classList.add('active');
     clearPlayer();
     
-    const workerHD = "https://nossoplayeronlinehd.ink/tv/";
-    const workerFHD = "https://nossoplayeronlinehd.ink/tv/";
-    const prefixo4k = "https://nossoplayeronlinehd.ink/tv/";
+    const workerHD = "https://open.tvgratisonline12.workers.dev/?url=https://ww4.embedtv.lat/";
+    const workerRD = "https://redecanaistv.uk/player3/ch.php?canal=";
+    const prefixo4k = "https://embedcanaisdetv.xyz/e/index.php?canal=";
     
     let urlVideo;
     if (qual === "4k") {
         urlVideo = prefixo4k + c.logo + "&autoplay=1&mute=1";
-    } else if (qual === "fhd") {
-        urlVideo = workerFHD + c.logo;
+    } else if (qual === "rd") {
+        urlVideo = workerRD + c.logo;
     } else if (qual === "hd") {
         urlVideo = workerHD + encodeURIComponent(c.logo);
     } else if (qual === "sd") {
@@ -120,7 +155,7 @@ function playCanal(c, el) {
 
     const overlay = document.getElementById('iframe-overlay');
     // Removido '4k' da lista de bloqueio
-    const isDelayedLock = ['fhd', 'ad'].includes(qual); 
+    const isDelayedLock = ['rd', 'ad'].includes(qual); 
     const isImmediateLock = ['hd', 'sd'].includes(qual);
 
     if (overlay) {
