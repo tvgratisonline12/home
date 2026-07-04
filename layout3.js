@@ -10,9 +10,9 @@ let refreshTimer;
 async function carregarCanaisJSON() {
     try {
         const urls = [
-            'https://tvgratis.online/rd.json',
-            'https://tvgratis.online/embed.json',
-            'https://outro-site.com/lista.json'
+            'rd.json',
+            'eb.json'
+            
         ];
 
         // Usamos allSettled para não parar se um falhar
