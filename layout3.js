@@ -10,9 +10,9 @@ let refreshTimer;
 async function carregarCanaisJSON() {
     try {
         const urls = [
-            'rd.json',
-            'eb.json'
-            
+            'https://tvgratis.online/rd.json',
+            'https://tvgratis.online/embed.json',
+            'https://outro-site.com/lista.json'
         ];
 
         // Usamos allSettled para não parar se um falhar
@@ -62,21 +62,32 @@ async function carregarCanaisJSON() {
 
 
 // --- 2. RENDERIZAÇÃO DA LISTA ---
+// --- 2. RENDERIZAÇÃO DA LISTA (ATUALIZADA PARA BUSCA) ---
 function renderList() {
     const catDisplay = document.getElementById("categoriaAtual");
     if (catDisplay) catDisplay.innerText = categoriaAtual;
+    
     const l = document.getElementById('contentList');
     if (!l) return;
+
+    // Pega o valor do seu campo de busca pelo ID 'filter'
+    const inputBusca = document.getElementById('filter');
+    const termo = inputBusca ? inputBusca.value.toLowerCase() : "";
+    
     l.innerHTML = '';
     
-    const lista = canaisRaw.filter(c => categoriaAtual === "Todos" || (c.categorias || []).includes(categoriaAtual));
+    // Filtra considerando a categoria ATUAL e o termo de busca
+    const lista = canaisRaw.filter(c => {
+        const matchCategoria = categoriaAtual === "Todos" || (c.categorias || []).includes(categoriaAtual);
+        const matchBusca = (c.canal || "").toLowerCase().includes(termo);
+        return matchCategoria && matchBusca;
+    });
     
     lista.forEach((item, idx) => {
         const div = document.createElement('div');
         div.className = 'item';
         
-        const qual = String(item.qualidade).toLowerCase();
-        
+        const qual = String(item.qualidade || "").toLowerCase();
         let badgeHtml = '';
         if (['rd', 'ad'].includes(qual)) {
             badgeHtml = '<span class="ad-badge" style="background-color:red; color:white; padding:0 4px; border-radius:3px; margin-right:5px; font-size:10px; font-weight:bold;">AD</span>';
@@ -98,6 +109,7 @@ function renderList() {
                 if (c && !document.fullscreenElement) c.requestFullscreen();
             }, 300);
         };
+        
         l.appendChild(div);
     });
 }
@@ -234,7 +246,7 @@ function exibirAvisoBonito() {
         </div>
     `;
     playerContainer.appendChild(aviso);
-    setTimeout(() => { if (aviso) aviso.remove(); }, 3000);
+    setTimeout(() => { if (aviso) aviso.remove(); }, 5000);
 }
 
 // --- 5. NAVEGAÇÃO CATEGORIAS ---
