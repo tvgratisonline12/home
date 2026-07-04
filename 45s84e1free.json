@@ -58,6 +58,7 @@
   {"canal": "GLOBO SP", "logo": "globosp", "qualidade": "hd", "categorias": ["Todos", "Abertos"]},
   {"canal": "GLOBOPLAY NOVELAS", "logo": "globonovelas", "qualidade": "hd", "categorias": ["Todos", "Filmes e Séries"]},
   {"canal": "GLOOB", "logo": "gloob", "qualidade": "hd", "categorias": ["Todos", "Infantil"]},
+  {"canal": "GLOOBINHO", "logo": "gloobinho", "qualidade": "4k", "categorias": ["Todos", "Infantil", "Vip"]},
   {"canal": "GLOOBINHO", "logo": "gloobinho", "qualidade": "fhd", "categorias": ["Todos", "Infantil"]},
   {"canal": "GNT", "logo": "gnt", "qualidade": "hd", "categorias": ["Todos", "Lifestyle"]},
   {"canal": "HBO", "logo": "hbo", "qualidade": "hd", "categorias": ["Todos", "Filmes e Séries"]},
