@@ -11,7 +11,7 @@ async function carregarCanaisJSON() {
     try {
         const urls = [
             'https://tvgratis.online/rd.json',
-            'https://tvgratis.online/embed.json',
+            'https://tvgratis.online/eb.json',
             'https://outro-site.com/lista.json'
         ];
 
