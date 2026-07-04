@@ -234,7 +234,7 @@ function exibirAvisoBonito() {
         </div>
     `;
     playerContainer.appendChild(aviso);
-    setTimeout(() => { if (aviso) aviso.remove(); }, 5000);
+    setTimeout(() => { if (aviso) aviso.remove(); }, 3000);
 }
 
 // --- 5. NAVEGAÇÃO CATEGORIAS ---
