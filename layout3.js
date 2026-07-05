@@ -320,3 +320,31 @@ document.addEventListener('keydown', function(event) {
         }
     }
 });
+
+// Criar o elemento do cursor
+const cursor = document.createElement('div');
+cursor.id = 'virtual-cursor';
+document.body.appendChild(cursor);
+
+let cursorX = window.innerWidth / 2;
+let cursorY = window.innerHeight / 2;
+
+document.addEventListener('keydown', function(e) {
+    const speed = 20; // Velocidade da seta
+    
+    switch(e.key) {
+        case 'ArrowUp':    cursorY -= speed; break;
+        case 'ArrowDown':  cursorY += speed; break;
+        case 'ArrowLeft':  cursorX -= speed; break;
+        case 'ArrowRight': cursorX += speed; break;
+        case 'Enter':
+            // Simular clique onde a seta está
+            const el = document.elementFromPoint(cursorX, cursorY);
+            if (el) el.click();
+            return;
+    }
+    
+    // Atualizar posição
+    cursor.style.left = cursorX + 'px';
+    cursor.style.top = cursorY + 'px';
+});
