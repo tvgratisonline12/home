@@ -72,7 +72,7 @@
             </div>
         </div>
         <div class="search-box">
-    <input type="text" id="filter" placeholder="🔍 Buscar canal..." onkeyup="renderList()">
+    <input type="text" id="filter" placeholder="🔍 Buscar canal..." onkeyup="renderList()" readonly onfocus="this.removeAttribute('readonly');" onblur="this.setAttribute('readonly', 'readonly');">
 </div>
         <div class="channel-list" id="contentList"></div>
     </aside>
@@ -99,7 +99,7 @@
         </div>
     </main>
 
-   <script src="layout3.js"></script>
+   <script src="layout.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/disable-devtool@latest/disable-devtool.min.js"></script>
     
 </body>
