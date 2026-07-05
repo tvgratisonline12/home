@@ -104,6 +104,18 @@
     box-shadow: 0 0 30px rgba(255,0,0,.45);
 }
 
+#virtual-cursor {
+    width: 20px;
+    height: 20px;
+    background: url('https://cdn-icons-png.flaticon.com/512/61/61168.png') no-repeat center center;
+    background-size: contain;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 999999;
+    pointer-events: none; /* A seta não bloqueia os cliques */
+}
+
 .fhd-title { font-size: 28px; font-weight: bold; color: #ff4040; margin-bottom: 20px; }
 .fhd-text { line-height: 1.7; font-size: 18px; }
 #fhd-timer { margin-top: 25px; font-size: 38px; font-weight: bold; color: #00ff88; }
