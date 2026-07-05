@@ -8,9 +8,9 @@ let overlayTimeout;
 async function carregarCanaisJSON() {
     try {
         const urls = [
-            'rd.json',
-            'eb.json',
-            'cx.json'
+            'https://tvgratis.online/rd.json',
+            'https://tvgratis.online/embed.json',
+            'https://outro-site.com/lista.json'
         ];
 
         const resultados = await Promise.allSettled(urls.map(url => fetch(url)));
