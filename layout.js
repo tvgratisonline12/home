@@ -9,7 +9,7 @@ async function carregarCanaisJSON() {
     try {
         const urls = [
             'rd.json',
-            'embed.json',
+            'eb.json',
             'cx.json'
         ];
 
@@ -116,14 +116,14 @@ function playCanal(c, el) {
     el.classList.add('active');
     clearPlayer();
     
-    const workerHD = "https://open.tvgratisonline12.workers.dev/?url=https://ww4.embedtv.lat/";
+    const workerEB = "https://open.tvgratisonline12.workers.dev/?url=https://ww4.embedtv.lat/";
     const workerRD = "https://redecanaistv.uk/player3/ch.php?canal=";
     
     let urlVideo;
     if (qual === "rd") {
         urlVideo = workerRD + c.logo;
-    } else if (qual === "hd") {
-        urlVideo = workerHD + encodeURIComponent(c.logo);
+    } else if (qual === "eb") {
+        urlVideo = workerEB + encodeURIComponent(c.logo);
     } else if (qual === "sd") {
         urlVideo = c.logo + ".m3u8";
     } else {
@@ -134,7 +134,7 @@ function playCanal(c, el) {
 
     const overlay = document.getElementById('iframe-overlay');
     const isDelayedLock = ['rd', 'ad'].includes(qual); 
-    const isImmediateLock = ['hd', 'sd'].includes(qual);
+    const isImmediateLock = ['eb', 'sd'].includes(qual);
 
     if (overlay) {
         overlay.ondblclick = () => {
