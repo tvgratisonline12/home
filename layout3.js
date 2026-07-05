@@ -10,9 +10,9 @@ let refreshTimer;
 async function carregarCanaisJSON() {
     try {
         const urls = [
-            'rd.json',
-            'eb.json',
-            'cx.json'
+            'https://tvgratis.online/rd.json',
+            'https://tvgratis.online/embed.json',
+            'https://outro-site.com/lista.json'
         ];
 
         // Usamos allSettled para não parar se um falhar
@@ -272,3 +272,51 @@ window.onload = function() {
     carregarCanaisJSON();
     iniciarTelaInicial();
 };
+
+// --- 6. OTIMIZAÇÃO PARA TV (D-PAD) ---
+document.addEventListener('keydown', function(event) {
+    const activeElement = document.activeElement;
+    
+    // Se o usuário apertar OK (Enter) no teclado/controle
+    if (event.key === 'Enter') {
+        // Se estiver no Player Container, force o foco no Iframe
+        if (activeElement.id === 'player-container' || activeElement.id === 'iframe-overlay') {
+            const iframe = document.getElementById('videoIframe');
+            if (iframe) {
+                iframe.focus();
+                // Opcional: Se o player permitir, dispara um clique
+                iframe.contentWindow.postMessage('play', '*');
+            }
+        }
+    }
+});
+
+// Força o PlayerContainer a ser focável pelo controle remoto
+document.getElementById('player-container').setAttribute('tabindex', '0');
+
+// --- 7. LOGICA DE FULLSCREEN PARA TV ---
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+        const activeElement = document.activeElement;
+        const playerContainer = document.getElementById('player-container');
+
+        // Se o foco estiver no player, ativamos o Fullscreen e o Play
+        if (activeElement && activeElement.id === 'videoIframe') {
+            
+            // 1. Tentar entrar em tela cheia no container principal
+            if (playerContainer && !document.fullscreenElement) {
+                playerContainer.requestFullscreen().catch(err => {
+                    console.log("Erro ao entrar em fullscreen: " + err.message);
+                });
+            }
+
+            // 2. Enviar sinal de Play para o Iframe
+            const iframe = document.getElementById('videoIframe');
+            if (iframe && iframe.contentWindow) {
+                // Tenta diversos métodos de play para diferentes tipos de players
+                iframe.contentWindow.postMessage('play', '*');
+                iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+            }
+        }
+    }
+});
