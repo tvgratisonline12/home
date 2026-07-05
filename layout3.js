@@ -3,10 +3,8 @@ let categorias = [];
 let categoriaAtual = 'Todos';
 let indiceCategoria = 0;
 let overlayTimeout;
-let refreshTimer;
 
 // --- 1. CARREGAMENTO DO JSON ---
-// --- 1. CARREGAMENTO DO JSON COM TOLERÂNCIA A ERROS ---
 async function carregarCanaisJSON() {
     try {
         const urls = [
@@ -15,11 +13,8 @@ async function carregarCanaisJSON() {
             'https://outro-site.com/lista.json'
         ];
 
-        // Usamos allSettled para não parar se um falhar
         const resultados = await Promise.allSettled(urls.map(url => fetch(url)));
 
-        // Filtramos apenas os que deram sucesso (status === 'fulfilled')
-        // E extraímos apenas o JSON dos que funcionaram
         const dadosValidos = [];
         for (const res of resultados) {
             if (res.status === 'fulfilled' && res.value.ok) {
@@ -29,21 +24,16 @@ async function carregarCanaisJSON() {
                 } catch (e) {
                     console.warn("Erro ao processar JSON de uma fonte:", e);
                 }
-            } else {
-                console.warn("Falha ao carregar uma das fontes, pulando...");
             }
         }
 
-        // Se nenhum carregou, avisamos o usuário
         if (dadosValidos.length === 0) {
             throw new Error("Nenhuma fonte de canais está disponível.");
         }
 
-        // Consolida e ordena
         canaisRaw = dadosValidos.flat();
         canaisRaw.sort((a, b) => (a.canal || "").localeCompare(b.canal || ""));
 
-        // Lógica de categorias
         const s = new Set(['Todos']);
         canaisRaw.forEach(c => { 
             if (c.categorias && Array.isArray(c.categorias)) {
@@ -60,9 +50,7 @@ async function carregarCanaisJSON() {
     }
 }
 
-
 // --- 2. RENDERIZAÇÃO DA LISTA ---
-// --- 2. RENDERIZAÇÃO DA LISTA (ATUALIZADA PARA BUSCA) ---
 function renderList() {
     const catDisplay = document.getElementById("categoriaAtual");
     if (catDisplay) catDisplay.innerText = categoriaAtual;
@@ -70,13 +58,11 @@ function renderList() {
     const l = document.getElementById('contentList');
     if (!l) return;
 
-    // Pega o valor do seu campo de busca pelo ID 'filter'
     const inputBusca = document.getElementById('filter');
     const termo = inputBusca ? inputBusca.value.toLowerCase() : "";
     
     l.innerHTML = '';
     
-    // Filtra considerando a categoria ATUAL e o termo de busca
     const lista = canaisRaw.filter(c => {
         const matchCategoria = categoriaAtual === "Todos" || (c.categorias || []).includes(categoriaAtual);
         const matchBusca = (c.canal || "").toLowerCase().includes(termo);
@@ -91,8 +77,6 @@ function renderList() {
         let badgeHtml = '';
         if (['rd', 'ad'].includes(qual)) {
             badgeHtml = '<span class="ad-badge" style="background-color:red; color:white; padding:0 4px; border-radius:3px; margin-right:5px; font-size:10px; font-weight:bold;">AD</span>';
-        } else if (qual === '4k') {
-            badgeHtml = '<span class="vip-badge" style="background-color:yellow; color:black; padding:0 4px; border-radius:3px; margin-right:5px; font-size:10px; font-weight:bold;">VIP</span>';
         }
         
         div.innerHTML = `
@@ -114,7 +98,7 @@ function renderList() {
     });
 }
 
-// --- 3. PLAYER E LÓGICA DE CANAIS ---
+// --- 3. PLAYER ---
 function playCanal(c, el) {
     const qual = String(c.qualidade).toLowerCase();
     
@@ -134,12 +118,9 @@ function playCanal(c, el) {
     
     const workerHD = "https://open.tvgratisonline12.workers.dev/?url=https://ww4.embedtv.lat/";
     const workerRD = "https://redecanaistv.uk/player3/ch.php?canal=";
-    const prefixo4k = "https://embedcanaisdetv.xyz/e/index.php?canal=";
     
     let urlVideo;
-    if (qual === "4k") {
-        urlVideo = prefixo4k + c.logo + "&autoplay=1&mute=1";
-    } else if (qual === "rd") {
+    if (qual === "rd") {
         urlVideo = workerRD + c.logo;
     } else if (qual === "hd") {
         urlVideo = workerHD + encodeURIComponent(c.logo);
@@ -151,22 +132,7 @@ function playCanal(c, el) {
 
     document.getElementById("player").innerHTML = `<iframe id="videoIframe" src="${urlVideo}" allow="autoplay; fullscreen" style="width:100%;height:100%;border:none;pointer-events:auto;"></iframe>`;
 
-    // --- REFRESH CONDICIONAL PARA 4K ---
-    if (refreshTimer) clearInterval(refreshTimer);
-    if (qual === "4k") {
-        refreshTimer = setInterval(() => {
-            resetIframe();
-            setTimeout(() => {
-                const iframe = document.getElementById('videoIframe');
-                if (iframe && iframe.contentWindow) {
-                    iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
-                }
-            }, 2000);
-        }, 20000); // 29 minutos
-    }
-
     const overlay = document.getElementById('iframe-overlay');
-    // Removido '4k' da lista de bloqueio
     const isDelayedLock = ['rd', 'ad'].includes(qual); 
     const isImmediateLock = ['hd', 'sd'].includes(qual);
 
@@ -182,7 +148,7 @@ function playCanal(c, el) {
             overlay.style.setProperty('display', 'none', 'important');
             overlayTimeout = setTimeout(() => {
                 overlay.style.setProperty('display', 'block', 'important');
-            }, 12000);
+            }, 15000);
         } else if (isImmediateLock) {
             overlay.style.setProperty('display', 'block', 'important');
         } else {
@@ -192,25 +158,9 @@ function playCanal(c, el) {
 }
 
 // --- 4. FUNÇÕES DE SUPORTE ---
-function resetIframe() {
-    const playerDiv = document.getElementById("player");
-    const antigoIframe = playerDiv.querySelector('iframe');
-    if (antigoIframe) {
-        const novoIframe = document.createElement('iframe');
-        novoIframe.id = "videoIframe";
-        novoIframe.src = antigoIframe.src;
-        novoIframe.style.cssText = "width:100%;height:100%;border:none;pointer-events:auto;";
-        novoIframe.allow = "autoplay; fullscreen";
-        playerDiv.replaceChild(novoIframe, antigoIframe);
-        try { localStorage.clear(); } catch(e) {}
-    }
-}
-
 function clearPlayer() {
     const p = document.getElementById("player");
     if (p) p.innerHTML = "";
-    const sb = document.getElementById("smart-buffer-overlay");
-    if (sb) sb.style.display = "none";
 }
 
 function iniciarTelaInicial() {
@@ -246,12 +196,13 @@ function exibirAvisoBonito() {
         </div>
     `;
     playerContainer.appendChild(aviso);
-    setTimeout(() => { if (aviso) aviso.remove(); }, 5000);
+    setTimeout(() => { if (aviso) aviso.remove(); }, 3000);
 }
 
-// --- 5. NAVEGAÇÃO CATEGORIAS ---
+// --- 5. NAVEGAÇÃO DAS CATEGORIAS ---
 function proximaCategoria() {
     if (categorias.length === 0) return;
+
     indiceCategoria = (indiceCategoria + 1) % categorias.length;
     categoriaAtual = categorias[indiceCategoria];
     renderList();
@@ -259,92 +210,14 @@ function proximaCategoria() {
 
 function categoriaAnterior() {
     if (categorias.length === 0) return;
+
     indiceCategoria = (indiceCategoria - 1 + categorias.length) % categorias.length;
     categoriaAtual = categorias[indiceCategoria];
     renderList();
 }
 
+// --- INICIALIZAÇÃO ---
 window.onload = function() {
-    // Remove o modal VIP do DOM antes de qualquer script disparar
-    const vipModal = document.getElementById('vipModal');
-    if (vipModal) vipModal.remove();
-
     carregarCanaisJSON();
     iniciarTelaInicial();
 };
-
-// --- 6. OTIMIZAÇÃO PARA TV (D-PAD) ---
-document.addEventListener('keydown', function(event) {
-    const activeElement = document.activeElement;
-    
-    // Se o usuário apertar OK (Enter) no teclado/controle
-    if (event.key === 'Enter') {
-        // Se estiver no Player Container, force o foco no Iframe
-        if (activeElement.id === 'player-container' || activeElement.id === 'iframe-overlay') {
-            const iframe = document.getElementById('videoIframe');
-            if (iframe) {
-                iframe.focus();
-                // Opcional: Se o player permitir, dispara um clique
-                iframe.contentWindow.postMessage('play', '*');
-            }
-        }
-    }
-});
-
-// Força o PlayerContainer a ser focável pelo controle remoto
-document.getElementById('player-container').setAttribute('tabindex', '0');
-
-// --- 7. LOGICA DE FULLSCREEN PARA TV ---
-document.addEventListener('keydown', function(event) {
-    if (event.key === 'Enter') {
-        const activeElement = document.activeElement;
-        const playerContainer = document.getElementById('player-container');
-
-        // Se o foco estiver no player, ativamos o Fullscreen e o Play
-        if (activeElement && activeElement.id === 'videoIframe') {
-            
-            // 1. Tentar entrar em tela cheia no container principal
-            if (playerContainer && !document.fullscreenElement) {
-                playerContainer.requestFullscreen().catch(err => {
-                    console.log("Erro ao entrar em fullscreen: " + err.message);
-                });
-            }
-
-            // 2. Enviar sinal de Play para o Iframe
-            const iframe = document.getElementById('videoIframe');
-            if (iframe && iframe.contentWindow) {
-                // Tenta diversos métodos de play para diferentes tipos de players
-                iframe.contentWindow.postMessage('play', '*');
-                iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
-            }
-        }
-    }
-});
-
-// Criar o elemento do cursor
-const cursor = document.createElement('div');
-cursor.id = 'virtual-cursor';
-document.body.appendChild(cursor);
-
-let cursorX = window.innerWidth / 2;
-let cursorY = window.innerHeight / 2;
-
-document.addEventListener('keydown', function(e) {
-    const speed = 20; // Velocidade da seta
-    
-    switch(e.key) {
-        case 'ArrowUp':    cursorY -= speed; break;
-        case 'ArrowDown':  cursorY += speed; break;
-        case 'ArrowLeft':  cursorX -= speed; break;
-        case 'ArrowRight': cursorX += speed; break;
-        case 'Enter':
-            // Simular clique onde a seta está
-            const el = document.elementFromPoint(cursorX, cursorY);
-            if (el) el.click();
-            return;
-    }
-    
-    // Atualizar posição
-    cursor.style.left = cursorX + 'px';
-    cursor.style.top = cursorY + 'px';
-});
