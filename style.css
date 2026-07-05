@@ -1,125 +1,39 @@
-:root { --bg: #111; --sidebar-bg: #151515; --purple: #8a2be2; --green: #00ff88; --text: #ffffff; }
-        body { background-color: var(--bg); color: var(--text); font-family: 'Rajdhani', sans-serif; margin: 0; display: flex; height: 100vh; overflow: hidden; }
-        
-        ::-webkit-scrollbar { width: 5px; }
-        ::-webkit-scrollbar-track { background: #111; }
-        ::-webkit-scrollbar-thumb { background: var(--purple); border-radius: 10px; }
-        
-        aside { width: 320px; background: var(--sidebar-bg); border-right: 1px solid rgba(138,43,226,0.3); display: flex; flex-direction: column; flex-shrink: 0; box-shadow: 10px 0 30px rgba(0,0,0,0.5); }
-        main { flex-grow: 1; display: flex; align-items: center; justify-content: center; padding: 20px; background: radial-gradient(circle, #1a1a1a 0%, #111 100%); }
-        
-        #player-container { width: 100%; height: 100%; background: #000; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); position: relative; }
-        #player, .player-wrapper, iframe { width: 100% !important; height: 100% !important; border: none; display: block; }
-
-        .brand-container { border-bottom: 1px solid #222; padding: 15px 10px; text-align: center; }
-        .search-box { padding: 15px; }
-        .search-box input { width: 90%; background: #000; border: 1px solid #333; padding: 12px; color: var(--green); border-radius: 8px; outline: none; font-family: 'Rajdhani'; }
-        .channel-list { overflow-y: auto; flex-grow: 1; }
-        
-        .item { padding: 12px 15px; margin: 5px 10px; background: #1a1a1a; border-radius: 8px; display: flex; align-items: center; font-size: 14px; font-weight: 600; cursor: pointer; border-left: 4px solid transparent; user-select: none; transition: 0.2s; }
-        .item:hover { background: rgba(34,34,34,0.7); transform: translateX(5px); }
-        .item.active { border-left-color: var(--green); background: rgba(138,43,226,0.15); color: var(--green); }
-        .channel-number { min-width: 30px; font-size: 11px; color: var(--purple); margin-right: 12px; background: #000; padding: 2px 6px; border-radius: 4px; text-align: center; }
-        
-        #smart-buffer-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); z-index: 2000; display: none; flex-direction: column; align-items: center; justify-content: center; color: #fff; font-family: 'Rajdhani', sans-serif; }
-        .spinner { width: 50px; height: 50px; border: 5px solid rgba(138,43,226,0.3); border-top-color: var(--green); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 20px; }
-        @keyframes spin { to { transform: rotate(360deg); } }
-        
-        #custom-progress-bar { position: absolute; bottom: 0; left: 0; width: 100%; height: 1px; background: rgba(0, 0, 0, 0.5); z-index: 1000; display: none; transition: opacity 1s ease, height 0.2s ease; opacity: 1; }
-        #bar-buffered { position: absolute; top: 0; left: 0; height: 100%; background: rgba(255, 255, 255, 0.4); width: 0%; }
-        #bar-played { position: absolute; top: 0; left: 0; height: 100%; background: var(--green); width: 0%; transition: width 0.3s linear; }
-        
-        #time-display { position: absolute; top: 4px; left: 10px; right: 10px; display: flex; justify-content: space-between; font-size: 14px; color: #fff; font-family: monospace; z-index: 1001; pointer-events: none; opacity: 0; transition: opacity 1s ease; }
-
-        .categoria-header{ display:flex; align-items:center; justify-content:space-between; padding:0 8px; gap:10px; }
-        .tituloCategoria{ flex:1; text-align:center; font-size:22px; font-weight:bold; background:linear-gradient(90deg,#00ff88,#8a2be2); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-        .cat-btn{ width:38px; height:38px; border-radius:50%; border:1px solid #8a2be2; background:#111; color:#00ff88; font-size:22px; cursor:pointer; }
-        .cat-btn:hover{ background:#8a2be2; color:#fff; }
-
-        @media (max-width: 768px) { .channel-list { margin-bottom: 60px; } body { flex-direction: column; } main { order: 1; height: 35vh; width: 100%; padding: 0; } aside { order: 2; width: 100%; height: 65vh; border-right: none; border-top: 2px solid var(--purple); } }
-        
-        #iframe-overlay{ position:absolute; inset:0; z-index:1500; background:transparent; cursor:default; }
-
-        /* Estilização Centralizada e Responsiva */
-        #welcome-screen { position: absolute; inset: 0; z-index: 20; background: #000; display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center; padding: 20px; }
-        #welcome-title { font-size: 48px; font-weight: 700; background: linear-gradient(90deg,#00ff88,#8a2be2); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-        #welcome-sub { margin-top:20px; font-size:20px; color:#fff; opacity:0; }
-        
-        #noise-container { display: none; position: absolute; inset: 0; z-index: 19; background: #000; overflow: hidden; pointer-events: none; }
-        #tv-static { position: absolute; top: -50px; left: -50px; right: -50px; bottom: -50px; opacity: 0.15;
-            background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"%3E%3Cfilter id="noise"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noise)"/%3E%3C/svg%3E');
-            animation: noise 0.2s linear infinite; }
-
-        @keyframes fadeIn{to{opacity:1}}
-        @keyframes noise { 0% { transform: translate(0, 0); } 10% { transform: translate(-5px, -5px); } 100% { transform: translate(0, 0); } }
-
-        /* ---------- ESTILIZAÇÃO DE CANAIS COM ANÚNCIO (FHD) ---------- */
-.item.has-ad {
-    background-color: rgba(255, 64, 64, 0.15); /* Fundo vermelho bem transparente */
-    border-left: 4px solid #ff4040;
-    color: #ffcccc;
+:root { --bg:#111; --sidebar-bg:#151515; --purple:#8a2be2; --green:#00ff88; --text:#fff; }
+body{background:var(--bg);color:var(--text);font-family:'Rajdhani',sans-serif;margin:0;display:flex;height:100vh;overflow:hidden;}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:#111}
+::-webkit-scrollbar-thumb{background:var(--purple);border-radius:10px}
+aside{width:320px;background:var(--sidebar-bg);border-right:1px solid rgba(138,43,226,.3);display:flex;flex-direction:column;flex-shrink:0;box-shadow:10px 0 30px rgba(0,0,0,.5)}
+main{flex-grow:1;display:flex;align-items:center;justify-content:center;padding:20px;background:radial-gradient(circle,#1a1a1a 0%,#111 100%)}
+#player-container{width:100%;height:100%;background:#000;border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,.1);position:relative}
+#player,.player-wrapper,iframe{width:100%!important;height:100%!important;border:none;display:block}
+.brand-container{border-bottom:1px solid #222;padding:15px 10px;text-align:center}
+.search-box{padding:15px}
+.search-box input{width:90%;background:#000;border:1px solid #333;padding:12px;color:var(--green);border-radius:8px;outline:none;font-family:'Rajdhani'}
+.channel-list{overflow-y:auto;flex-grow:1}
+.item{padding:12px 15px;margin:5px 10px;background:#1a1a1a;border-radius:8px;display:flex;align-items:center;font-size:14px;font-weight:600;cursor:pointer;border-left:4px solid transparent;user-select:none;transition:.2s}
+.item:hover{background:rgba(34,34,34,.7);transform:translateX(5px)}
+.item.active{border-left-color:var(--green);background:rgba(138,43,226,.15);color:var(--green)}
+.channel-number{min-width:30px;font-size:11px;color:var(--purple);margin-right:12px;background:#000;padding:2px 6px;border-radius:4px;text-align:center}
+.categoria-header{display:flex;align-items:center;justify-content:space-between;padding:0 8px;gap:10px}
+.tituloCategoria{flex:1;text-align:center;font-size:22px;font-weight:bold;background:linear-gradient(90deg,#00ff88,#8a2be2);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.cat-btn{width:38px;height:38px;border-radius:50%;border:1px solid #8a2be2;background:#111;color:#00ff88;font-size:22px;cursor:pointer}
+.cat-btn:hover{background:#8a2be2;color:#fff}
+#iframe-overlay{position:absolute;inset:0;z-index:1500;background:transparent;cursor:default}
+#welcome-screen{position:absolute;inset:0;z-index:20;background:#000;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;padding:20px}
+#welcome-title{font-size:48px;font-weight:700;background:linear-gradient(90deg,#00ff88,#8a2be2);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+#welcome-sub{margin-top:20px;font-size:20px;color:#fff;opacity:0}
+#noise-container{display:none;position:absolute;inset:0;z-index:19;background:#000;overflow:hidden;pointer-events:none}
+#tv-static{position:absolute;top:-50px;left:-50px;right:-50px;bottom:-50px;opacity:.15;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");animation:noise .2s linear infinite}
+@keyframes fadeIn{to{opacity:1}}
+@keyframes noise{0%{transform:translate(0,0)}10%{transform:translate(-5px,-5px)}100%{transform:translate(0,0)}}
+.ad-badge{background:#ff4040;color:#fff;font-size:9px;padding:2px 6px;border-radius:4px;margin-right:10px;font-weight:800;display:inline-block;text-transform:uppercase}
+#virtual-cursor{width:20px;height:20px;background:url('https://cdn-icons-png.flaticon.com/512/61/61168.png') no-repeat center center;background-size:contain;position:fixed;top:50%;left:50%;z-index:999999;pointer-events:none}
+@media (max-width:768px){
+.channel-list{margin-bottom:60px}
+body{flex-direction:column}
+main{order:1;height:35vh;width:100%;padding:0}
+aside{order:2;width:100%;height:65vh;border-right:none;border-top:2px solid var(--purple)}
+#welcome-title{font-size:32px}
+#welcome-sub{font-size:16px}
 }
-
-.item.has-ad:hover {
-    background-color: rgba(255, 64, 64, 0.3);
-}
-
-.item.has-ad.active {
-    background-color: rgba(255, 64, 64, 0.4);
-    color: #ff4040;
-}
-
-/* Badge de AD que vai dentro do item */
-.ad-badge {
-    background-color: #ff4040;
-    color: #fff;
-    font-size: 9px;
-    padding: 2px 6px;
-    border-radius: 4px;
-    margin-right: 10px;
-    font-weight: 800;
-    display: inline-block;
-    text-transform: uppercase;
-}
-
-/* ---------- AVISO (Modal) ---------- */
-#fhd-warning {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: rgba(0,0,0,.85);
-    z-index: 3000; /* Garante que fique acima de tudo */
-}
-
-.fhd-box {
-    width: min(520px, 90%);
-    background: #161616;
-    border: 2px solid #ff2f2f;
-    border-radius: 14px;
-    padding: 30px;
-    text-align: center;
-    color: #fff;
-    box-shadow: 0 0 30px rgba(255,0,0,.45);
-}
-
-#virtual-cursor {
-    width: 20px;
-    height: 20px;
-    background: url('https://cdn-icons-png.flaticon.com/512/61/61168.png') no-repeat center center;
-    background-size: contain;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    z-index: 999999;
-    pointer-events: none; /* A seta não bloqueia os cliques */
-}
-
-.fhd-title { font-size: 28px; font-weight: bold; color: #ff4040; margin-bottom: 20px; }
-.fhd-text { line-height: 1.7; font-size: 18px; }
-#fhd-timer { margin-top: 25px; font-size: 38px; font-weight: bold; color: #00ff88; }
-        @media (max-width: 768px) {
-            #welcome-title { font-size: 32px; }
-            #welcome-sub { font-size: 16px; }
-        }
