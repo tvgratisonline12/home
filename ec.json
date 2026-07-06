@@ -45,7 +45,7 @@
   {"canal": "GLOBO RS", "logo": "globors", "qualidade": "ec", "categorias": ["Todos", "Abertos"]},
   {"canal": "GLOBO RJ", "logo": "globorj", "qualidade": "ec", "categorias": ["Todos", "Abertos"]},
   {"canal": "GLOBO SP", "logo": "globosp", "qualidade": "ec", "categorias": ["Todos", "Abertos"]},
-  {"canal": "GLOBONEWS", "logo": "globonews", "qualidade": "ec", "categorias": ["Todos", "Notícias"]},
+  {"canal": "GLOBO NEWS", "logo": "globonews", "qualidade": "ec", "categorias": ["Todos", "Notícias"]},
   {"canal": "GLOBOPLAY NOVELAS", "logo": "globoplaynovelas", "qualidade": "ec", "categorias": ["Todos", "Filmes e Séries"]},
   {"canal": "GLOOB", "logo": "gloob", "qualidade": "ec", "categorias": ["Todos", "Infantil"]},
   {"canal": "GLOOBINHO", "logo": "gloobinho", "qualidade": "ec", "categorias": ["Todos", "Infantil"]},
