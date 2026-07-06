@@ -1,6 +1,5 @@
 [
   {"canal": "ADULT SWIM", "logo": "adultswim", "qualidade": "ec", "categorias": ["Todos", "Filmes e Séries"]},
-  {"canal": "A&E", "logo": "aee", "qualidade": "ec", "categorias": ["Todos", "Filmes e Séries"]},
   {"canal": "AMC", "logo": "amc", "qualidade": "ec", "categorias": ["Todos", "Filmes e Séries"]},
   {"canal": "AMC SÉRIES", "logo": "amcseries", "qualidade": "ec", "categorias": ["Todos", "Filmes e Séries"]},
   {"canal": "ANIMAL PLANET", "logo": "animalplanet", "qualidade": "ec", "categorias": ["Todos", "Documentários"]},
@@ -65,7 +64,6 @@
   {"canal": "HBO POP", "logo": "hbopop", "qualidade": "ec", "categorias": ["Todos", "Filmes e Séries"]},
   {"canal": "HBO SIGNATURE", "logo": "hbosignature", "qualidade": "ec", "categorias": ["Todos", "Filmes e Séries"]},
   {"canal": "HBO XTREME", "logo": "hboxtreme", "qualidade": "ec", "categorias": ["Todos", "Filmes e Séries"]},
-  {"canal": "HGTV", "logo": "hgtv", "qualidade": "ec", "categorias": ["Todos", "Lifestyle"]},
   {"canal": "HISTORY", "logo": "history", "qualidade": "ec", "categorias": ["Todos", "Documentários"]},
   {"canal": "HISTORY 2", "logo": "history2", "qualidade": "ec", "categorias": ["Todos", "Documentários"]},
   {"canal": "INVESTIGAÇÃO DISCOVERY", "logo": "discoveryid", "qualidade": "ec", "categorias": ["Todos", "Documentários"]},
