@@ -181,9 +181,9 @@ function iniciarTelaInicial() {
                     <div id="welcome-title" style="font-size: 1.8rem;">RECOMENDAÇÃO DE NAVEGADOR</div>
                     <div id="welcome-sub" style="animation: fadeIn 1s forwards 0.5s; font-size: 1rem;">Para uma experiência sem anúncios e travamentos</div>
                     <div class="grid-apps">
-                        ${renderItemRec('BrowserHere', 'browser.jpg', 'Android TV')}
-                        ${renderItemRec('Brave', 'brave.jpg', 'Desktop')}
-                        ${renderItemRec('Brave', 'brave.jpg', 'Mobile')}
+                        ${renderItemRec('Android TV', 'browser.jpg', 'Browser Here')}
+                        ${renderItemRec('Windows', 'brave.jpg', 'Brave')}
+                        ${renderItemRec('Android', 'brave.jpg', 'Brave')}
                     </div>
                 </div>
 
