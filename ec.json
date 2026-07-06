@@ -93,7 +93,7 @@
   {"canal": "RECORD MG", "logo": "recordmg", "qualidade": "ec", "categorias": ["Todos", "Abertos"]},
   {"canal": "RECORD NEWS", "logo": "recordnews", "qualidade": "ec", "categorias": ["Todos", "Notícias"]},
   {"canal": "RECORD RJ", "logo": "recordrj", "qualidade": "ec", "categorias": ["Todos", "Abertos"]},
-  {"canal": "RECORD", "logo": "recordsp", "qualidade": "ec", "categorias": ["Todos", "Abertos"]},
+  {"canal": "RECORD SP", "logo": "recordsp", "qualidade": "ec", "categorias": ["Todos", "Abertos"]},
   {"canal": "REDETV!", "logo": "redetv", "qualidade": "ec", "categorias": ["Todos", "Abertos"]},
   {"canal": "SBT RJ", "logo": "sbtrj", "qualidade": "ec", "categorias": ["Todos", "Abertos"]},
   {"canal": "SBT SP", "logo": "sbtsp", "qualidade": "ec", "categorias": ["Todos", "Abertos"]},
