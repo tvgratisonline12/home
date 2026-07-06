@@ -53,7 +53,7 @@
   {"canal": "FISH TV", "logo": "fishtv", "qualidade": "rd", "categorias": ["Todos", "Lifestyle"]},
   {"canal": "FOOD NETWORK", "logo": "foodnetwork", "qualidade": "rd", "categorias": ["Todos", "Lifestyle"]},
   {"canal": "GE TV", "logo": "getv", "qualidade": "rd", "categorias": ["Todos", "Esportes"]},
-  {"canal": "GLOBONEWS", "logo": "globonews", "qualidade": "rd", "categorias": ["Todos", "Notícias"]},
+  {"canal": "GLOBO NEWS", "logo": "globonews", "qualidade": "rd", "categorias": ["Todos", "Notícias"]},
   {"canal": "GLOBOPLAY NOVELAS", "logo": "globoplaynovelas", "qualidade": "rd", "categorias": ["Todos", "Filmes e Séries"]},
   {"canal": "GLOOB", "logo": "gloob", "qualidade": "rd", "categorias": ["Todos", "Infantil"]},
   {"canal": "GLOOBINHO", "logo": "gloobinho", "qualidade": "rd", "categorias": ["Todos", "Infantil"]},
