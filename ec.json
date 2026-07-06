@@ -1,4 +1,5 @@
 [
+  {"canal": "A&E", "logo": "aee", "qualidade": "ec", "categorias": ["Todos", "Filmes e Séries"]},
   {"canal": "ADULT SWIM", "logo": "adultswim", "qualidade": "ec", "categorias": ["Todos", "Filmes e Séries"]},
   {"canal": "AMC", "logo": "amc", "qualidade": "ec", "categorias": ["Todos", "Filmes e Séries"]},
   {"canal": "AMC SÉRIES", "logo": "amcseries", "qualidade": "ec", "categorias": ["Todos", "Filmes e Séries"]},
