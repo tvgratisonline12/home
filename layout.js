@@ -116,14 +116,14 @@ function playCanal(c, el) {
     el.classList.add('active');
     clearPlayer();
     
-    const workerEB = "https://open.tvgratisonline12.workers.dev/?url=https://ww4.embedtv.lat/";
+    const workerHD = "https://open.tvgratisonline12.workers.dev/?url=https://ww4.embedtv.lat/";
     const workerRD = "https://redecanaistv.uk/player3/ch.php?canal=";
     
     let urlVideo;
     if (qual === "rd") {
         urlVideo = workerRD + c.logo;
-    } else if (qual === "eb") {
-        urlVideo = workerEB + encodeURIComponent(c.logo);
+    } else if (qual === "hd") {
+        urlVideo = workerHD + encodeURIComponent(c.logo);
     } else if (qual === "sd") {
         urlVideo = c.logo + ".m3u8";
     } else {
@@ -134,7 +134,7 @@ function playCanal(c, el) {
 
     const overlay = document.getElementById('iframe-overlay');
     const isDelayedLock = ['rd', 'ad'].includes(qual); 
-    const isImmediateLock = ['eb', 'sd'].includes(qual);
+    const isImmediateLock = ['hd', 'sd'].includes(qual);
 
     if (overlay) {
         overlay.ondblclick = () => {
@@ -166,11 +166,48 @@ function clearPlayer() {
 function iniciarTelaInicial() {
     const p = document.getElementById('player');
     if (!p) return;
+
     p.innerHTML = `
         <div id="noise-container"><div id="tv-static"></div></div>
         <div id="welcome-screen">
-            <div id="welcome-title">TVGrátis.Online</div>
-            <div id="welcome-sub" style="animation: fadeIn 1s forwards 0.5s">Escolha um canal para começar</div>
+            <div id="container-alternante">
+                
+                <div class="bloco-slide" id="slide-1">
+                    <div id="welcome-title">TVGrátis.Online</div>
+                    <div id="welcome-sub" style="animation: fadeIn 1s forwards 0.5s">Escolha um canal para começar</div>
+                </div>
+
+                <div class="bloco-slide" id="slide-2">
+                    <div id="welcome-title" style="font-size: 1.8rem;">RECOMENDAÇÃO DE NAVEGADOR</div>
+                    <div id="welcome-sub" style="animation: fadeIn 1s forwards 0.5s; font-size: 1rem;">Para uma experiência sem anúncios e travamentos</div>
+                    <div class="grid-apps">
+                        ${renderItemRec('BrowserHere', 'browser.jpg', 'Android TV')}
+                        ${renderItemRec('Brave', 'brave.jpg', 'Desktop')}
+                        ${renderItemRec('Brave', 'brave.jpg', 'Mobile')}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    `;
+}
+
+function renderItemRec(nome, icon, disp) {
+    return `
+        <div class="rec-card">
+            <div class="rec-disp">${disp}</div>
+            <img src="${icon}" class="rec-icon" onerror="this.style.display='none'">
+            <div class="rec-nome">${nome}</div>
+        </div>
+    `;
+}
+
+function renderItemRec(nome, icon, disp) {
+    return `
+        <div style="display:inline-block; margin: 15px; text-align: center;">
+            <img src="${icon}" style="width: 40px; height: 40px; border-radius: 8px;">
+            <div style="font-size: 0.65rem; color: #a855f7; font-weight: bold; margin-top: 5px; text-transform: uppercase;">${disp}</div>
+            <div style="font-size: 0.8rem; font-weight: bold;">${nome}</div>
         </div>
     `;
 }
