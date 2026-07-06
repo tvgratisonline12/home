@@ -9,7 +9,7 @@ async function carregarCanaisJSON() {
     try {
         const urls = [
             'rd.json',
-            '*.json',
+            '404.json',
             'cx.json',
              'ec.json'
      
