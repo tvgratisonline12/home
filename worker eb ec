@@ -1,0 +1,81 @@
+addEventListener('fetch', event => {
+  event.respondWith(handleRequest(event.request));
+});
+
+async function handleRequest(request) {
+  const url = new URL(request.url);
+
+  // FLUXO 1: Se a URL tiver o parâmetro ?url= (Seu primeiro worker)
+  if (url.searchParams.has("url")) {
+    return handleHTMLProxy(request, url);
+  }
+
+  // FLUXO 2: Se for um caminho de arquivo (Seu segundo worker - ex: /bandsports/index.m3u8)
+  // Assumimos que se não tem ?url=, é uma chamada direta de stream
+  return handleStreamProxy(request, url);
+}
+
+// --- Lógica do Worker de HTML (Limpeza e Autoplay) ---
+async function handleHTMLProxy(request, url) {
+  const targetUrl = url.searchParams.get("url");
+  
+  const response = await fetch(targetUrl, {
+    headers: {
+      'Referer': targetUrl,
+      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36'
+    }
+  });
+
+  let body = await response.text();
+  
+  // Limpeza de Scripts de Ads
+  body = body.replace(/<script[^>]*src=["']([^"']*(aclib|popads|ad-server|propeller|adcash)[^"']*)["'][^>]*><\/script>/gi, '');
+  body = body.replace(/<div[^>]*znid=["'][^0-9]*["'][^>]*><\/div>/gi, '');
+
+  // Script de Play Universal
+  const scriptAutoPlay = `
+    <script>
+      (function() {
+        function tentarDarPlay() {
+          const btn = document.querySelector('.play-wrapper') || document.querySelector('[class*="play"]');
+          if (btn) btn.click();
+          const videos = document.querySelectorAll('video');
+          videos.forEach(v => { if (v.paused) v.play().catch(e => {}); });
+        }
+        let tentativas = 0;
+        const intervalo = setInterval(() => {
+          tentarDarPlay();
+          tentativas++;
+          if (tentativas > 10) clearInterval(intervalo);
+        }, 800);
+      })();
+    </script>
+  `;
+  body = body.replace('</body>', scriptAutoPlay + '</body>');
+
+  return new Response(body, {
+    headers: { 'Content-Type': 'text/html; charset=UTF-8', 'Access-Control-Allow-Origin': '*' }
+  });
+}
+
+// --- Lógica do Worker de Stream (Headers/CORS) ---
+async function handleStreamProxy(request, url) {
+  const targetHost = '2606.cdn10embed.xyz';
+  const targetUrl = 'https://' + targetHost + url.pathname + url.search;
+
+  const headers = new Headers(request.headers);
+  headers.set('Referer', 'https://12embeddecanais.xyz/');
+  headers.set('Origin', 'https://12embeddecanais.xyz/');
+  headers.delete('Host');
+
+  const response = await fetch(targetUrl, {
+    method: request.method,
+    headers: headers,
+    body: request.body
+  });
+
+  const newResponse = new Response(response.body, response);
+  newResponse.headers.set('Access-Control-Allow-Origin', '*');
+  newResponse.headers.set('Access-Control-Allow-Methods', 'GET, HEAD, OPTIONS');
+  return newResponse;
+}
