@@ -184,6 +184,7 @@ function iniciarTelaInicial() {
                         ${renderItemRec('Android TV', 'browser.jpg', 'Browser Here')}
                         ${renderItemRec('Windows', 'brave.jpg', 'Brave')}
                         ${renderItemRec('Android', 'brave.jpg', 'Brave')}
+                        ${renderItemRec('IOS', 'brave.jpg', 'Brave')}
                     </div>
                 </div>
 
