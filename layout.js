@@ -8,9 +8,11 @@ let overlayTimeout;
 async function carregarCanaisJSON() {
     try {
         const urls = [
-            'rd.json',
-            '*.json',
-            'cx.json'
+            'https://tvgratis.online/rd.json',
+            'eb.json',
+            'https://tvgratis.online/cx.json',
+             'https://tvgratis.online/ec.json'
+     
         ];
 
         const resultados = await Promise.allSettled(urls.map(url => fetch(url)));
@@ -116,14 +118,14 @@ function playCanal(c, el) {
     el.classList.add('active');
     clearPlayer();
     
-    const workerHD = "https://open.tvgratisonline12.workers.dev/?url=https://ww4.embedtv.lat/";
+    const workerEC = "https://open.tvgratis.workers.dev/";
     const workerRD = "https://redecanaistv.uk/player3/ch.php?canal=";
     
     let urlVideo;
     if (qual === "rd") {
         urlVideo = workerRD + c.logo;
-    } else if (qual === "hd") {
-        urlVideo = workerHD + encodeURIComponent(c.logo);
+    } else if (qual === "ec") {
+    urlVideo = workerEC + encodeURIComponent(c.logo) + "/index.m3u8";
     } else if (qual === "sd") {
         urlVideo = c.logo + ".m3u8";
     } else {
@@ -134,7 +136,7 @@ function playCanal(c, el) {
 
     const overlay = document.getElementById('iframe-overlay');
     const isDelayedLock = ['rd', 'ad'].includes(qual); 
-    const isImmediateLock = ['hd', 'sd'].includes(qual);
+    const isImmediateLock = ['ec', 'sd'].includes(qual);
 
     if (overlay) {
         overlay.ondblclick = () => {
@@ -184,7 +186,6 @@ function iniciarTelaInicial() {
                         ${renderItemRec('Android TV', 'browser.jpg', 'Browser Here')}
                         ${renderItemRec('Windows', 'brave.jpg', 'Brave')}
                         ${renderItemRec('Android', 'brave.jpg', 'Brave')}
-                        ${renderItemRec('IOS', 'brave.jpg', 'Brave')}
                     </div>
                 </div>
 
