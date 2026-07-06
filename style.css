@@ -32,11 +32,11 @@ main{flex-grow:1;display:flex;align-items:center;justify-content:center;padding:
 
 .bloco-slide {
     position: absolute; width: 100%; top: 0; left: 0;
-    animation: alternarTelas 12s infinite;
+    animation: alternarTelas 6s infinite;
     opacity: 0;
 }
 
-#slide-2 { animation-delay: 6s; }
+#slide-2 { animation-delay: 3s; }
 
 @keyframes alternarTelas {
     0%, 45% { opacity: 1; visibility: visible; }
