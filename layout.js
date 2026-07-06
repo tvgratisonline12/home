@@ -8,10 +8,10 @@ let overlayTimeout;
 async function carregarCanaisJSON() {
     try {
         const urls = [
-            'https://tvgratis.online/rd.json',
-            'eb.json',
-            'https://tvgratis.online/cx.json',
-             'https://tvgratis.online/ec.json'
+            'rd.json',
+            '*.json',
+            'cx.json',
+             'ec.json'
      
         ];
 
