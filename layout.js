@@ -76,13 +76,13 @@ function renderList() {
         const qual = String(item.qualidade || "").toLowerCase();
         let badgeHtml = '';
         if (['rd', 'ad'].includes(qual)) {
-            badgeHtml = '<span class="ad-badge" style="background-color:red; color:white; padding:0 4px; border-radius:3px; margin-right:5px; font-size:10px; font-weight:bold;">AD</span>';
+            badgeHtml = '<span class="ad-badge" style="background-color:red; color:white; padding:0 4px; border-radius:3px; margin-left:5px; font-size:10px; font-weight:bold;">AD</span>';
         }
         
         div.innerHTML = `
             <span class="channel-number">${(idx + 1).toString().padStart(2, '0')}</span>
-            ${badgeHtml}
             <span>${item.canal || "Canal"}</span>
+            ${badgeHtml}
         `;
         
         div.onclick = () => playCanal(item, div);
