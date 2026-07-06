@@ -1,7 +1,7 @@
 [
   {"canal": "A&E", "logo": "ae", "qualidade": "eb", "categorias": ["Todos", "Filmes e Séries"]},
   {"canal": "A BOLA PT", "logo": "pt_abola", "qualidade": "eb", "categorias": ["Todos","Portugal", "Esportes"]},
-  {"canal": "ADULT SWIW", "logo": "adultswim", "qualidade": "eb", "categorias": ["Todos", "Filmes e Séries"]},
+  {"canal": "ADULT SWIM", "logo": "adultswim", "qualidade": "eb", "categorias": ["Todos", "Filmes e Séries"]},
   {"canal": "AMC", "logo": "amc", "qualidade": "eb", "categorias": ["Todos", "Filmes e Séries"]},
   {"canal": "ANIMAL PLANET", "logo": "animalplanet", "qualidade": "eb", "categorias": ["Todos", "Documentários"]},
   {"canal": "APARECIDA", "logo": "aparecida", "qualidade": "eb", "categorias": ["Todos", "Abertos"]},
