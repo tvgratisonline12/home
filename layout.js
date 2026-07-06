@@ -119,24 +119,28 @@ function playCanal(c, el) {
     clearPlayer();
     
     const workerEC = "https://open.tvgratis.workers.dev/";
+    const workerEB = "https://open.tvgratis.workers.dev/?url=https://ww4.embedtv.lat/";
     const workerRD = "https://redecanaistv.uk/player3/ch.php?canal=";
     
     let urlVideo;
-    if (qual === "rd") {
-        urlVideo = workerRD + c.logo;
-    } else if (qual === "ec") {
+
+if (qual === "rd") {
+    urlVideo = workerRD + c.logo;
+} else if (qual === "ec") {
     urlVideo = workerEC + encodeURIComponent(c.logo) + "/index.m3u8";
-    } else if (qual === "sd") {
-        urlVideo = c.logo + ".m3u8";
-    } else {
-        urlVideo = c.logo;
-    }
+} else if (qual === "eb") { // Nova lógica adicionada
+    urlVideo = workerEB + encodeURIComponent(c.logo);
+} else if (qual === "sd") {
+    urlVideo = c.logo + ".m3u8";
+} else {
+    urlVideo = c.logo;
+}
 
     document.getElementById("player").innerHTML = `<iframe id="videoIframe" src="${urlVideo}" allow="autoplay; fullscreen" style="width:100%;height:100%;border:none;pointer-events:auto;"></iframe>`;
 
     const overlay = document.getElementById('iframe-overlay');
     const isDelayedLock = ['rd', 'ad'].includes(qual); 
-    const isImmediateLock = ['ec', 'sd'].includes(qual);
+    const isImmediateLock = ['ec', 'eb','sd'].includes(qual);
 
     if (overlay) {
         overlay.ondblclick = () => {
