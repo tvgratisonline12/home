@@ -85,6 +85,18 @@
 </main>
    <script src="layout.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/disable-devtool@latest/disable-devtool.min.js"></script>
-    
+<script>
+    DisableDevtool({
+        md5: '8865f3a072045558837311100572d427', // Este hash é apenas um exemplo, você pode omitir se não quiser uma senha de bypass
+        url: 'bloqueado.html', // Para onde o usuário será redirecionado se tentar abrir o console
+        tk_name: 'adblock_key', // Nome do parâmetro opcional
+        debug: false, // Define como false para não mostrar logs no console
+        disableMenu: true, // Bloqueia o clique direito
+        disableSelect: true, // Bloqueia seleção de texto
+        disableCopy: true, // Bloqueia copiar
+        disableCut: true, // Bloqueia cortar
+        disablePaste: true // Bloqueia colar
+    });
+</script>
 </body>
 </html>
