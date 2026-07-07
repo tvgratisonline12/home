@@ -73,7 +73,7 @@
   {"canal": "MULTISHOW", "logo": "multishow", "qualidade": "ec", "categorias": ["Todos", "Música"]},
   {"canal": "NOSSO FUTEBOL", "logo": "nossofutebol", "qualidade": "ec", "categorias": ["Todos", "Esportes"]},
   {"canal": "NSPORTS", "logo": "nsports", "qualidade": "ec", "categorias": ["Todos", "Esportes"]},
-  {"canal": "OFF", "logo": "canaloff", "qualidade": "ec", "categorias": ["Todos", "Lifestyle"]},
+  {"canal": "OFF", "logo": "canaloff", "qualidade": "ec", "categorias": ["Todos", "Esportes"]},
   {"canal": "PARAMOUNT+ 1", "logo": "paramountplus", "qualidade": "ec", "categorias": ["Todos", "Filmes e Séries"]},
   {"canal": "PARAMOUNT+ 2", "logo": "paramountplus02", "qualidade": "ec", "categorias": ["Todos", "Filmes e Séries"]},
   {"canal": "PREMIERE 2", "logo": "premiere2", "qualidade": "ec", "categorias": ["Todos", "Esportes"]},
