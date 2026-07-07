@@ -114,7 +114,7 @@
   {"canal": "TNT NOVELAS", "logo": "tntnovelas", "qualidade": "ec", "categorias": ["Todos", "Filmes e Séries"]},
   {"canal": "TNT SÉRIES", "logo": "tntseries", "qualidade": "ec", "categorias": ["Todos", "Filmes e Séries"]},
   {"canal": "TOONCAST", "logo": "tooncast", "qualidade": "ec", "categorias": ["Todos", "Infantil"]},
-  {"canal": "TV CULTURA", "logo": "tvcultura", "qualidade": "ec", "categorias": ["Todos", "Infantil"]},
+  {"canal": "TV CULTURA", "logo": "tvcultura", "qualidade": "ec", "categorias": ["Todos", "Abertos"]},
   {"canal": "UNIVERSAL", "logo": "universaltv", "qualidade": "ec", "categorias": ["Todos", "Filmes e Séries"]},
   {"canal": "WARNER", "logo": "warner", "qualidade": "ec", "categorias": ["Todos", "Filmes e Séries"]},
   {"canal": "XSPORTS", "logo": "xsports", "qualidade": "ec", "categorias": ["Todos", "Esportes"]}
