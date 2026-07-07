@@ -21,7 +21,7 @@
   {"canal": "DAZN 1", "logo": "dazn", "qualidade": "ec", "categorias": ["Todos", "Esportes"]},
   {"canal": "DISCOVERY CHANNEL", "logo": "discoverychannel", "qualidade": "ec", "categorias": ["Todos", "Documentários"]},
   {"canal": "DISCOVERY HOME & HEALTH", "logo": "discoveryhh", "qualidade": "ec", "categorias": ["Todos", "Lifestyle"]},
-  {"canal": "INVESTIGAÇÃO DISCOVERY", "logo": "discoveryid", "qualidade": "ec", "categorias": ["Todos", "Documentários"]},
+  {"canal": "DISCOVERY ID", "logo": "discoveryid", "qualidade": "ec", "categorias": ["Todos", "Documentários"]},
   {"canal": "DISCOVERY KIDS", "logo": "discoverykids", "qualidade": "ec", "categorias": ["Todos", "Infantil"]},
   {"canal": "DISCOVERY SCIENCE", "logo": "discoveryscience", "qualidade": "ec", "categorias": ["Todos", "Documentários"]},
   {"canal": "DISCOVERY THEATER", "logo": "discoverytheater", "qualidade": "ec", "categorias": ["Todos", "Documentários"]},
