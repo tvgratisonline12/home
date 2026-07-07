@@ -84,7 +84,7 @@
   {"canal": "SONY CHANNEL", "logo": "sonychannel", "qualidade": "eb", "categorias": ["Todos", "Filmes e Séries"]},
   {"canal": "SPACE", "logo": "space", "qualidade": "eb", "categorias": ["Todos", "Filmes e Séries"]},
   {"canal": "STUDIO UNIVERSAL", "logo": "studiouniversal", "qualidade": "eb", "categorias": ["Todos", "Filmes e Séries"]},
-  {"canal": "SPORTV", "logo": "sportv", "qualidade": "eb", "categorias": ["Todos", "Esportes"]},
+  {"canal": "SPORTV 1", "logo": "sportv", "qualidade": "eb", "categorias": ["Todos", "Esportes"]},
   {"canal": "SPORTV 2", "logo": "sportv2", "qualidade": "eb", "categorias": ["Todos", "Esportes"]},
   {"canal": "SPORTV 3", "logo": "sportv3", "qualidade": "eb", "categorias": ["Todos", "Esportes"]},
   {"canal": "SPORTV PT 1", "logo": "pt_sportv1", "qualidade": "eb", "categorias": ["Todos", "Portugal", "Esportes"]},
