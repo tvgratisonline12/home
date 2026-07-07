@@ -70,7 +70,7 @@
   {"canal": "NARUTO CLASSIC 24H", "logo": "24h_naruto", "qualidade": "eb", "categorias": ["Todos", "24 Horas"]},
   {"canal": "OFF", "logo": "off", "qualidade": "eb", "categorias": ["Todos", "Esportes"]},
   {"canal": "OS SIMPSONS 24H", "logo": "24h_simpsons", "qualidade": "eb", "categorias": ["Todos", "24 Horas"]},
-  {"canal": "PREMIERE 1", "logo": "premiere", "qualidade": "eb", "categorias": ["Todos", "Esportes"]},
+  {"canal": "PREMIERE CLUBES", "logo": "premiere", "qualidade": "eb", "categorias": ["Todos", "Esportes"]},
   {"canal": "PREMIERE 2", "logo": "premiere2", "qualidade": "eb", "categorias": ["Todos", "Esportes"]},
   {"canal": "PREMIERE 3", "logo": "premiere3", "qualidade": "eb", "categorias": ["Todos", "Esportes"]},
   {"canal": "PREMIERE 4", "logo": "premiere4", "qualidade": "eb", "categorias": ["Todos", "Esportes"]},
