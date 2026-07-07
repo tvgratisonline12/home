@@ -83,7 +83,7 @@
   {"canal": "MODO VIAGEM", "logo": "modoviagem", "qualidade": "rd", "categorias": ["Todos", "Lifestyle"]},
   {"canal": "MULTISHOW", "logo": "multishow", "qualidade": "rd", "categorias": ["Todos", "Música"]},
   {"canal": "MUSIC BOX BRAZIL", "logo": "musicboxbrazil", "qualidade": "rd", "categorias": ["Todos", "Música"]},
-  {"canal": "N SPORTS", "logo": "nsports", "qualidade": "rd", "categorias": ["Todos", "Esportes"]},
+  {"canal": "NSPORTS", "logo": "nsports", "qualidade": "rd", "categorias": ["Todos", "Esportes"]},
   {"canal": "OFF", "logo": "off", "qualidade": "rd", "categorias": ["Todos", "Lifestyle"]},
   {"canal": "PARAMOUNT+ 1", "logo": "paramountplus1", "qualidade": "rd", "categorias": ["Todos", "Filmes e Séries"]},
   {"canal": "PARAMOUNT+ 2", "logo": "paramountplus2", "qualidade": "rd", "categorias": ["Todos", "Filmes e Séries"]},
