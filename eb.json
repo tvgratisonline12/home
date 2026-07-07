@@ -24,7 +24,7 @@
   {"canal": "CULTURA", "logo": "cultura", "qualidade": "eb", "categorias": ["Todos", "Abertos"]},
   {"canal": "DAZN 1", "logo": "pt_eleven1", "qualidade": "eb", "categorias": ["Todos", "Esportes"]},
   {"canal": "DISCOVERY CHANNEL", "logo": "discoverychannel", "qualidade": "eb", "categorias": ["Todos", "Documentários"]},
-  {"canal": "DISCOVERY H&H", "logo": "discoveryhh", "qualidade": "eb", "categorias": ["Todos", "Lifestyle"]},
+  {"canal": "DISCOVERY HOME & HEALTH", "logo": "discoveryhh", "qualidade": "eb", "categorias": ["Todos", "Lifestyle"]},
   {"canal": "DISCOVERY ID", "logo": "discoveryid", "qualidade": "eb", "categorias": ["Todos", "Documentários"]},
   {"canal": "DISCOVERY KIDS", "logo": "discoverykids", "qualidade": "eb", "categorias": ["Todos", "Infantil"]},
   {"canal": "DISCOVERY SCIENCE", "logo": "discoveryscience", "qualidade": "eb", "categorias": ["Todos", "Documentários"]},
