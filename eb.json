@@ -66,7 +66,7 @@
   {"canal": "HISTORY", "logo": "history", "qualidade": "eb", "categorias": ["Todos", "Documentários"]},
   {"canal": "HISTORY 2", "logo": "history2", "qualidade": "eb", "categorias": ["Todos", "Documentários"]},
   {"canal": "MEGAPIX", "logo": "megapix", "qualidade": "eb", "categorias": ["Todos", "Filmes e Séries"]},
-  {"canal": "MULTI SHOW", "logo": "multishow", "qualidade": "eb", "categorias": ["Todos", "Música"]},
+  {"canal": "MULTISHOW", "logo": "multishow", "qualidade": "eb", "categorias": ["Todos", "Música"]},
   {"canal": "NARUTO CLASSIC 24H", "logo": "24h_naruto", "qualidade": "eb", "categorias": ["Todos", "24 Horas"]},
   {"canal": "OFF", "logo": "off", "qualidade": "eb", "categorias": ["Todos", "Esportes"]},
   {"canal": "OS SIMPSONS 24H", "logo": "24h_simpsons", "qualidade": "eb", "categorias": ["Todos", "24 Horas"]},
