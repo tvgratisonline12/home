@@ -99,89 +99,78 @@ function renderList() {
         l.appendChild(div);
     });
 }
+        
+// --- 3. LÓGICA DO PLAYER INTEGRADA ---
+let playerInstance = null; // Variável global de controle
 
-// --- 3. PLAYER (ATUALIZADO) ---
 async function playCanal(c, el) {
-    const qual = String(c.qualidade).toLowerCase();
+    const qual = String(c.qualidade || "").toLowerCase();
     
-    // Limpeza de elementos antigos
-    let nc = document.getElementById('noise-container'); if (nc) nc.remove();
-    let s = document.getElementById('tv-static'); if (s) s.remove();
-    let w = document.getElementById('welcome-screen'); if (w) w.remove();
-    const avisoAntigo = document.getElementById('aviso-bonito');
-    if (avisoAntigo) avisoAntigo.remove();
+    // 1. Limpeza de elementos da tela inicial e avisos
+    ['noise-container', 'tv-static', 'welcome-screen', 'aviso-bonito'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.remove();
+    });
     
+    // 2. Estado visual da lista
     document.querySelectorAll('.item').forEach(i => i.classList.remove('active'));
-    el.classList.add('active');
-    clearPlayer(); // Limpa o conteúdo anterior
+    if (el) el.classList.add('active');
+    
+    // 3. Destruir player anterior para evitar conflito de memória
+    if (playerInstance) { 
+        playerInstance.dispose(); 
+        playerInstance = null; 
+    }
     
     const container = document.getElementById("player");
-    const workerEC = "https://open.tvgratis.workers.dev/";
-    const workerEB = "https://open.tvgratis.workers.dev/?url=https://ww4.embedtv.lat/";
-    const workerRD = "https://redecanaistv.uk/player3/ch.php?canal=";
-
-    // Lógica de formação da URL
+    container.innerHTML = "";
+    
+    // 4. Formação da URL de acordo com as regras solicitadas
     let urlVideo;
     if (qual === "rd") {
-        urlVideo = workerRD + c.logo;
+        urlVideo = "https://redecanaistv.uk/player3/ch.php?canal=" + c.logo;
     } else if (qual === "ec") {
-        // Formata: worker + logo + /index.m3u8
-        urlVideo = workerEC + encodeURIComponent(c.logo) + "/index.m3u8";
+        urlVideo = "https://open.tvgratis.workers.dev/" + encodeURIComponent(c.logo) + "/index.m3u8";
     } else if (qual === "eb") {
-        urlVideo = workerEB + encodeURIComponent(c.logo);
+        urlVideo = "https://open.tvgratis.workers.dev/?url=https://ww4.embedtv.lat/" + encodeURIComponent(c.logo);
     } else if (qual === "sd") {
-        // Formata: link + .m3u8
-        urlVideo = c.logo + ".m3u8";
+        urlVideo = c.logo + ".m3u8"; // Adiciona .m3u8 conforme solicitado
     } else {
         urlVideo = c.logo;
     }
 
-    // Decisão: Usar Player HLS ou Iframe
+    // 5. Renderização (Video.js para sd/ec, Iframe para o restante)
     if (['sd', 'ec'].includes(qual)) {
-        // Cria elemento de vídeo
-        const video = document.createElement('video');
-        video.id = 'video-player';
-        video.className = 'video-js vjs-default-skin';
-        video.controls = true;
-        video.autoplay = true;
-        video.style.width = "100%";
-        video.style.height = "100%";
-        container.appendChild(video);
-
-        // Inicializa com Video.js
-        videojs(video, {
-            sources: [{ src: urlVideo, type: 'application/x-mpegURL' }]
+        container.innerHTML = `<video id="video-player" class="video-js vjs-big-play-centered" controls autoplay playsinline style="width:100%;height:100%;"></video>`;
+        
+        playerInstance = videojs('video-player', {
+            autoplay: true,
+            controls: true,
+            sources: [{ 
+                src: urlVideo, 
+                type: 'application/x-mpegURL' 
+            }]
         });
     } else {
-        // Mantém Iframe para outros (rd, eb, etc)
         container.innerHTML = `<iframe id="videoIframe" src="${urlVideo}" allow="autoplay; fullscreen" style="width:100%;height:100%;border:none;"></iframe>`;
     }
 
+    // 6. Gerenciamento de Overlay (conforme sua lógica original)
+    if (['rd', 'ad'].includes(qual)) exibirAvisoBonito();
+    
     const overlay = document.getElementById('iframe-overlay');
-    const isDelayedLock = ['rd', 'ad'].includes(qual); 
-    const isImmediateLock = ['ec', 'eb','sd'].includes(qual);
-
     if (overlay) {
-        overlay.ondblclick = () => {
-            const container = document.getElementById('player-container');
-            if (container && !document.fullscreenElement) container.requestFullscreen();
-            else if (document.fullscreenElement) document.exitFullscreen();
-        };
-
         clearTimeout(overlayTimeout);
-        if (isDelayedLock) {
+        if (['rd', 'ad'].includes(qual)) {
             overlay.style.setProperty('display', 'none', 'important');
-            overlayTimeout = setTimeout(() => {
-                overlay.style.setProperty('display', 'block', 'important');
-            }, 15000);
-        } else if (isImmediateLock) {
+            overlayTimeout = setTimeout(() => { overlay.style.setProperty('display', 'block', 'important'); }, 15000);
+        } else if (['ec', 'eb', 'sd'].includes(qual)) {
             overlay.style.setProperty('display', 'block', 'important');
         } else {
             overlay.style.setProperty('display', 'none', 'important');
         }
     }
 }
-
 // --- 4. FUNÇÕES DE SUPORTE ---
 function clearPlayer() {
     const p = document.getElementById("player");
