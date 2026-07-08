@@ -1,5 +1,5 @@
 [
-  {"canal": "ISTV", "logo": "https://video10.logicahost.com.br/redeistv/redeistv/chunklist_w445873689", "qualidade": "sd", "categorias": ["Todos", "Filmes e Séries"]},
+  {"canal": "ISTV", "logo": "https://www.hlsplayer.org/play?url=https%3A%2F%2Fvideo10.logicahost.com.br%2Fredeistv%2Fredeistv%2Fchunklist_w445873689", "qualidade": "sd", "categorias": ["Todos", "Filmes e Séries"]},
   {"canal": "JOVEM PAN NEWS", "logo": "https://amg01391-amg01391c3-tcl-spain-5038.playouts.now.amagi.tv/playlist1080-p", "qualidade": "sd", "categorias": ["Todos", "Notícias"]},
   {"canal": "NSPORTS", "logo": "https://ogc-nsprt-tcl-roku-syndication.otteravision.com/ogc/nsprt/nsprt_720p", "qualidade": "sd", "categorias": ["Todos", "Esportes"]},
   {"canal": "REDE BRASIL", "logo": "https://redebrasil.nuvemplay.live/hls/stream", "qualidade": "sd", "categorias": ["Todos", "Abertos"]},
