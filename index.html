@@ -2,67 +2,25 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-
-    <script src="player.js"></script>
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- SEO -->
+    
     <title>TV Grátis - Assista Canais de TV Online Grátis e Ao Vivo</title>
-
-    <meta name="description" content="Assista canais de TV online grátis e ao vivo. Plataforma gratuita, sem propagandas, sem cadastro e sem custos. Diversos canais disponíveis para assistir diretamente pelo navegador.">
-
-    <meta name="keywords" content="tv grátis, canais de tv, tv online, assistir tv online, canais ao vivo, tv ao vivo, televisão online, streaming grátis, assistir canais grátis">
-
-    <meta name="author" content="TV Grátis">
-
-    <meta name="robots" content="index, follow">
-
+    <meta name="description" content="Assista canais de TV online grátis e ao vivo.">
     <link rel="canonical" href="https://tvgratis.online/">
+    <script src="player.js"></script>
+    <link href="https://vjs.zencdn.net/8.10.0/video-js.css" rel="stylesheet" />
+    <script src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
 
-    <!-- Open Graph -->
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="TV Grátis - Canais de TV Online">
-    <meta property="og:description" content="Assista canais de TV online gratuitamente, sem anúncios e sem cadastro.">
-    <meta property="og:image" content="https://tvgratis.online/logo.png">
-    <meta property="og:url" content="https://tvgratis.online/">
-    <meta property="og:locale" content="pt_BR">
-    <meta property="og:site_name" content="TV Grátis">
-
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="TV Grátis">
-    <meta name="twitter:description" content="Assista canais de TV online gratuitamente.">
-    <meta name="twitter:image" content="https://tvgratis.online/logo.png">
-
-    <!-- Tema do navegador -->
-    <meta name="theme-color" content="#111111">
-
-    <!-- Favicon -->
-    <link rel="icon" href="favicon.ico">
-
-    <!-- Fonte -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
-
-    <!-- CSS -->
     <link rel="stylesheet" href="style.css">
 
-    <!-- Dados Estruturados -->
-    <script type="application/ld+json">
-    {
-      "@context":"https://schema.org",
-      "@type":"WebSite",
-      "name":"TV Grátis",
-      "url":"https://tvgratis.online",
-      "description":"Assista canais de TV online gratuitamente, sem cadastro e diretamente do navegador."
-    }
-    </script>
-
+    <meta name="theme-color" content="#111111">
+    <link rel="icon" href="favicon.ico">
 </head>
 <body>
+
     <aside>
         <div class="brand-container">
             <div class="categoria-header">
@@ -72,31 +30,39 @@
             </div>
         </div>
         <div class="search-box">
-    <input type="text" id="filter" placeholder="🔍 Buscar canal..." onkeyup="renderList()" readonly onfocus="this.removeAttribute('readonly');" onblur="this.setAttribute('readonly', 'readonly');">
-</div>
+            <input type="text" id="filter" placeholder="🔍 Buscar canal..." onkeyup="renderList()" readonly onfocus="this.removeAttribute('readonly');" onblur="this.setAttribute('readonly', 'readonly');">
+        </div>
         <div class="channel-list" id="contentList"></div>
     </aside>
     
     <main>
-    <div id="player-container" ondblclick="toggleFullScreen()">
-        <div id="player"></div>
-        <div id="iframe-overlay"></div>
-    </div>
-</main>
-   <script src="layout.js"></script>
+        <div id="player-container" ondblclick="toggleFullScreen()">
+            <div id="player"></div>
+            <div id="iframe-overlay"></div>
+        </div>
+    </main>
+
+    <script src="layout2.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/disable-devtool@latest/disable-devtool.min.js"></script>
-<script>
-    DisableDevtool({
-        md5: '8865f3a072045558837311100572d427', // Este hash é apenas um exemplo, você pode omitir se não quiser uma senha de bypass
-        url: 'bloqueado.html', // Para onde o usuário será redirecionado se tentar abrir o console
-        tk_name: 'adblock_key', // Nome do parâmetro opcional
-        debug: false, // Define como false para não mostrar logs no console
-        disableMenu: true, // Bloqueia o clique direito
-        disableSelect: true, // Bloqueia seleção de texto
-        disableCopy: true, // Bloqueia copiar
-        disableCut: true, // Bloqueia cortar
-        disablePaste: true // Bloqueia colar
-    });
-</script>
+    
+    <script>
+        DisableDevtool({
+            md5: '8865f3a072045558837311100572d427',
+            url: 'bloqueado.html',
+            disableMenu: true,
+            disableSelect: true,
+            disableCopy: true
+        });
+
+        // Função para FullScreen do container
+        function toggleFullScreen() {
+            const elem = document.getElementById("player-container");
+            if (!document.fullscreenElement) {
+                elem.requestFullscreen().catch(err => alert(`Erro ao entrar em tela cheia: ${err.message}`));
+            } else {
+                document.exitFullscreen();
+            }
+        }
+    </script>
 </body>
 </html>
