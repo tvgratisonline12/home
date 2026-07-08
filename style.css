@@ -52,7 +52,7 @@ main{flex-grow:1;display:flex;align-items:center;justify-content:center;padding:
 
 .rec-disp { font-size: 0.95rem; color: #a855f7; font-weight: 900; text-transform: uppercase; margin-bottom: 15px; }
 
-.rec-icon { width: 70px; height: 70px; border-radius: 15px; margin-bottom: 15px; }
+.rec-icon { width: 50px; height: 50px; border-radius: 15px; margin-bottom: 15px; }
 
 .rec-nome { font-size: 1.2rem; font-weight: 700; color: #fff; }
 @media (max-width:768px){
