@@ -1,4 +1,6 @@
 [
+  {"canal": "ADRENALINA PURA TV", "logo": "https://amg00740-sofa-amg00740c7-tcl-us-7126.playouts.now.amagi.tv/1080p-cc/index", "qualidade": "sd", "categorias": ["Todos", "Filmes e Séries"]},
+  {"canal": "GRJNGO", "logo": "https://amogonetworx-grjngo-1-eu.plex.wurl.tv/2000", "qualidade": "sd", "categorias": ["Todos", "Filmes e Séries"]},
   {"canal": "ISTV", "logo": "https://video10.logicahost.com.br/redeistv/redeistv/chunklist_w445873689", "qualidade": "sd", "categorias": ["Todos", "Abertos"]},
   {"canal": "JOVEM PAN NEWS", "logo": "https://amg01391-amg01391c3-tcl-spain-5038.playouts.now.amagi.tv/playlist1080-p", "qualidade": "sd", "categorias": ["Todos", "Notícias"]},
   {"canal":"MR BEAN CARTOON 24h", "logo": "https://amg00627-amg00627c40-rakuten-uk-5725.playouts.now.amagi.tv/720p-vtt/index", "qualidade": "sd", "categorias": ["Todos", "24 Horas"]},
@@ -7,7 +9,14 @@
   {"canal": "REDE BRASIL", "logo": "https://redebrasil.nuvemplay.live/hls/stream", "qualidade": "sd", "categorias": ["Todos", "Abertos"]},
   {"canal": "REDETV PR", "logo": "https://tv01.zas.media:1936/redetvparana/redetvparana/chunklist_w207761227", "qualidade": "sd", "categorias": ["Todos", "Abertos"]},
   {"canal": "RETRO CARTOON", "logo": "https://stmv1.video.brstream.com.br/retrotv/retrotv/chunklist_w329696462", "qualidade": "sd", "categorias": ["Todos", "Infantil"]},
+   {"canal": "RUNTIME AÇAO", "logo": "https://run-rt-ra.otteravision.com/run/rt_ra/rt_ra_720", "qualidade": "sd", "categorias": ["Todos", "Filmes e Séries"]},
+  {"canal": "RUNTIME COMÉDIA", "logo": "https://run-rc-br.otteravision.com/run/rc_br/rc_br_720", "qualidade": "sd", "categorias": ["Todos", "Filmes e Séries"]},
+  {"canal": "RUNTIME CRIME", "logo": "https://run-cr-br.otteravision.com/run/cr_br/cr_br_720", "qualidade": "sd", "categorias": ["Todos", "Filmes e Séries"]},
+  {"canal": "RUNTIME FÁMILIA", "logo": "https://run-rufb.otteravision.com/run/rufb/rufb_720", "qualidade": "sd", "categorias": ["Todos", "Filmes e Séries"]},
+  {"canal": "RUNTIME ROMANCE", "logo": "https://run-ro-br.otteravision.com/run/ro_br/ro_br_720", "qualidade": "sd", "categorias": ["Todos", "Filmes e Séries"]},
+  {"canal": "SESSÃO TRASH", "logo": "https://amg00711-zylo-amg00711c12-plex-us-8636.playouts.now.amagi.tv/playlist1080p", "qualidade": "sd", "categorias": ["Todos", "Filmes e Séries"]},
   {"canal": "TELA BRASIL", "logo": "https://stmv.webtvninjas.com.br/mailson6054/mailson6054/playlist", "qualidade": "sd", "categorias": ["Todos", "Filmes e Séries"]},
   {"canal": "TV LOADING", "logo": "https://stmv1.srvif.com/loadingtv/loadingtv/playlist", "qualidade": "sd", "categorias": ["Todos", "Infantil"]},
+   {"canal": "TV RECORDAÇÕES", "logo": "https://srv3.zcast.com.br/tvrecordacoes/tvrecordacoes/playlist", "qualidade": "sd", "categorias": ["Todos", "Abertos"]},
   {"canal": "VINTAGE TV", "logo": "https://video01.brascast.com/rogerio7271/rogerio7271/playlist", "qualidade": "sd", "categorias": ["Todos", "Abertos"]}
 ]
