@@ -1,10 +1,13 @@
 [
   {"canal": "ISTV", "logo": "https://video10.logicahost.com.br/redeistv/redeistv/chunklist_w445873689", "qualidade": "sd", "categorias": ["Todos", "Abertos"]},
   {"canal": "JOVEM PAN NEWS", "logo": "https://amg01391-amg01391c3-tcl-spain-5038.playouts.now.amagi.tv/playlist1080-p", "qualidade": "sd", "categorias": ["Todos", "Notícias"]},
+  {"canal":"MR BEAN CARTOON 24h", "logo": "https://amg00627-amg00627c40-rakuten-uk-5725.playouts.now.amagi.tv/720p-vtt/index", "qualidade": "sd", "categorias": ["Todos", "24 Horas"]},
+  {"canal":"MR BEAN CARTOON 24h", "logo": "https://amg00627-banijay-amg00627c35-plex-us-4257.playouts.now.amagi.tv/1080p-cc-pt/index", "qualidade": "sd", "categorias": ["Todos", "24 Horas"]},
   {"canal": "NSPORTS", "logo": "https://ogc-nsprt-tcl-roku-syndication.otteravision.com/ogc/nsprt/nsprt_720p", "qualidade": "sd", "categorias": ["Todos", "Esportes"]},
   {"canal": "REDE BRASIL", "logo": "https://redebrasil.nuvemplay.live/hls/stream", "qualidade": "sd", "categorias": ["Todos", "Abertos"]},
   {"canal": "REDETV PR", "logo": "https://tv01.zas.media:1936/redetvparana/redetvparana/chunklist_w207761227", "qualidade": "sd", "categorias": ["Todos", "Abertos"]},
   {"canal": "RETRO CARTOON", "logo": "https://stmv1.video.brstream.com.br/retrotv/retrotv/chunklist_w329696462", "qualidade": "sd", "categorias": ["Todos", "Infantil"]},
   {"canal": "TELA BRASIL", "logo": "https://stmv.webtvninjas.com.br/mailson6054/mailson6054/playlist", "qualidade": "sd", "categorias": ["Todos", "Filmes e Séries"]},
-  {"canal": "TV LOADING", "logo": "https://stmv1.srvif.com/loadingtv/loadingtv/playlist", "qualidade": "sd", "categorias": ["Todos", "Infantil"]}
+  {"canal": "TV LOADING", "logo": "https://stmv1.srvif.com/loadingtv/loadingtv/playlist", "qualidade": "sd", "categorias": ["Todos", "Infantil"]},
+  {"canal": "VINTAGE TV", "logo": "https://video01.brascast.com/rogerio7271/rogerio7271/playlist", "qualidade": "sd", "categorias": ["Todos", "Abertos"]}
 ]
