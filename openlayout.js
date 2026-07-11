@@ -11,7 +11,8 @@ async function carregarCanaisJSON() {
             'rd.json',
             'eb.json',
             'cx.json',
-             'ec.json'
+             'ec.json',
+            'mc.json'
      
         ];
 
