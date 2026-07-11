@@ -2,25 +2,14 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Player de Streaming</title>
+    <title>Player Dinâmico via Proxy</title>
     
     <!-- CSS do Video.js -->
     <link href="https://vjs.zencdn.net/8.10.0/video-js.css" rel="stylesheet" />
 
     <style>
-        body { 
-            background-color: #000; 
-            margin: 0; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            height: 100vh; 
-        }
-        .video-container { 
-            width: 100%; 
-            max-width: 900px; 
-        }
+        body { background: #000; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; }
+        .video-container { width: 90%; max-width: 800px; }
         .video-js { width: 100%; height: auto; }
     </style>
 </head>
@@ -28,9 +17,6 @@
 
     <div class="video-container">
         <video id="meu-player" class="video-js vjs-default-skin" controls preload="auto">
-            <p class="vjs-no-js">
-                Para ver este vídeo, por favor, ative o JavaScript.
-            </p>
         </video>
     </div>
 
@@ -39,29 +25,28 @@
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 
     <script>
-        // URL do seu Worker
-        const videoSrc = 'https://placar-sofascore.dircianoafonso.workers.dev/';
+        // 1. URL do seu Worker
+        const workerUrl = 'https://placar-sofascore.dircianoafonso.workers.dev/';
+        
+        // 2. O link do stream original que você deseja assistir
+        const targetLink = 'https://jmp2.uk/plu-656e2a81954b020008ed17a4.m3u8';
+        
+        // 3. Monta a URL final (Worker + Parâmetro)
+        const videoSrc = workerUrl + '?url=' + encodeURIComponent(targetLink);
+        
         const videoElement = document.getElementById('meu-player');
 
         if (Hls.isSupported()) {
             const hls = new Hls();
-            
-            // Carrega a fonte através do seu worker
             hls.loadSource(videoSrc);
             hls.attachMedia(videoElement);
             
             hls.on(Hls.Events.MANIFEST_PARSED, function() {
-                videoElement.play().catch(e => console.log("Auto-play bloqueado pelo navegador: ", e));
+                videoElement.play().catch(err => console.log("Erro ao iniciar:", err));
             });
             
             hls.on(Hls.Events.ERROR, function (event, data) {
-                console.error("Erro no HLS: ", data);
-            });
-        } else if (videoElement.canPlayType('application/vnd.apple.mpegurl')) {
-            // Suporte nativo (iOS/Safari)
-            videoElement.src = videoSrc;
-            videoElement.addEventListener('loadedmetadata', function() {
-                videoElement.play();
+                console.error("Erro no HLS:", data);
             });
         }
     </script>
