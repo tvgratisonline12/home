@@ -12,7 +12,7 @@ async function carregarCanaisJSON() {
             'eb.json',
             'cx.json',
              'ec.json',
-            'mc.json'
+             'mc.json'
      
         ];
 
