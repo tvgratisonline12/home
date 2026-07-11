@@ -8,10 +8,11 @@ let overlayTimeout;
 async function carregarCanaisJSON() {
     try {
         const urls = [
-            'rd.json',
-            'eb.json',
-            'cx.json',
-             'ec.json'
+            'https://tvgratis.online/rd.json',
+            'https://tvgratis.online/eb.json',
+            'https://tvgratis.online/cx.json',
+             'https://tvgratis.online/ec.json',
+             'https://tvgratis.online/pl.json'
      
         ];
 
@@ -124,52 +125,81 @@ async function playCanal(c, el) {
     
     const container = document.getElementById("player");
     container.innerHTML = "";
-    
-    // 4. Formação da URL de acordo com as regras solicitadas
-    let urlVideo;
-    if (qual === "rd") {
-        urlVideo = "https://redecanaistv.uk/player3/ch.php?canal=" + c.logo;
-    } else if (qual === "ec") {
-        urlVideo = "https://open.tvgratis.workers.dev/" + encodeURIComponent(c.logo) + "/index.m3u8";
-    } else if (qual === "eb") {
-        urlVideo = "https://open.tvgratis.workers.dev/?url=https://ww4.embedtv.lat/" + encodeURIComponent(c.logo);
-    } else if (qual === "sd") {
-        urlVideo = c.logo + ".m3u8"; // Adiciona .m3u8 conforme solicitado
-    } else {
-        urlVideo = c.logo;
-    }
+    // --- 4. FORMAÇÃO DA URL E LÓGICA DE RENDERIZAÇÃO ---
+let urlVideo;
 
-    // 5. Renderização (Video.js para sd/ec, Iframe para o restante)
-    if (['sd', 'ec'].includes(qual)) {
-        container.innerHTML = `<video id="video-player" class="video-js vjs-big-play-centered" controls autoplay playsinline style="width:100%;height:100%;"></video>`;
-        
-        playerInstance = videojs('video-player', {
-            autoplay: true,
-            controls: true,
-            sources: [{ 
-                src: urlVideo, 
-                type: 'application/x-mpegURL' 
-            }]
-        });
-    } else {
-        container.innerHTML = `<iframe id="videoIframe" src="${urlVideo}" allow="autoplay; fullscreen" style="width:100%;height:100%;border:none;"></iframe>`;
-    }
+// Define a URL baseada na qualidade
+if (qual === "rd") {
+    urlVideo = "https://redecanaistv.uk/player3/ch.php?canal=" + c.logo;
+} else if (qual === "ec") {
+    urlVideo = "https://open.tvgratis.workers.dev/" + encodeURIComponent(c.logo) + "/index.m3u8";
+} else if (qual === "eb") {
+    urlVideo = "https://open.tvgratis.workers.dev/?url=https://ww4.embedtv.lat/" + encodeURIComponent(c.logo);
+} else if (qual === "sd") {
+    urlVideo = c.logo + ".m3u8";
+} else if (qual === "pl") {
+    urlVideo = c.logo; // URL externa para o caso PL
+} else {
+    urlVideo = c.logo; // Fallback para outros casos
+}
 
-    // 6. Gerenciamento de Overlay (conforme sua lógica original)
-    if (['rd', 'ad'].includes(qual)) exibirAvisoBonito();
+// --- 5. RENDERIZAÇÃO ---
+container.innerHTML = ""; // Limpa o player antes de renderizar
+
+if (qual === 'pl') {
+    // Tela de aviso para canais que precisam de link externo
+    container.innerHTML = `
+        <div id="aviso-pl" style="width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; background:linear-gradient(135deg, #1a1a1a 0%, #000 100%); color:white; text-align:center; padding:20px; border-radius:10px;">
+            <h3 style="margin-bottom: 15px; font-family: sans-serif;">Acesso Externo Necessário</h3>
+            <p style="margin-bottom: 25px; opacity: 0.8; font-family: sans-serif;">Este canal precisa ser aberto em uma nova guia para funcionar corretamente.</p>
+            <a href="${urlVideo}" target="_blank" style="padding: 15px 30px; background: #a855f7; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; font-family: sans-serif; transition: 0.3s; cursor: pointer;">
+                ABRIR CANAL
+            </a>
+        </div>
+    `;
+} else if (['sd', 'ec'].includes(qual)) {
+    // Video.js para streamings diretos
+    container.innerHTML = `<video id="video-player" class="video-js vjs-big-play-centered" controls autoplay playsinline style="width:100%;height:100%;"></video>`;
     
-    const overlay = document.getElementById('iframe-overlay');
-    if (overlay) {
-        clearTimeout(overlayTimeout);
-        if (['rd', 'ad'].includes(qual)) {
-            overlay.style.setProperty('display', 'none', 'important');
-            overlayTimeout = setTimeout(() => { overlay.style.setProperty('display', 'block', 'important'); }, 15000);
-        } else if (['ec', 'eb', 'sd'].includes(qual)) {
-            overlay.style.setProperty('display', 'block', 'important');
-        } else {
-            overlay.style.setProperty('display', 'none', 'important');
-        }
+    playerInstance = videojs('video-player', {
+        autoplay: true,
+        controls: true,
+        sources: [{ 
+            src: urlVideo, 
+            type: 'application/x-mpegURL' 
+        }]
+    });
+} else {
+    // Iframe para o restante (RD, EB e outros)
+    container.innerHTML = `<iframe id="videoIframe" src="${urlVideo}" allow="autoplay; fullscreen" style="width:100%;height:100%;border:none;"></iframe>`;
+}
+
+    // --- 6. GERENCIAMENTO DE OVERLAY ---
+const overlay = document.getElementById('iframe-overlay');
+if (overlay) {
+    clearTimeout(overlayTimeout);
+
+    // Lista de qualidades que exigem tratamento especial
+    const qualidadesComOverlay = ['rd', 'ad', 'ec', 'eb', 'sd'];
+
+    if (['rd', 'ad'].includes(qual)) {
+        // Regra para RD/AD: Remove o overlay e agenda a volta dele
+        exibirAvisoBonito();
+        overlay.style.setProperty('display', 'none', 'important');
+        overlayTimeout = setTimeout(() => { 
+            overlay.style.setProperty('display', 'block', 'important'); 
+        }, 15000);
+    } 
+    else if (['ec', 'eb', 'sd'].includes(qual)) {
+        // Regra para outros tipos que precisam de overlay fixo
+        overlay.style.setProperty('display', 'block', 'important');
+    } 
+    else {
+        // SE NÃO FOR NENHUMA DAS QUALIDADES ACIMA:
+        // O overlay é removido/escondido permanentemente para este canal
+        overlay.style.setProperty('display', 'none', 'important');
     }
+}
 }
 // --- 4. FUNÇÕES DE SUPORTE ---
 function clearPlayer() {
