@@ -5,16 +5,7 @@ let indiceCategoria = 0;
 let overlayTimeout;
 
 // --- 1. CARREGAMENTO DO JSON ---
-async function carregarCanaisJSON() {
-    try {
-        const urls = [
-            'rd.json',
-            'eb.json',
-            'cx.json',
-             'ec.json',
-             'mc.json'
-     
-        ];
+const urls = ['rd.json', 'eb.json', 'cx.json', 'ec.json', 'mc.json'];
 
         const resultados = await Promise.allSettled(urls.map(url => fetch(url)));
 
