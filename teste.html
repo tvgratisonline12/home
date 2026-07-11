@@ -1,46 +1,32 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Meu Player de TV</title>
-    <!-- Player Clappr -->
+    <title>Meu Site de Canais</title>
+    <!-- Player Clappr (robusto) -->
     <script src="https://cdn.jsdelivr.net/npm/clappr@latest/dist/clappr.min.js"></script>
-    <style>
-        body { margin: 0; display: flex; height: 100vh; background: #1a1a1a; }
-        .sidebar { width: 300px; background: #222; color: #fff; padding: 20px; overflow-y: auto; }
-        .main-content { flex-grow: 1; display: flex; justify-content: center; align-items: center; }
-        #player { width: 90%; height: 500px; }
-        .canal-item { padding: 10px; border-bottom: 1px solid #444; cursor: pointer; }
-    </style>
 </head>
 <body>
 
-    <div class="sidebar">
-        <h3>Canais</h3>
-        <div class="canal-item">Canal Pluto 1</div>
-        <div class="canal-item">Canal Pluto 2</div>
-    </div>
-
-    <div class="main-content">
-        <div id="player"></div>
-    </div>
+    <!-- Onde o vídeo vai tocar -->
+    <div id="player"></div>
 
     <script>
-        // O link que você extraiu
-        const streamUrl = 'https://stitcher-ipv4.pluto.tv/v2/stitch/embed/hls/channel/5f357e91b18f0b00073583d2/master.m3u8?deviceType=samsung-tvplus&deviceMake=samsung&deviceModel=samsung&deviceVersion=unknown&appVersion=unknown&deviceLat=0&deviceLon=0&deviceDNT={TARGETOPT}&deviceId={PSID}&advertisingId={PSID}&us_privacy=1YNY&samsung_app_domain={APP_DOMAIN}&samsung_app_name={APP_NAME}&profileLimit=&profileFloor=&embedPartner=samsung-tvplus&masterJWTPassthrough=1&authToken=eyJhbGciOiJIUzI1NiIsImtpZCI6ImI2YzVkMmFlLTIzODgtNDg3Ny1hMTM1LTFiN2RhZDJkYjMxYSIsInR5cCI6IkpXVCJ9.eyJwYXJ0bmVyIjoic2Ftc3VuZ3R2cGx1cyIsImZlYXR1cmVzIjp7Im11bHRpUG9kQWRzIjp7ImNvaG9ydCI6IiIsImVuYWJsZWQiOnRydWV9LCJzdGl0Y2hlckhsc05nIjp7ImRlbXV4ZWRBdWRpbyI6ImppdCJ9LCJzdGl0Y2hlclBhcnRuZXJTaG93U2xhdGUiOnsiZW5hYmxlZCI6dHJ1ZX19LCJpc3MiOiJzZXJ2aWNlLXBhcnRuZXItYXV0aC5wbHV0by50diIsInN1YiI6InByaTp2MTpwbHV0bzpkZXZpY2VzOmMyRnRjM1Z1WjNSMmNHeDFjdz09IiwiYXVkIjoiKi5wbHV0by50diIsImV4cCI6MTc4MzgzNDA0OCwiaWF0IjoxNzgzNzQ3NjQ4LCJqdGkiOiIwZTg2MzBiNS1hN2U3LTQ5OWQtODY1Ni00ZGZmMjA3ZDg5MTAifQ.yVA7aMhXG7c9EM8oS-jQWyK4UMw4BuC9ITInJiZr8-Q';
+        // A URL do seu Worker
+        const workerUrl = "https://placar-sofascore.dircianoafonso.workers.dev/?url=";
 
+        // O link completo da Pluto TV que você extraiu
+        const linkPluto = "https://stitcher-ipv4.pluto.tv/v2/stitch/embed/hls/channel/5f357e91b18f0b00073583d2/master.m3u8?deviceType=samsung-tvplus&authToken=SUA_TOKEN_AQUI...";
+
+        // Monta a URL final
+        const urlFinal = workerUrl + encodeURIComponent(linkPluto);
+
+        // Inicializa o player apontando para o seu Worker
         var player = new Clappr.Player({
-            source: streamUrl,
+            source: urlFinal,
             parentId: "#player",
             width: '100%',
-            height: '100%',
-            autoPlay: true,
-            hlsjsConfig: {
-                // Tenta forçar o navegador a ignorar certas restrições
-                xhrSetup: function(xhr, url) {
-                    xhr.withCredentials = false;
-                }
-            }
+            height: '500px',
+            autoPlay: true
         });
     </script>
 </body>
