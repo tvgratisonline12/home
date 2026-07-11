@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Teste de Player HLS</title>
+    
+    <!-- CSS do Video.js -->
+    <link href="https://vjs.zencdn.net/8.10.0/video-js.css" rel="stylesheet" />
+
+    <style>
+        body { font-family: sans-serif; display: flex; flex-direction: column; align-items: center; padding: 20px; }
+        .video-container { width: 100%; max-width: 800px; }
+    </style>
+</head>
+<body>
+
+    <h1>Teste de Reprodução</h1>
+    
+    <div class="video-container">
+        <video id="meu-player" class="video-js vjs-default-skin" controls preload="auto" width="800" height="450">
+            <!-- O source será injetado via JS -->
+        </video>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+
+    <script>
+        const videoSrc = 'https://jmp2.uk/plu-5f357e91b18f0b00073583d2.m3u8';
+        const videoElement = document.getElementById('meu-player');
+
+        if (Hls.isSupported()) {
+            const hls = new Hls();
+            hls.loadSource(videoSrc);
+            hls.attachMedia(videoElement);
+            hls.on(Hls.Events.MANIFEST_PARSED, function() {
+                videoElement.play();
+            });
+        } else if (videoElement.canPlayType('application/vnd.apple.mpegurl')) {
+            // Suporte nativo (Safari)
+            videoElement.src = videoSrc;
+            videoElement.addEventListener('loadedmetadata', function() {
+                videoElement.play();
+            });
+        }
+    </script>
+</body>
+</html>
