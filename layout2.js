@@ -8,11 +8,11 @@ let overlayTimeout;
 async function carregarCanaisJSON() {
     try {
         const urls = [
-            'https://tvgratis.online/rd.json',
-            'https://tvgratis.online/eb.json',
-            'https://tvgratis.online/cx.json',
-             'https://tvgratis.online/ec.json',
-             'https://tvgratis.online/pl.json'
+            'rd.json',
+            'eb.json',
+            'cx.json',
+             'ec.json',
+             'pl.json'
      
         ];
 
@@ -150,12 +150,14 @@ if (qual === 'pl') {
     // Tela de aviso para canais que precisam de link externo
     container.innerHTML = `
         <div id="aviso-pl" style="width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; background:linear-gradient(135deg, #1a1a1a 0%, #000 100%); color:white; text-align:center; padding:20px; border-radius:10px;">
-            <h3 style="margin-bottom: 15px; font-family: sans-serif;">Acesso Externo Necessário</h3>
-            <p style="margin-bottom: 25px; opacity: 0.8; font-family: sans-serif;">Este canal precisa ser aberto em uma nova guia para funcionar corretamente.</p>
+            <div id="welcome-title">Aviso Importante</div>
+            <div id="welcome-sub" style="animation: fadeIn 1s forwards 0.5s">Este canal Precisa Ser Aberto em um link.<br>
+                Externo para Funcionar Corretamente</div> <br><br>
+        
             <a href="${urlVideo}" target="_blank" style="padding: 15px 30px; background: #a855f7; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; font-family: sans-serif; transition: 0.3s; cursor: pointer;">
                 ABRIR CANAL
             </a>
-        </div>
+    
     `;
 } else if (['sd', 'ec'].includes(qual)) {
     // Video.js para streamings diretos
