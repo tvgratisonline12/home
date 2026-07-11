@@ -8,6 +8,7 @@
   {"canal": "NSPORTS", "logo": "https://ogc-nsprt-tcl-roku-syndication.otteravision.com/ogc/nsprt/nsprt_720p", "qualidade": "sd", "categorias": ["Todos", "Esportes"]},
   {"canal": "PLAY TV", "logo": "https://isaocorp.cloudecast.com/playtv/tracks-v1/index.fmp4", "qualidade": "sd", "categorias": ["Todos", "Infantil"]},
   {"canal": "REDE BRASIL", "logo": "https://redebrasil.nuvemplay.live/hls/stream", "qualidade": "sd", "categorias": ["Todos", "Abertos"]},
+   {"canal": "REDE MANCHETE", "logo": "https://stmv1.srvif.com/tvserie/tvserie/playlist", "qualidade": "sd", "categorias": ["Todos", "Filmes e Séries"]},
   {"canal": "REDE MINAS", "logo": "https://8hzcavccys.zoeweb.tv/redeminas/ngrp:redeminas_all/chunklist_b1731072", "qualidade": "sd", "categorias": ["Todos", "Abertos"]},
   {"canal": "REDETV PR", "logo": "https://tv01.zas.media:1936/redetvparana/redetvparana/chunklist_w207761227", "qualidade": "sd", "categorias": ["Todos", "Abertos"]},
   {"canal": "RETRO CARTOON", "logo": "https://stmv1.video.brstream.com.br/retrotv/retrotv/chunklist_w329696462", "qualidade": "sd", "categorias": ["Todos", "Infantil"]},
