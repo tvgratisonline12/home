@@ -200,17 +200,9 @@ if (overlay) {
     clearTimeout(overlayTimeout);
 
     // Lista de qualidades que exigem tratamento especial
-    const qualidadesComOverlay = ['rd', 'ad', 'ec', 'eb', 'sd'];
+    const qualidadesComOverlay = [ 'ec', 'eb', 'sd'];
 
-    if (['rd', 'ad'].includes(qual)) {
-        // Regra para RD/AD: Remove o overlay e agenda a volta dele
-        exibirAvisoBonito();
-        overlay.style.setProperty('display', 'none', 'important');
-        overlayTimeout = setTimeout(() => { 
-            overlay.style.setProperty('display', 'block', 'important'); 
-        }, 15000);
-    } 
-    else if (['ec', 'eb', 'sd'].includes(qual)) {
+    if (['ec', 'eb', 'sd'].includes(qual)) {
         // Regra para outros tipos que precisam de overlay fixo
         overlay.style.setProperty('display', 'block', 'important');
     } 
