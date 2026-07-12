@@ -138,7 +138,7 @@ if (qual === "rd") {
 } else if (qual === "sd") {
     urlVideo = c.logo + ".m3u8";
 } else if (qual === "pl") {
-    urlVideo = c.logo; // URL externa para o caso PL
+    urlVideo = "https://jmp2.uk/plu-" + encodeURIComponent(c.logo) + ".m3u8";
 } else {
     urlVideo = c.logo; // Fallback para outros casos
 }
