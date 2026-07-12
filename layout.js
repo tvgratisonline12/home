@@ -169,7 +169,8 @@ if (qual === 'pl') {
     container.innerHTML = `
     <div id="aviso-pl" style="width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; background:linear-gradient(135deg, #1a1a1a 0%, #000 100%); color:white; text-align:center; padding:20px; box-sizing:border-box;">
         <div id="welcome-title">Aviso Importante</div>
-        <div id="welcome-sub">Este canal precisa ser aberto em uma janela dedicada.</div> <br><br>
+       <div id="welcome-sub" style="animation: fadeIn 1s forwards 0.5s">Este canal Precisa Ser Aberto em um link.<br>
+                Externo para Funcionar Corretamente</div> <br><br>
         
         <button onclick="abrirPopupNoContainer('${urlVideo}')" style="padding: 15px 30px; background: #a855f7; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">
             ABRIR CANAL
