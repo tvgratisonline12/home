@@ -79,7 +79,7 @@ function renderList() {
         const qual = String(item.qualidade || "").toLowerCase();
         let badgeHtml = '';
         if (['rd', 'ad'].includes(qual)) {
-            badgeHtml = '<span class="ad-badge" style="background-color:red; color:white; padding:0 4px; border-radius:3px; margin-left:5px; font-size:10px; font-weight:bold;">AD</span>';
+            badgeHtml = '';
         }
         let plIcon = '';
 
@@ -257,30 +257,6 @@ function renderItemRec(nome, icon, disp) {
             <div style="font-size: 0.8rem; font-weight: bold;">${nome}</div>
         </div>
     `;
-}
-
-function exibirAvisoBonito() {
-    const playerContainer = document.getElementById('player-container');
-    const aviso = document.createElement('div');
-    aviso.id = 'aviso-bonito';
-    aviso.style.cssText = `
-        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-        background: linear-gradient(135deg, #1a1a1a 0%, #000 100%);
-        color: #fff; display: flex; flex-direction: column; align-items: center;
-        justify-content: center; z-index: 9999; text-align: center;
-        font-family: 'Segoe UI', sans-serif; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        padding: 20px; box-sizing: border-box;
-    `;
-    aviso.innerHTML = `
-        <div id="noise-container"><div id="tv-static"></div></div>
-        <div id="welcome-screen">
-            <div id="welcome-title">Aviso Importante</div>
-            <div id="welcome-sub" style="animation: fadeIn 1s forwards 0.5s">Este canal contém anúncios.<br>
-                Caso uma nova janela abra, <b>feche-a</b><br>e retorne ao site para continuar assistindo.</div>
-        </div>
-    `;
-    playerContainer.appendChild(aviso);
-    setTimeout(() => { if (aviso) aviso.remove(); }, 3000);
 }
 
 function abrirPopupNoContainer(url) {
