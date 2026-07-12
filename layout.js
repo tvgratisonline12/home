@@ -169,12 +169,11 @@ if (qual === 'pl') {
     container.innerHTML = `
     <div id="aviso-pl" style="width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; background:linear-gradient(135deg, #1a1a1a 0%, #000 100%); color:white; text-align:center; padding:20px; box-sizing:border-box;">
         <div id="welcome-title">Aviso Importante</div>
-        <div id="welcome-sub" style="animation: fadeIn 1s forwards 0.5s">Este canal precisa ser aberto em uma janela dedicada para funcionar.</div> <br><br>
+        <div id="welcome-sub">Este canal precisa ser aberto em uma janela dedicada.</div> <br><br>
         
-        <button onclick="window.open('${urlVideo}', '_blank', 'width=700,height=340,top=' + ((screen.height-340)/2) + ',left=' + ((screen.width-700)/2));" 
-        style="padding: 15px 15px; background: #a855f7; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">
-    ABRIR CANAL
-</button>
+        <button onclick="abrirPopupNoContainer('${urlVideo}')" style="padding: 15px 30px; background: #a855f7; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">
+            ABRIR CANAL
+        </button>
     </div>
 `;
 } else if (['sd', 'ec'].includes(qual)) {
@@ -301,6 +300,23 @@ function exibirAvisoBonito() {
     setTimeout(() => { if (aviso) aviso.remove(); }, 3000);
 }
 
+function abrirPopupNoContainer(url) {
+    const container = document.getElementById('player');
+    const rect = container.getBoundingClientRect();
+    
+    // TAMANHO E POSICAO POP UP
+    const top = window.screenY + rect.top;
+    const left = window.screenX + rect.left;
+    const largura = rect.width;
+    const altura = rect.height;
+    
+    window.open(
+        url, 
+        'JanelaCanal', 
+        `width=${largura},height=${altura},top=${top},left=${left},toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=yes`
+    );
+}
+
 // --- 5. NAVEGAÇÃO DAS CATEGORIAS ---
 function proximaCategoria() {
     if (categorias.length === 0) return;
@@ -323,3 +339,4 @@ window.onload = function() {
     carregarCanaisJSON();
     iniciarTelaInicial();
 };
+
