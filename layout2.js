@@ -94,7 +94,7 @@ if (qual === 'pl') {
          stroke-width="2.2"
          stroke-linecap="round"
          stroke-linejoin="round"
-         style="vertical-align:middle;margin-right:6px;">
+         style="vertical-align:middle;margin-left:6px;">
         <path d="M14 3h7v7"/>
         <path d="M10 14L21 3"/>
         <path d="M21 14v7H3V3h7"/>
@@ -102,7 +102,7 @@ if (qual === 'pl') {
 }
         div.innerHTML = `
             <span class="channel-number">${(idx + 1).toString().padStart(2, '0')}</span>
-            <span>${plIcon}${item.canal || "Canal"}</span>
+            <span>${item.canal || "Canal"}${plIcon}</span>
             ${badgeHtml}
         `;
         
