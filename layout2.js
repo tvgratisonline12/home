@@ -146,18 +146,21 @@ if (qual === "rd") {
 // --- 5. RENDERIZAÇÃO ---
 container.innerHTML = ""; // Limpa o player antes de renderizar
 
-if (qual === 'pl') {
+} else if (qual === 'pl') {
     // Tela de aviso para canais que precisam de link externo
     container.innerHTML = `
-        <div id="aviso-pl" style="width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; background:linear-gradient(135deg, #1a1a1a 0%, #000 100%); color:white; text-align:center; padding:20px; border-radius:10px;">
-            <div id="welcome-title">Aviso Importante</div>
-            <div id="welcome-sub" style="animation: fadeIn 1s forwards 0.5s">Este canal Precisa Ser Aberto em um link.<br>
-                Externo para Funcionar Corretamente</div> <br><br>
+        <div id="aviso-pl" style="width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; background:linear-gradient(135deg, #1a1a1a 0%, #000 100%); color:white; text-align:center; padding:20px; box-sizing:border-box;">
+            
+            <div id="welcome-title" style="margin-bottom: 15px; font-size: 1.5rem;">Aviso Importante</div>
+            
+            <div id="welcome-sub" style="margin-bottom: 25px; line-height: 1.4; max-width: 90%;">
+                Este canal precisa ser aberto em um link<br>externo para funcionar corretamente.
+            </div>
         
-            <a href="${urlVideo}" target="_blank" style="padding: 15px 30px; background: #a855f7; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; font-family: sans-serif; transition: 0.3s; cursor: pointer;">
+            <a href="${urlVideo}" target="_blank" style="padding: 15px 40px; background: #a855f7; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; font-family: sans-serif; transition: 0.3s; cursor: pointer; display: inline-block; text-align: center;">
                 ABRIR CANAL
             </a>
-    
+        </div>
     `;
 } else if (['sd', 'ec'].includes(qual)) {
     // Video.js para streamings diretos
