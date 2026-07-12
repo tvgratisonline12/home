@@ -162,6 +162,7 @@ container.innerHTML = ""; // Limpa o player antes de renderizar
             </a>
         </div>
     `;
+}
 } else if (['sd', 'ec'].includes(qual)) {
     // Video.js para streamings diretos
     container.innerHTML = `<video id="video-player" class="video-js vjs-big-play-centered" controls autoplay playsinline style="width:100%;height:100%;"></video>`;
