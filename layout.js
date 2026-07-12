@@ -1,1 +1,324 @@
-(function(_0x48cfd7,_0x4cb886){const _0x51b960=_0x1e80,_0x47a2dd=_0x48cfd7();while(!![]){try{const _0x227aeb=parseInt(_0x51b960(0x24f))/0x1*(parseInt(_0x51b960(0x1f1))/0x2)+parseInt(_0x51b960(0x229))/0x3+-parseInt(_0x51b960(0x224))/0x4+parseInt(_0x51b960(0x1f9))/0x5+parseInt(_0x51b960(0x23a))/0x6+parseInt(_0x51b960(0x206))/0x7+-parseInt(_0x51b960(0x241))/0x8;if(_0x227aeb===_0x4cb886)break;else _0x47a2dd['push'](_0x47a2dd['shift']());}catch(_0x1f3e6a){_0x47a2dd['push'](_0x47a2dd['shift']());}}}(_0x1ac9,0xf28c4));let canaisRaw=[],categorias=[],categoriaAtual='Todos',indiceCategoria=0x0,overlayTimeout;async function carregarCanaisJSON(){const _0x3e25d7=_0x1e80;try{const _0xf6fcc8=['rd.json',_0x3e25d7(0x219),_0x3e25d7(0x1ee),_0x3e25d7(0x243),_0x3e25d7(0x242)],_0x5f1c00=await Promise[_0x3e25d7(0x234)](_0xf6fcc8['map'](_0x17732d=>fetch(_0x17732d))),_0x295fc7=[];for(const _0x326c85 of _0x5f1c00){if(_0x326c85[_0x3e25d7(0x1ff)]===_0x3e25d7(0x202)&&_0x326c85[_0x3e25d7(0x245)]['ok'])try{const _0x400fb3=await _0x326c85[_0x3e25d7(0x245)][_0x3e25d7(0x232)]();_0x295fc7['push'](_0x400fb3);}catch(_0xdee8f2){console[_0x3e25d7(0x22a)](_0x3e25d7(0x22b),_0xdee8f2);}}if(_0x295fc7['length']===0x0)throw new Error(_0x3e25d7(0x1ef));canaisRaw=_0x295fc7[_0x3e25d7(0x247)](),canaisRaw[_0x3e25d7(0x236)]((_0x57d214,_0x5023cb)=>(_0x57d214['canal']||'')[_0x3e25d7(0x20a)](_0x5023cb[_0x3e25d7(0x205)]||''));const _0x4769ff=new Set([_0x3e25d7(0x1f2)]);canaisRaw['forEach'](_0x1da11d=>{const _0x502cab=_0x3e25d7;_0x1da11d[_0x502cab(0x1f8)]&&Array['isArray'](_0x1da11d[_0x502cab(0x1f8)])&&_0x1da11d[_0x502cab(0x1f8)]['forEach'](_0x2639f9=>_0x4769ff[_0x502cab(0x233)](_0x2639f9));}),categorias=Array[_0x3e25d7(0x238)](_0x4769ff),renderList();}catch(_0x572cbe){console[_0x3e25d7(0x22c)]('Erro\x20crítico:',_0x572cbe);const _0x20da70=document[_0x3e25d7(0x21a)]('contentList');if(_0x20da70)_0x20da70[_0x3e25d7(0x22e)]=_0x3e25d7(0x24a);}}function _0x1e80(_0x2c168b,_0x5aa213){_0x2c168b=_0x2c168b-0x1e9;const _0x1ac99f=_0x1ac9();let _0x1e80e7=_0x1ac99f[_0x2c168b];return _0x1e80e7;}function renderList(){const _0x317f2f=_0x1e80,_0x5b05c1=document[_0x317f2f(0x21a)]('categoriaAtual');if(_0x5b05c1)_0x5b05c1[_0x317f2f(0x1fa)]=categoriaAtual;const _0x4fb50f=document[_0x317f2f(0x21a)](_0x317f2f(0x225));if(!_0x4fb50f)return;const _0x3f2f89=document[_0x317f2f(0x21a)](_0x317f2f(0x1f7)),_0x1ec20d=_0x3f2f89?_0x3f2f89[_0x317f2f(0x245)]['toLowerCase']():'';_0x4fb50f[_0x317f2f(0x22e)]='';const _0x52dbcb=canaisRaw['filter'](_0x1e9305=>{const _0xd0e332=_0x317f2f,_0x75d87f=categoriaAtual==='Todos'||(_0x1e9305['categorias']||[])[_0xd0e332(0x217)](categoriaAtual),_0x262291=(_0x1e9305['canal']||'')['toLowerCase']()['includes'](_0x1ec20d);return _0x75d87f&&_0x262291;});_0x52dbcb[_0x317f2f(0x1ea)]((_0x21f9c0,_0x1bf030)=>{const _0x147b8a=_0x317f2f,_0x22ad29=document[_0x147b8a(0x23d)](_0x147b8a(0x20e));_0x22ad29[_0x147b8a(0x20b)]=_0x147b8a(0x213);const _0x437723=String(_0x21f9c0['qualidade']||'')[_0x147b8a(0x1eb)]();let _0x23fc1a='';['rd','ad'][_0x147b8a(0x217)](_0x437723)&&(_0x23fc1a=_0x147b8a(0x237));let _0x39df3b='';_0x437723==='pl'&&(_0x39df3b=_0x147b8a(0x1e9)),_0x22ad29[_0x147b8a(0x22e)]=_0x147b8a(0x231)+(_0x1bf030+0x1)[_0x147b8a(0x20f)]()[_0x147b8a(0x248)](0x2,'0')+_0x147b8a(0x246)+(_0x21f9c0[_0x147b8a(0x205)]||'Canal')+_0x39df3b+_0x147b8a(0x21f)+_0x23fc1a+'\x0a\x20\x20\x20\x20\x20\x20\x20\x20',_0x22ad29[_0x147b8a(0x208)]=()=>playCanal(_0x21f9c0,_0x22ad29),_0x22ad29[_0x147b8a(0x215)]=()=>{playCanal(_0x21f9c0,_0x22ad29),setTimeout(()=>{const _0x43296e=_0x1e80,_0x4f0aa1=document[_0x43296e(0x21a)](_0x43296e(0x23f));if(_0x4f0aa1&&!document[_0x43296e(0x240)])_0x4f0aa1[_0x43296e(0x216)]();},0x12c);},_0x4fb50f[_0x147b8a(0x21b)](_0x22ad29);});}let playerInstance=null;async function playCanal(_0x34600f,_0x3d75ef){const _0x2abe74=_0x1e80,_0x5f35a0=String(_0x34600f[_0x2abe74(0x228)]||'')[_0x2abe74(0x1eb)]();[_0x2abe74(0x20c),_0x2abe74(0x1fe),_0x2abe74(0x24b),_0x2abe74(0x21c)][_0x2abe74(0x1ea)](_0x156d17=>{const _0x46e9b8=_0x2abe74,_0x434d9b=document[_0x46e9b8(0x21a)](_0x156d17);if(_0x434d9b)_0x434d9b[_0x46e9b8(0x218)]();}),document[_0x2abe74(0x251)](_0x2abe74(0x1f0))[_0x2abe74(0x1ea)](_0x5e6f86=>_0x5e6f86[_0x2abe74(0x204)][_0x2abe74(0x218)](_0x2abe74(0x24d)));if(_0x3d75ef)_0x3d75ef['classList']['add'](_0x2abe74(0x24d));playerInstance&&(playerInstance[_0x2abe74(0x222)](),playerInstance=null);const _0x522dae=document[_0x2abe74(0x21a)](_0x2abe74(0x1fb));_0x522dae[_0x2abe74(0x22e)]='';let _0x895a2a;if(_0x5f35a0==='rd')_0x895a2a=_0x2abe74(0x23c)+_0x34600f[_0x2abe74(0x20d)];else{if(_0x5f35a0==='ec')_0x895a2a='https://open.tvgratis.workers.dev/'+encodeURIComponent(_0x34600f[_0x2abe74(0x20d)])+_0x2abe74(0x21d);else{if(_0x5f35a0==='eb')_0x895a2a=_0x2abe74(0x207)+encodeURIComponent(_0x34600f[_0x2abe74(0x20d)]);else{if(_0x5f35a0==='sd')_0x895a2a=_0x34600f[_0x2abe74(0x20d)]+'.m3u8';else _0x5f35a0==='pl'?_0x895a2a=_0x2abe74(0x226)+encodeURIComponent(_0x34600f[_0x2abe74(0x20d)])+_0x2abe74(0x1f3):_0x895a2a=_0x34600f[_0x2abe74(0x20d)];}}}_0x522dae['innerHTML']='';if(_0x5f35a0==='pl')_0x522dae[_0x2abe74(0x22e)]=_0x2abe74(0x249)+_0x895a2a+_0x2abe74(0x212);else['sd','ec'][_0x2abe74(0x217)](_0x5f35a0)?(_0x522dae[_0x2abe74(0x22e)]=_0x2abe74(0x1ed),playerInstance=videojs('video-player',{'autoplay':!![],'controls':!![],'sources':[{'src':_0x895a2a,'type':_0x2abe74(0x235)}]})):_0x522dae[_0x2abe74(0x22e)]=_0x2abe74(0x24e)+_0x895a2a+'\x22\x20allow=\x22autoplay;\x20fullscreen\x22\x20style=\x22width:100%;height:100%;border:none;\x22></iframe>';const _0x1f85c9=document['getElementById'](_0x2abe74(0x214));if(_0x1f85c9){clearTimeout(overlayTimeout);const _0x6936e1=['rd','ad','ec','eb','sd'];if(['rd','ad'][_0x2abe74(0x217)](_0x5f35a0))exibirAvisoBonito(),_0x1f85c9[_0x2abe74(0x250)][_0x2abe74(0x211)](_0x2abe74(0x24c),_0x2abe74(0x239),_0x2abe74(0x220)),overlayTimeout=setTimeout(()=>{const _0x55208c=_0x2abe74;_0x1f85c9[_0x55208c(0x250)][_0x55208c(0x211)](_0x55208c(0x24c),_0x55208c(0x201),_0x55208c(0x220));},0x3a98);else['ec','eb','sd']['includes'](_0x5f35a0)?_0x1f85c9[_0x2abe74(0x250)][_0x2abe74(0x211)](_0x2abe74(0x24c),'block',_0x2abe74(0x220)):_0x1f85c9['style'][_0x2abe74(0x211)](_0x2abe74(0x24c),_0x2abe74(0x239),'important');}}function clearPlayer(){const _0x40c0ee=_0x1e80,_0x34319c=document[_0x40c0ee(0x21a)](_0x40c0ee(0x1fb));if(_0x34319c)_0x34319c[_0x40c0ee(0x22e)]='';}function iniciarTelaInicial(){const _0x4c005c=_0x1e80,_0x52a955=document[_0x4c005c(0x21a)]('player');if(!_0x52a955)return;_0x52a955[_0x4c005c(0x22e)]=_0x4c005c(0x1fc)+renderItemRec(_0x4c005c(0x1fd),_0x4c005c(0x230),_0x4c005c(0x221))+_0x4c005c(0x203)+renderItemRec('Windows','brave.jpg',_0x4c005c(0x1ec))+_0x4c005c(0x203)+renderItemRec(_0x4c005c(0x23e),_0x4c005c(0x22d),_0x4c005c(0x1ec))+'\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20'+renderItemRec(_0x4c005c(0x210),_0x4c005c(0x22d),'Brave')+_0x4c005c(0x23b);}function renderItemRec(_0x61bdd8,_0x517705,_0x4a7ccd){const _0x227aec=_0x1e80;return'\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22rec-card\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22rec-disp\x22>'+_0x4a7ccd+_0x227aec(0x227)+_0x517705+_0x227aec(0x209)+_0x61bdd8+_0x227aec(0x223);}function _0x1ac9(){const _0x108579=['display','active','<iframe\x20id=\x22videoIframe\x22\x20src=\x22','35421SpOdDW','style','querySelectorAll','\x0a\x20\x20\x20\x20<svg\x20xmlns=\x22http://www.w3.org/2000/svg\x22\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20width=\x2214\x22\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20height=\x2214\x22\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20viewBox=\x220\x200\x2024\x2024\x22\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20fill=\x22none\x22\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20stroke=\x22#2196F3\x22\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20stroke-width=\x222.2\x22\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20stroke-linecap=\x22round\x22\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20stroke-linejoin=\x22round\x22\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20style=\x22vertical-align:middle;margin-left:6px;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<path\x20d=\x22M14\x203h7v7\x22/>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<path\x20d=\x22M10\x2014L21\x203\x22/>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<path\x20d=\x22M21\x2014v7H3V3h7\x22/>\x0a\x20\x20\x20\x20</svg>','forEach','toLowerCase','Brave','<video\x20id=\x22video-player\x22\x20class=\x22video-js\x20vjs-big-play-centered\x22\x20controls\x20autoplay\x20playsinline\x20style=\x22width:100%;height:100%;\x22></video>','cx.json','Nenhuma\x20fonte\x20de\x20canais\x20está\x20disponível.','.item','96ASQFET','Todos','.m3u8','length','\x0a\x20\x20\x20\x20\x20\x20\x20\x20position:\x20absolute;\x20top:\x200;\x20left:\x200;\x20width:\x20100%;\x20height:\x20100%;\x0a\x20\x20\x20\x20\x20\x20\x20\x20background:\x20linear-gradient(135deg,\x20#1a1a1a\x200%,\x20#000\x20100%);\x0a\x20\x20\x20\x20\x20\x20\x20\x20color:\x20#fff;\x20display:\x20flex;\x20flex-direction:\x20column;\x20align-items:\x20center;\x0a\x20\x20\x20\x20\x20\x20\x20\x20justify-content:\x20center;\x20z-index:\x209999;\x20text-align:\x20center;\x0a\x20\x20\x20\x20\x20\x20\x20\x20font-family:\x20\x27Segoe\x20UI\x27,\x20sans-serif;\x20box-shadow:\x200\x2010px\x2030px\x20rgba(0,0,0,0.5);\x0a\x20\x20\x20\x20\x20\x20\x20\x20padding:\x2020px;\x20box-sizing:\x20border-box;\x0a\x20\x20\x20\x20','cssText','filter','categorias','8823345zeZaKU','innerText','player','\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20id=\x22noise-container\x22><div\x20id=\x22tv-static\x22></div></div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20id=\x22welcome-screen\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20id=\x22container-alternante\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22bloco-slide\x22\x20id=\x22slide-1\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20id=\x22welcome-title\x22>TVGrátis.Online</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20id=\x22welcome-sub\x22\x20style=\x22animation:\x20fadeIn\x201s\x20forwards\x200.5s\x22>Escolha\x20um\x20canal\x20para\x20começar</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22bloco-slide\x22\x20id=\x22slide-2\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20id=\x22welcome-title\x22\x20style=\x22font-size:\x201.8rem;\x22>RECOMENDAÇÃO\x20DE\x20NAVEGADOR</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20id=\x22welcome-sub\x22\x20style=\x22animation:\x20fadeIn\x201s\x20forwards\x200.5s;\x20font-size:\x201rem;\x22>Para\x20uma\x20experiência\x20sem\x20anúncios\x20e\x20travamentos</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22grid-apps\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','Android\x20TV','tv-static','status','</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22font-size:\x200.8rem;\x20font-weight:\x20bold;\x22>','block','fulfilled','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','classList','canal','1730239EkTVTi','https://open.tvgratis.workers.dev/?url=https://ww4.embedtv.lat/','onclick','\x22\x20class=\x22rec-icon\x22\x20onerror=\x22this.style.display=\x27none\x27\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22rec-nome\x22>','localeCompare','className','noise-container','logo','div','toString','Ios','setProperty','\x22\x20target=\x22_blank\x22\x20style=\x22padding:\x2015px\x2030px;\x20background:\x20#a855f7;\x20color:\x20white;\x20text-decoration:\x20none;\x20border-radius:\x208px;\x20font-weight:\x20bold;\x20font-family:\x20sans-serif;\x20transition:\x200.3s;\x20cursor:\x20pointer;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20ABRIR\x20CANAL\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</a>\x0a\x20\x20\x20\x20\x0a\x20\x20\x20\x20','item','iframe-overlay','ondblclick','requestFullscreen','includes','remove','eb.json','getElementById','appendChild','aviso-bonito','/index.m3u8','\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22display:inline-block;\x20margin:\x2015px;\x20text-align:\x20center;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<img\x20src=\x22','</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','important','Browser\x20Here','dispose','</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20','6712708mWTVpZ','contentList','https://jmp2.uk/plu-','</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<img\x20src=\x22','qualidade','4061016KwVZZU','warn','Erro\x20ao\x20processar\x20JSON\x20de\x20uma\x20fonte:','error','brave.jpg','innerHTML','\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20id=\x22noise-container\x22><div\x20id=\x22tv-static\x22></div></div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20id=\x22welcome-screen\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20id=\x22welcome-title\x22>Aviso\x20Importante</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20id=\x22welcome-sub\x22\x20style=\x22animation:\x20fadeIn\x201s\x20forwards\x200.5s\x22>Este\x20canal\x20contém\x20anúncios.<br>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20Caso\x20uma\x20nova\x20janela\x20abra,\x20<b>feche-a</b><br>e\x20retorne\x20ao\x20site\x20para\x20continuar\x20assistindo.</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20','browser.jpg','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20class=\x22channel-number\x22>','json','add','allSettled','application/x-mpegURL','sort','<span\x20class=\x22ad-badge\x22\x20style=\x22background-color:red;\x20color:white;\x20padding:0\x204px;\x20border-radius:3px;\x20margin-left:5px;\x20font-size:10px;\x20font-weight:bold;\x22>AD</span>','from','none','1145130PJEFLs','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20','https://redecanaistv.uk/player3/ch.php?canal=','createElement','Android','player-container','fullscreenElement','20679424nOuIqf','pl.json','ec.json','\x22\x20style=\x22width:\x2040px;\x20height:\x2040px;\x20border-radius:\x208px;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22font-size:\x200.65rem;\x20color:\x20#a855f7;\x20font-weight:\x20bold;\x20margin-top:\x205px;\x20text-transform:\x20uppercase;\x22>','value','</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span>','flat','padStart','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20id=\x22aviso-pl\x22\x20style=\x22width:100%;\x20height:100%;\x20display:flex;\x20flex-direction:column;\x20align-items:center;\x20justify-content:center;\x20background:linear-gradient(135deg,\x20#1a1a1a\x200%,\x20#000\x20100%);\x20color:white;\x20text-align:center;\x20padding:20px;\x20box-sizing:border-box;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20id=\x22welcome-title\x22>Aviso\x20Importante</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20id=\x22welcome-sub\x22\x20style=\x22animation:\x20fadeIn\x201s\x20forwards\x200.5s\x22>Este\x20canal\x20Precisa\x20Ser\x20Aberto\x20em\x20um\x20link.<br>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20Externo\x20para\x20Funcionar\x20Corretamente</div>\x20<br><br>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<a\x20href=\x22','<div\x20class=\x22item\x22\x20style=\x22color:red;\x20text-align:center;\x22>Nenhum\x20canal\x20disponível\x20no\x20momento.</div>','welcome-screen'];_0x1ac9=function(){return _0x108579;};return _0x1ac9();}function renderItemRec(_0x44cac7,_0x13b39d,_0x5376a6){const _0x110d01=_0x1e80;return _0x110d01(0x21e)+_0x13b39d+_0x110d01(0x244)+_0x5376a6+_0x110d01(0x200)+_0x44cac7+_0x110d01(0x223);}function exibirAvisoBonito(){const _0x2a3845=_0x1e80,_0x52efbb=document[_0x2a3845(0x21a)]('player-container'),_0x230613=document[_0x2a3845(0x23d)](_0x2a3845(0x20e));_0x230613['id']=_0x2a3845(0x21c),_0x230613[_0x2a3845(0x250)][_0x2a3845(0x1f6)]=_0x2a3845(0x1f5),_0x230613[_0x2a3845(0x22e)]=_0x2a3845(0x22f),_0x52efbb[_0x2a3845(0x21b)](_0x230613),setTimeout(()=>{const _0x412eeb=_0x2a3845;if(_0x230613)_0x230613[_0x412eeb(0x218)]();},0xbb8);}function proximaCategoria(){const _0x553025=_0x1e80;if(categorias['length']===0x0)return;indiceCategoria=(indiceCategoria+0x1)%categorias[_0x553025(0x1f4)],categoriaAtual=categorias[indiceCategoria],renderList();}function categoriaAnterior(){const _0x2c5f94=_0x1e80;if(categorias['length']===0x0)return;indiceCategoria=(indiceCategoria-0x1+categorias['length'])%categorias[_0x2c5f94(0x1f4)],categoriaAtual=categorias[indiceCategoria],renderList();}window['onload']=function(){carregarCanaisJSON(),iniciarTelaInicial();};
+let canaisRaw = [];
+let categorias = [];
+let categoriaAtual = 'Todos';
+let indiceCategoria = 0;
+let overlayTimeout;
+
+// --- 1. CARREGAMENTO DO JSON ---
+async function carregarCanaisJSON() {
+    try {
+        const urls = [
+            'rd.json',
+            'eb.json',
+            'cx.json',
+             'ec.json',
+             'pl.json'
+     
+        ];
+
+        const resultados = await Promise.allSettled(urls.map(url => fetch(url)));
+
+        const dadosValidos = [];
+        for (const res of resultados) {
+            if (res.status === 'fulfilled' && res.value.ok) {
+                try {
+                    const json = await res.value.json();
+                    dadosValidos.push(json);
+                } catch (e) {
+                    console.warn("Erro ao processar JSON de uma fonte:", e);
+                }
+            }
+        }
+
+        if (dadosValidos.length === 0) {
+            throw new Error("Nenhuma fonte de canais está disponível.");
+        }
+
+        canaisRaw = dadosValidos.flat();
+        canaisRaw.sort((a, b) => (a.canal || "").localeCompare(b.canal || ""));
+
+        const s = new Set(['Todos']);
+        canaisRaw.forEach(c => { 
+            if (c.categorias && Array.isArray(c.categorias)) {
+                c.categorias.forEach(cat => s.add(cat));
+            }
+        });
+        categorias = Array.from(s);
+        
+        renderList();
+    } catch (error) {
+        console.error("Erro crítico:", error);
+        const contentList = document.getElementById('contentList');
+        if (contentList) contentList.innerHTML = `<div class="item" style="color:red; text-align:center;">Nenhum canal disponível no momento.</div>`;
+    }
+}
+
+// --- 2. RENDERIZAÇÃO DA LISTA ---
+function renderList() {
+    const catDisplay = document.getElementById("categoriaAtual");
+    if (catDisplay) catDisplay.innerText = categoriaAtual;
+    
+    const l = document.getElementById('contentList');
+    if (!l) return;
+
+    const inputBusca = document.getElementById('filter');
+    const termo = inputBusca ? inputBusca.value.toLowerCase() : "";
+    
+    l.innerHTML = '';
+    
+    const lista = canaisRaw.filter(c => {
+        const matchCategoria = categoriaAtual === "Todos" || (c.categorias || []).includes(categoriaAtual);
+        const matchBusca = (c.canal || "").toLowerCase().includes(termo);
+        return matchCategoria && matchBusca;
+    });
+    
+    lista.forEach((item, idx) => {
+        const div = document.createElement('div');
+        div.className = 'item';
+        
+        const qual = String(item.qualidade || "").toLowerCase();
+        let badgeHtml = '';
+        if (['rd', 'ad'].includes(qual)) {
+            badgeHtml = '<span class="ad-badge" style="background-color:red; color:white; padding:0 4px; border-radius:3px; margin-left:5px; font-size:10px; font-weight:bold;">AD</span>';
+        }
+        let plIcon = '';
+
+if (qual === 'pl') {
+    plIcon = `
+    <svg xmlns="http://www.w3.org/2000/svg"
+         width="14"
+         height="14"
+         viewBox="0 0 24 24"
+         fill="none"
+         stroke="#2196F3"
+         stroke-width="2.2"
+         stroke-linecap="round"
+         stroke-linejoin="round"
+         style="vertical-align:middle;margin-left:6px;">
+        <path d="M14 3h7v7"/>
+        <path d="M10 14L21 3"/>
+        <path d="M21 14v7H3V3h7"/>
+    </svg>`;
+}
+        div.innerHTML = `
+            <span class="channel-number">${(idx + 1).toString().padStart(2, '0')}</span>
+            <span>${item.canal || "Canal"}${plIcon}</span>
+            ${badgeHtml}
+        `;
+        
+        div.onclick = () => playCanal(item, div);
+        div.ondblclick = () => {
+            playCanal(item, div);
+            setTimeout(() => {
+                const c = document.getElementById('player-container');
+                if (c && !document.fullscreenElement) c.requestFullscreen();
+            }, 300);
+        };
+        
+        l.appendChild(div);
+    });
+}
+        
+// --- 3. LÓGICA DO PLAYER INTEGRADA ---
+let playerInstance = null; // Variável global de controle
+
+async function playCanal(c, el) {
+    const qual = String(c.qualidade || "").toLowerCase();
+    
+    // 1. Limpeza de elementos da tela inicial e avisos
+    ['noise-container', 'tv-static', 'welcome-screen', 'aviso-bonito'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.remove();
+    });
+    
+    // 2. Estado visual da lista
+    document.querySelectorAll('.item').forEach(i => i.classList.remove('active'));
+    if (el) el.classList.add('active');
+    
+    // 3. Destruir player anterior para evitar conflito de memória
+    if (playerInstance) { 
+        playerInstance.dispose(); 
+        playerInstance = null; 
+    }
+    
+    const container = document.getElementById("player");
+    container.innerHTML = "";
+    // --- 4. FORMAÇÃO DA URL E LÓGICA DE RENDERIZAÇÃO ---
+let urlVideo;
+
+// Define a URL baseada na qualidade
+if (qual === "rd") {
+    urlVideo = "https://redecanaistv.uk/player3/ch.php?canal=" + c.logo;
+} else if (qual === "ec") {
+    urlVideo = "https://open.tvgratis.workers.dev/" + encodeURIComponent(c.logo) + "/index.m3u8";
+} else if (qual === "eb") {
+    urlVideo = "https://open.tvgratis.workers.dev/?url=https://ww4.embedtv.lat/" + encodeURIComponent(c.logo);
+} else if (qual === "sd") {
+    urlVideo = c.logo + ".m3u8";
+} else if (qual === "pl") {
+    urlVideo = "https://jmp2.uk/plu-" + encodeURIComponent(c.logo) + ".m3u8";
+} else {
+    urlVideo = c.logo; // Fallback para outros casos
+}
+
+// --- 5. RENDERIZAÇÃO ---
+container.innerHTML = ""; // Limpa o player antes de renderizar
+
+if (qual === 'pl') {
+    // Tela de aviso para canais que precisam de link externo
+    container.innerHTML = `
+    <div id="aviso-pl" style="width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; background:linear-gradient(135deg, #1a1a1a 0%, #000 100%); color:white; text-align:center; padding:20px; box-sizing:border-box;">
+        <div id="welcome-title">Aviso Importante</div>
+        <div id="welcome-sub" style="animation: fadeIn 1s forwards 0.5s">Este canal precisa ser aberto em uma janela dedicada para funcionar.</div> <br><br>
+        
+        <button onclick="abrirPopup('${urlVideo}')" style="padding: 15px 30px; background: #a855f7; color: white; border: none; border-radius: 8px; font-weight: bold; font-family: sans-serif; transition: 0.3s; cursor: pointer;">
+            ABRIR CANAL
+        </button>
+    </div>
+`;
+} else if (['sd', 'ec'].includes(qual)) {
+    // Video.js para streamings diretos
+    container.innerHTML = `<video id="video-player" class="video-js vjs-big-play-centered" controls autoplay playsinline style="width:100%;height:100%;"></video>`;
+    
+    playerInstance = videojs('video-player', {
+        autoplay: true,
+        controls: true,
+        sources: [{ 
+            src: urlVideo, 
+            type: 'application/x-mpegURL' 
+        }]
+    });
+} else {
+    // Iframe para o restante (RD, EB e outros)
+    container.innerHTML = `<iframe id="videoIframe" src="${urlVideo}" allow="autoplay; fullscreen" style="width:100%;height:100%;border:none;"></iframe>`;
+}
+
+    // --- 6. GERENCIAMENTO DE OVERLAY ---
+const overlay = document.getElementById('iframe-overlay');
+if (overlay) {
+    clearTimeout(overlayTimeout);
+
+    // Lista de qualidades que exigem tratamento especial
+    const qualidadesComOverlay = ['rd', 'ad', 'ec', 'eb', 'sd'];
+
+    if (['rd', 'ad'].includes(qual)) {
+        // Regra para RD/AD: Remove o overlay e agenda a volta dele
+        exibirAvisoBonito();
+        overlay.style.setProperty('display', 'none', 'important');
+        overlayTimeout = setTimeout(() => { 
+            overlay.style.setProperty('display', 'block', 'important'); 
+        }, 15000);
+    } 
+    else if (['ec', 'eb', 'sd'].includes(qual)) {
+        // Regra para outros tipos que precisam de overlay fixo
+        overlay.style.setProperty('display', 'block', 'important');
+    } 
+    else {
+        // SE NÃO FOR NENHUMA DAS QUALIDADES ACIMA:
+        // O overlay é removido/escondido permanentemente para este canal
+        overlay.style.setProperty('display', 'none', 'important');
+    }
+}
+}
+// --- 4. FUNÇÕES DE SUPORTE ---
+function clearPlayer() {
+    const p = document.getElementById("player");
+    if (p) p.innerHTML = "";
+}
+
+function iniciarTelaInicial() {
+    const p = document.getElementById('player');
+    if (!p) return;
+
+    p.innerHTML = `
+        <div id="noise-container"><div id="tv-static"></div></div>
+        <div id="welcome-screen">
+            <div id="container-alternante">
+                
+                <div class="bloco-slide" id="slide-1">
+                    <div id="welcome-title">TVGrátis.Online</div>
+                    <div id="welcome-sub" style="animation: fadeIn 1s forwards 0.5s">Escolha um canal para começar</div>
+                </div>
+
+                <div class="bloco-slide" id="slide-2">
+                    <div id="welcome-title" style="font-size: 1.8rem;">RECOMENDAÇÃO DE NAVEGADOR</div>
+                    <div id="welcome-sub" style="animation: fadeIn 1s forwards 0.5s; font-size: 1rem;">Para uma experiência sem anúncios e travamentos</div>
+                    <div class="grid-apps">
+                        ${renderItemRec('Android TV', 'browser.jpg', 'Browser Here')}
+                        ${renderItemRec('Windows', 'brave.jpg', 'Brave')}
+                        ${renderItemRec('Android', 'brave.jpg', 'Brave')}
+                        ${renderItemRec('Ios', 'brave.jpg', 'Brave')}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    `;
+}
+
+function renderItemRec(nome, icon, disp) {
+    return `
+        <div class="rec-card">
+            <div class="rec-disp">${disp}</div>
+            <img src="${icon}" class="rec-icon" onerror="this.style.display='none'">
+            <div class="rec-nome">${nome}</div>
+        </div>
+    `;
+}
+
+function renderItemRec(nome, icon, disp) {
+    return `
+        <div style="display:inline-block; margin: 15px; text-align: center;">
+            <img src="${icon}" style="width: 40px; height: 40px; border-radius: 8px;">
+            <div style="font-size: 0.65rem; color: #a855f7; font-weight: bold; margin-top: 5px; text-transform: uppercase;">${disp}</div>
+            <div style="font-size: 0.8rem; font-weight: bold;">${nome}</div>
+        </div>
+    `;
+}
+
+function exibirAvisoBonito() {
+    const playerContainer = document.getElementById('player-container');
+    const aviso = document.createElement('div');
+    aviso.id = 'aviso-bonito';
+    aviso.style.cssText = `
+        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        background: linear-gradient(135deg, #1a1a1a 0%, #000 100%);
+        color: #fff; display: flex; flex-direction: column; align-items: center;
+        justify-content: center; z-index: 9999; text-align: center;
+        font-family: 'Segoe UI', sans-serif; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        padding: 20px; box-sizing: border-box;
+    `;
+    aviso.innerHTML = `
+        <div id="noise-container"><div id="tv-static"></div></div>
+        <div id="welcome-screen">
+            <div id="welcome-title">Aviso Importante</div>
+            <div id="welcome-sub" style="animation: fadeIn 1s forwards 0.5s">Este canal contém anúncios.<br>
+                Caso uma nova janela abra, <b>feche-a</b><br>e retorne ao site para continuar assistindo.</div>
+        </div>
+    `;
+    playerContainer.appendChild(aviso);
+    setTimeout(() => { if (aviso) aviso.remove(); }, 3000);
+}
+
+// --- 5. NAVEGAÇÃO DAS CATEGORIAS ---
+function proximaCategoria() {
+    if (categorias.length === 0) return;
+
+    indiceCategoria = (indiceCategoria + 1) % categorias.length;
+    categoriaAtual = categorias[indiceCategoria];
+    renderList();
+}
+
+function categoriaAnterior() {
+    if (categorias.length === 0) return;
+
+    indiceCategoria = (indiceCategoria - 1 + categorias.length) % categorias.length;
+    categoriaAtual = categorias[indiceCategoria];
+    renderList();
+}
+
+// --- INICIALIZAÇÃO ---
+window.onload = function() {
+    carregarCanaisJSON();
+    iniciarTelaInicial();
+};
