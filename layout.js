@@ -171,7 +171,7 @@ if (qual === 'pl') {
         <div id="welcome-title">Aviso Importante</div>
         <div id="welcome-sub" style="animation: fadeIn 1s forwards 0.5s">Este canal precisa ser aberto em uma janela dedicada para funcionar.</div> <br><br>
         
-        <button onclick="window.open('${urlVideo}', '_blank', 'width=960,height=540,top=' + ((screen.height-540)/2) + ',left=' + ((screen.width-960)/2));" 
+        <button onclick="window.open('${urlVideo}', '_blank', 'width=700,height=340,top=' + ((screen.height-340)/2) + ',left=' + ((screen.width-700)/2));" 
         style="padding: 15px 30px; background: #a855f7; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">
     ABRIR CANAL
 </button>
