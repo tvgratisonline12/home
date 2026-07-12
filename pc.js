@@ -233,13 +233,9 @@ function iniciarTelaInicial() {
 
     p.innerHTML = `
         <div id="noise-container"><div id="tv-static"></div></div>
-        <div id="welcome-screen">
-            <div id="container-alternante">
-                
-                <div class="bloco-slide" id="slide-1">
-                    <div id="welcome-title">TVGrátis.Online</div>
-                    <div id="welcome-sub" style="animation: fadeIn 1s forwards 0.5s">Escolha um canal para começar</div>
-                </div>
+        <div id="welcome-screen" style="display:flex; align-items:center; justify-content:center; height:100%; width:100%;">
+            <img src="imagem.png" alt="Bem-vindo" style="max-width: 80%; max-height: 80%; object-fit: contain; pointer-events: none;">
+        </div>
     `;
 }
 
