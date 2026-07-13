@@ -385,8 +385,8 @@ function processarFocoLista(key) {
 }
 
 function atualizarFoco(itens) {
-    // Remove de todos
-    document.querySelectorAll('.item, .categoria-btn').forEach(el => el.classList.remove('focus'));
+    // Remove classe de tudo
+    document.querySelectorAll('.item, .tituloCategoria').forEach(el => el.classList.remove('focus'));
     
     if (focoAtual === 'lista') {
         if (itens[indiceSelecao]) {
@@ -394,6 +394,7 @@ function atualizarFoco(itens) {
             itens[indiceSelecao].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
     } else if (focoAtual === 'categoria') {
-        document.getElementById('categoriaAtual').classList.add('focus');
+        const cat = document.getElementById('categoriaAtual');
+        if (cat) cat.classList.add('focus');
     }
 }
