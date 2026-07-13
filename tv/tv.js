@@ -335,10 +335,65 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
+let focoAtual = 'lista'; // Pode ser 'categoria' ou 'lista'
+
+document.addEventListener('keydown', (e) => {
+    // Evita o comportamento padrão de scroll da TV
+    if(['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Enter'].includes(e.key)) {
+        e.preventDefault();
+    }
+
+    if (focoAtual === 'categoria') {
+        processarFocoCategoria(e.key);
+    } else if (focoAtual === 'lista') {
+        processarFocoLista(e.key);
+    } else if (focoAtual === 'player') {
+        if (e.key === 'ArrowLeft') {
+            focoAtual = 'lista';
+            renderList(); // Retorna o foco visual para a lista
+        }
+    }
+});
+
+function processarFocoCategoria(key) {
+    if (key === 'ArrowDown') {
+        focoAtual = 'lista';
+        renderList(); // Atualiza visualmente para a lista
+    } else if (key === 'ArrowRight') {
+        proximaCategoria();
+    } else if (key === 'ArrowLeft') {
+        categoriaAnterior();
+    }
+}
+
+function processarFocoLista(key) {
+    const itens = document.querySelectorAll('.item');
+    
+    if (key === 'ArrowUp') {
+        if (indiceSelecao > 0) indiceSelecao--;
+        else focoAtual = 'categoria'; // Sobe para o topo
+    } else if (key === 'ArrowDown') {
+        if (indiceSelecao < itens.length - 1) indiceSelecao++;
+    } else if (key === 'ArrowRight') {
+        focoAtual = 'player';
+    } else if (key === 'Enter') {
+        itens[indiceSelecao].click();
+    }
+    
+    // Atualiza o visual
+    atualizarFoco(itens);
+}
+
 function atualizarFoco(itens) {
-    itens.forEach(el => el.classList.remove('focus'));
-    if (itens[indiceSelecao]) {
-        itens[indiceSelecao].classList.add('focus');
-        itens[indiceSelecao].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    // Remove de todos
+    document.querySelectorAll('.item, .categoria-btn').forEach(el => el.classList.remove('focus'));
+    
+    if (focoAtual === 'lista') {
+        if (itens[indiceSelecao]) {
+            itens[indiceSelecao].classList.add('focus');
+            itens[indiceSelecao].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+    } else if (focoAtual === 'categoria') {
+        document.getElementById('categoriaAtual').classList.add('focus');
     }
 }
