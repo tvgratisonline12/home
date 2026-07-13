@@ -77,69 +77,47 @@ function renderList() {
         div.className = 'item';
         
         const qual = String(item.qualidade || "").toLowerCase();
-        let badgeHtml = '';
-        if (['rd', 'ad'].includes(qual)) {
-            badgeHtml = '';
-        }
-        let plIcon = '';
+        let plIcon = (qual === 'pl') ? `
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2196F3" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-left:6px;">
+                <path d="M14 3h7v7"/><path d="M10 14L21 3"/><path d="M21 14v7H3V3h7"/>
+            </svg>` : '';
 
-if (qual === 'pl') {
-    plIcon = `
-    <svg xmlns="http://www.w3.org/2000/svg"
-         width="14"
-         height="14"
-         viewBox="0 0 24 24"
-         fill="none"
-         stroke="#2196F3"
-         stroke-width="2.2"
-         stroke-linecap="round"
-         stroke-linejoin="round"
-         style="vertical-align:middle;margin-left:6px;">
-        <path d="M14 3h7v7"/>
-        <path d="M10 14L21 3"/>
-        <path d="M21 14v7H3V3h7"/>
-    </svg>`;
-}
         div.innerHTML = `
             <span class="channel-number">${(idx + 1).toString().padStart(2, '0')}</span>
             <span>${item.canal || "Canal"}${plIcon}</span>
-            ${badgeHtml}
         `;
         
-       
-div.onclick = () => {
-    if (qual === 'pl') {
-        // Abre o link diretamente no popup se for 'pl'
-        // Precisa recalcular a URL aqui ou passá-la como parâmetro
-        let urlPL = "https://jmp2.uk/plu-" + encodeURIComponent(item.logo) + ".m3u8";
-        abrirPopupNoContainer(urlPL);
+        // CORREÇÃO DO CLIQUE AQUI
+        div.onclick = () => {
+            if (qual === 'pl') {
+                let urlPL = "https://jmp2.uk/plu-" + encodeURIComponent(item.logo) + ".m3u8";
+                abrirPopupNoContainer(urlPL);
+                document.querySelectorAll('.item').forEach(i => i.classList.remove('active'));
+                div.classList.add('active');
+            } else {
+                playCanal(item, div);
+            }
+        };
         
-        // Mantém o estilo de ativo na lista
-        document.querySelectorAll('.item').forEach(i => i.classList.remove('active'));
-        div.classList.add('active');
-    } else {
-        // Comportamento normal para os outros
-        playCanal(item, div);
-    }
-};
-        
+        l.appendChild(div);
+    });
+}
+
 // --- 3. LÓGICA DO PLAYER INTEGRADA ---
-let playerInstance = null; // Variável global de controle
+let playerInstance = null;
 
 async function playCanal(c, el) {
     const qual = String(c.qualidade || "").toLowerCase();
     
-    // 1. Limpeza de elementos da tela inicial e avisos
+    // Limpeza visual
     ['noise-container', 'tv-static', 'welcome-screen', 'aviso-bonito'].forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.remove();
+        const elem = document.getElementById(id);
+        if (elem) elem.remove();
     });
     
-    // 2. Estado visual da lista
     document.querySelectorAll('.item').forEach(i => i.classList.remove('active'));
     if (el) el.classList.add('active');
     
-    // 3. Destruir player anterior para evitar conflito de memória
     if (playerInstance) { 
         playerInstance.dispose(); 
         playerInstance = null; 
@@ -147,61 +125,29 @@ async function playCanal(c, el) {
     
     const container = document.getElementById("player");
     container.innerHTML = "";
-    // --- 4. FORMAÇÃO DA URL E LÓGICA DE RENDERIZAÇÃO ---
-let urlVideo;
-
-// Define a URL baseada na qualidade
-if (qual === "rd") {
-    urlVideo = "https://redecanaistv.uk/player3/ch.php?canal=" + c.logo;
-} else if (qual === "ec") {
-    urlVideo = "https://open.tvgratis.workers.dev/" + encodeURIComponent(c.logo) + "/index.m3u8";
-} else if (qual === "eb") {
-    urlVideo = "https://open.tvgratis.workers.dev/?url=https://ww4.embedtv.lat/" + encodeURIComponent(c.logo);
-} else if (qual === "sd") {
-    urlVideo = c.logo + ".m3u8";
-} else if (qual === "pl") {
-    urlVideo = "https://jmp2.uk/plu-" + encodeURIComponent(c.logo) + ".m3u8";
-} else {
-    urlVideo = c.logo; // Fallback para outros casos
-}
-
-// --- 5. RENDERIZAÇÃO ---
-container.innerHTML = ""; 
-
-if (['sd', 'ec'].includes(qual)) {
-    container.innerHTML = `<video id="video-player" class="video-js vjs-big-play-centered" controls autoplay playsinline style="width:100%;height:100%;"></video>`;
     
-    playerInstance = videojs('video-player', {
-        autoplay: true,
-        controls: true,
-        sources: [{ 
-            src: urlVideo, 
-            type: 'application/x-mpegURL' 
-        }]
-    });
-} else {
-    // Iframe para RD, EB e outros
-    container.innerHTML = `<iframe id="videoIframe" src="${urlVideo}" allow="autoplay; fullscreen" style="width:100%;height:100%;border:none;"></iframe>`;
-}
+    // Formação da URL
+    let urlVideo;
+    if (qual === "rd") urlVideo = "https://redecanaistv.uk/player3/ch.php?canal=" + c.logo;
+    else if (qual === "ec") urlVideo = "https://open.tvgratis.workers.dev/" + encodeURIComponent(c.logo) + "/index.m3u8";
+    else if (qual === "eb") urlVideo = "https://open.tvgratis.workers.dev/?url=https://ww4.embedtv.lat/" + encodeURIComponent(c.logo);
+    else if (qual === "sd") urlVideo = c.logo + ".m3u8";
+    else urlVideo = c.logo;
 
-    // --- 6. GERENCIAMENTO DE OVERLAY ---
-const overlay = document.getElementById('iframe-overlay');
-if (overlay) {
-    clearTimeout(overlayTimeout);
-
-    // Lista de qualidades que exigem tratamento especial
-    const qualidadesComOverlay = [ 'ec', 'eb', 'sd'];
-
-    if (['ec', 'eb', 'sd'].includes(qual)) {
-        // Regra para outros tipos que precisam de overlay fixo
-        overlay.style.setProperty('display', 'block', 'important');
-    } 
-    else {
-        // SE NÃO FOR NENHUMA DAS QUALIDADES ACIMA:
-        // O overlay é removido/escondido permanentemente para este canal
-        overlay.style.setProperty('display', 'none', 'important');
+    // Renderização
+    if (['sd', 'ec'].includes(qual)) {
+        container.innerHTML = `<video id="video-player" class="video-js vjs-big-play-centered" controls autoplay playsinline style="width:100%;height:100%;"></video>`;
+        playerInstance = videojs('video-player', { autoplay: true, controls: true, sources: [{ src: urlVideo, type: 'application/x-mpegURL' }] });
+    } else {
+        container.innerHTML = `<iframe id="videoIframe" src="${urlVideo}" allow="autoplay; fullscreen" style="width:100%;height:100%;border:none;"></iframe>`;
     }
-}
+
+    // Overlay
+    const overlay = document.getElementById('iframe-overlay');
+    if (overlay) {
+        clearTimeout(overlayTimeout);
+        overlay.style.display = ['ec', 'eb', 'sd'].includes(qual) ? 'block' : 'none';
+    }
 }
 // --- 4. FUNÇÕES DE SUPORTE ---
 function clearPlayer() {
