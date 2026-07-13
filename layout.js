@@ -103,7 +103,7 @@ if (qual === 'pl') {
         div.innerHTML = `
             <span class="channel-number">${(idx + 1).toString().padStart(2, '0')}</span>
             <span>${item.canal || "Canal"}${plIcon}</span>
-            
+            ${badgeHtml}
         `;
         
         div.onclick = () => playCanal(item, div);
@@ -164,6 +164,19 @@ if (qual === "rd") {
 // --- 5. RENDERIZAÇÃO ---
 container.innerHTML = ""; // Limpa o player antes de renderizar
 
+if (qual === 'pl') {
+    // Tela de aviso para canais que precisam de link externo
+    container.innerHTML = `
+    <div id="aviso-pl" style="width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; background:linear-gradient(135deg, #1a1a1a 0%, #000 100%); color:white; text-align:center; padding:20px; box-sizing:border-box;">
+        <div id="welcome-title">Aviso Importante</div>
+       <div id="welcome-sub" style="animation: fadeIn 1s forwards 0.5s">Este canal Precisa Ser Aberto em um link.<br>
+                Externo para Funcionar Corretamente</div> <br><br>
+        
+        <button onclick="abrirPopupNoContainer('${urlVideo}')" style="padding: 15px 30px; background: #a855f7; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">
+            ABRIR CANAL
+        </button>
+    </div>
+`;
 } else if (['sd', 'ec'].includes(qual)) {
     // Video.js para streamings diretos
     container.innerHTML = `<video id="video-player" class="video-js vjs-big-play-centered" controls autoplay playsinline style="width:100%;height:100%;"></video>`;
@@ -327,4 +340,3 @@ window.onload = function() {
     carregarCanaisJSON();
     iniciarTelaInicial();
 };
-
