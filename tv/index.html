@@ -1,0 +1,19 @@
+// Script básico para cursor com D-Pad
+let cursor = document.createElement('div');
+cursor.style.cssText = 'position:fixed; width:20px; height:20px; background:red; border-radius:50%; z-index:9999; pointer-events:none;';
+document.body.appendChild(cursor);
+
+let x = window.innerWidth/2, y = window.innerHeight/2;
+
+window.addEventListener('keydown', (e) => {
+    if(e.key === 'ArrowUp') y -= 20;
+    if(e.key === 'ArrowDown') y += 20;
+    if(e.key === 'ArrowLeft') x -= 20;
+    if(e.key === 'ArrowRight') x += 20;
+    if(e.key === 'Enter') {
+        let el = document.elementFromPoint(x, y);
+        if(el) el.click();
+    }
+    cursor.style.left = x + 'px';
+    cursor.style.top = y + 'px';
+});
