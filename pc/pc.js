@@ -141,64 +141,49 @@ async function playCanal(c, el) {
     }
     
     const container = document.getElementById("player");
-    container.innerHTML = "";
-    // --- 4. FORMAÇÃO DA URL E LÓGICA DE RENDERIZAÇÃO ---
-let urlVideo;
+    container.innerHTML = ""; 
 
-// Define a URL baseada na qualidade
-if (qual === "rd") {
-    urlVideo = "https://redecanaistv.uk/player3/ch.php?canal=" + c.logo;
-} else if (qual === "ec") {
-    urlVideo = "https://open.tvgratis.workers.dev/" + encodeURIComponent(c.logo) + "/index.m3u8";
-} else if (qual === "eb") {
-    urlVideo = "https://open.tvgratis.workers.dev/?url=https://ww4.embedtv.lat/" + encodeURIComponent(c.logo);
-} else if (qual === "sd") {
-    urlVideo = c.logo + ".m3u8";
-} else if (qual === "pl") {
-    urlVideo = "https://jmp2.uk/plu-" + encodeURIComponent(c.logo) + ".m3u8";
-} else {
-    urlVideo = c.logo; // Fallback para outros casos
-}
+    // --- 4. FORMAÇÃO DA URL ---
+    let urlVideo;
+    if (qual === "rd") {
+        urlVideo = "https://redecanaistv.uk/player3/ch.php?canal=" + c.logo;
+    } else if (qual === "ec") {
+        urlVideo = "https://open.tvgratis.workers.dev/" + encodeURIComponent(c.logo) + "/index.m3u8";
+    } else if (qual === "eb") {
+        urlVideo = "https://open.tvgratis.workers.dev/?url=https://ww4.embedtv.lat/" + encodeURIComponent(c.logo);
+    } else if (qual === "sd") {
+        urlVideo = c.logo + ".m3u8";
+    } else if (qual === "pl") {
+        urlVideo = "https://jmp2.uk/plu-" + encodeURIComponent(c.logo) + ".m3u8";
+    } else {
+        urlVideo = c.logo;
+    }
 
-// --- 5. RENDERIZAÇÃO ---
-container.innerHTML = ""; // Limpa o player antes de renderizar
+    // --- 5. RENDERIZAÇÃO (Agora com o fluxo corrigido) ---
+    // Removemos o } que estava causando erro aqui
+    if (['sd', 'ec', 'pl'].includes(qual)) {
+        // Video.js para streamings diretos
+        container.innerHTML = `<video id="video-player" class="video-js vjs-big-play-centered" controls autoplay playsinline style="width:100%;height:100%;"></video>`;
+        
+        playerInstance = videojs('video-player', {
+            autoplay: true,
+            controls: true,
+            sources: [{ 
+                src: urlVideo, 
+                type: 'application/x-mpegURL' 
+            }]
+        });
+    } else {
+        // Iframe para o restante (RD, EB e outros)
+        container.innerHTML = `<iframe id="videoIframe" src="${urlVideo}" allow="autoplay; fullscreen" style="width:100%;height:100%;border:none;"></iframe>`;
+    }
 
-} else if (['sd', 'ec'].includes(qual)) {
-    // Video.js para streamings diretos
-    container.innerHTML = `<video id="video-player" class="video-js vjs-big-play-centered" controls autoplay playsinline style="width:100%;height:100%;"></video>`;
-    
-    playerInstance = videojs('video-player', {
-        autoplay: true,
-        controls: true,
-        sources: [{ 
-            src: urlVideo, 
-            type: 'application/x-mpegURL' 
-        }]
-    });
-} else {
-    // Iframe para o restante (RD, EB e outros)
-    container.innerHTML = `<iframe id="videoIframe" src="${urlVideo}" allow="autoplay; fullscreen" style="width:100%;height:100%;border:none;"></iframe>`;
-}
-
-    // --- 6. GERENCIAMENTO DE OVERLAY ---
-const overlay = document.getElementById('iframe-overlay');
-if (overlay) {
-    clearTimeout(overlayTimeout);
-
-    // Lista de qualidades que exigem tratamento especial
-    const qualidadesComOverlay = [ 'ec', 'eb', 'sd'];
-
-    if (['ec', 'eb', 'sd'].includes(qual)) {
-        // Regra para outros tipos que precisam de overlay fixo
-        overlay.style.setProperty('display', 'block', 'important');
-    } 
-    else {
-        // SE NÃO FOR NENHUMA DAS QUALIDADES ACIMA:
-        // O overlay é removido/escondido permanentemente para este canal
+    // --- 6. GERENCIAMENTO DE OVERLAY (Forçado a sumir) ---
+    const overlay = document.getElementById('iframe-overlay');
+    if (overlay) {
         overlay.style.setProperty('display', 'none', 'important');
     }
-}
-}
+} 
 // --- 4. FUNÇÕES DE SUPORTE ---
 function clearPlayer() {
     const p = document.getElementById("player");
