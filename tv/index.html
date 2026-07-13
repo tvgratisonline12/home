@@ -3,23 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TV Grátis</title>
     
+    <title>TV Grátis - Assista Canais de TV Online Grátis e Ao Vivo</title>
+    <meta name="description" content="Assista canais de TV online grátis e ao vivo.">
+    <link rel="canonical" href="https://tvgratis.online/">
+
     <link href="https://vjs.zencdn.net/8.10.0/video-js.css" rel="stylesheet" />
     <script src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <style>
-        /* Estilos essenciais para o Foco (Android TV) */
-        .focus {
-            outline: 3px solid #ff9900 !important;
-            transform: scale(1.05);
-            background-color: #333 !important;
-            z-index: 10;
-        }
-        .categoria-btn, .tituloCategoria { transition: 0.2s; }
-        .item { padding: 15px; border-bottom: 1px solid #222; }
-    </style>
+
+    <meta name="theme-color" content="#111111">
+    <link rel="icon" href="../imagens/favicon.ico">
 </head>
 <body>
 
@@ -27,33 +25,26 @@
         <div class="brand-container">
             <div class="categoria-header">
                 <button class="cat-btn" onclick="categoriaAnterior()">❮</button>
-                <div id="categoriaAtual" class="tituloCategoria" tabindex="0">Todos</div>
+                <div class="tituloCategoria"><span id="categoriaAtual">Todos</span></div>
                 <button class="cat-btn" onclick="proximaCategoria()">❯</button>
             </div>
         </div>
         
-        <div class="channel-list" id="contentList">
-            </div>
+        <div class="channel-list" id="contentList"></div>
     </aside>
     
     <main>
-        <div id="player-container">
+        <div id="player-container" ondblclick="toggleFullScreen()">
             <div id="player"></div>
             <div id="iframe-overlay"></div>
         </div>
     </main>
 
     <script src="tv.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/disable-devtool@latest/disable-devtool.min.js"></script>
+    
     <script>
-        // Função de Fullscreen adaptada para o D-PAD Enter
-        function toggleFullScreen() {
-            const container = document.getElementById('player-container');
-            if (!document.fullscreenElement) {
-                container.requestFullscreen().catch(err => console.log(err));
-            } else {
-                document.exitFullscreen();
-            }
-        }
+        function _0xb8bd(_0xeaa1e5,_0x261980){_0xeaa1e5=_0xeaa1e5-0x169;const _0x763752=_0x7637();let _0xb8bd1a=_0x763752[_0xeaa1e5];return _0xb8bd1a;}const _0x1ae32b=_0xb8bd;function _0x7637(){const _0x3b91a6=['8865f3a072045558837311100572d427','catch','message','exitFullscreen','1590496MESLeI','7542402wqmbTV','2936415ZDmxfw','requestFullscreen','player-container','Erro\x20ao\x20entrar\x20em\x20tela\x20cheia:\x20','1756440aimfVe','773737onOtdP','bloqueado.html','3231504pwIbGu','2140461aaDvwb','getElementById'];_0x7637=function(){return _0x3b91a6;};return _0x7637();}(function(_0x249e1b,_0x2a4ea6){const _0x5acf08=_0xb8bd,_0x5a68d6=_0x249e1b();while(!![]){try{const _0x1fba0a=parseInt(_0x5acf08(0x175))/0x1+parseInt(_0x5acf08(0x174))/0x2+-parseInt(_0x5acf08(0x178))/0x3+-parseInt(_0x5acf08(0x16e))/0x4+parseInt(_0x5acf08(0x170))/0x5+parseInt(_0x5acf08(0x177))/0x6+-parseInt(_0x5acf08(0x16f))/0x7;if(_0x1fba0a===_0x2a4ea6)break;else _0x5a68d6['push'](_0x5a68d6['shift']());}catch(_0x26ab08){_0x5a68d6['push'](_0x5a68d6['shift']());}}}(_0x7637,0x8fdab),DisableDevtool({'md5':_0x1ae32b(0x16a),'url':_0x1ae32b(0x176),'disableMenu':!![],'disableSelect':!![],'disableCopy':!![]}));function toggleFullScreen(){const _0x45cd66=_0x1ae32b,_0x39cf36=document[_0x45cd66(0x169)](_0x45cd66(0x172));!document['fullscreenElement']?_0x39cf36[_0x45cd66(0x171)]()[_0x45cd66(0x16b)](_0x481bb8=>alert(_0x45cd66(0x173)+_0x481bb8[_0x45cd66(0x16c)])):document[_0x45cd66(0x16d)]();}
     </script>
 </body>
 </html>
