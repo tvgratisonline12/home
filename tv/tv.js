@@ -290,3 +290,55 @@ window.onload = function() {
     carregarCanaisJSON();
     iniciarTelaInicial();
 };
+
+let focoAtual = 'lista'; // 'lista' ou 'player'
+let indiceSelecao = 0; // Índice do canal selecionado na lista visível
+
+document.addEventListener('keydown', (e) => {
+    const itens = document.querySelectorAll('.item');
+    
+    if (focoAtual === 'lista') {
+        switch(e.key) {
+            case 'ArrowDown':
+                if (indiceSelecao < itens.length - 1) {
+                    indiceSelecao++;
+                    atualizarFoco(itens);
+                }
+                break;
+            case 'ArrowUp':
+                if (indiceSelecao > 0) {
+                    indiceSelecao--;
+                    atualizarFoco(itens);
+                }
+                break;
+            case 'ArrowRight':
+                focoAtual = 'player';
+                itens[indiceSelecao].classList.remove('focus');
+                break;
+            case 'Enter':
+                itens[indiceSelecao].click();
+                break;
+        }
+    } else {
+        if (e.key === 'ArrowLeft') {
+            focoAtual = 'lista';
+            atualizarFoco(itens);
+        } else if (e.key === 'Enter') {
+            // Lógica para Fullscreen no Iframe
+            const frame = document.getElementById('videoIframe');
+            if (frame) {
+                if (!document.fullscreenElement) {
+                    document.getElementById('player').requestFullscreen();
+                }
+            }
+        }
+    }
+});
+
+function atualizarFoco(itens) {
+    itens.forEach(el => el.classList.remove('focus'));
+    if (itens[indiceSelecao]) {
+        itens[indiceSelecao].classList.add('focus');
+        itens[indiceSelecao].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+}
