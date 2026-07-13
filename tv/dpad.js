@@ -1,16 +1,25 @@
-let areaAtual = 'LISTA'; // 'CATEGORIA', 'LISTA', 'PLAYER'
+let areaAtual = 'LISTA';
 let focoIndex = 0;
 let clickCount = 0;
 
 document.addEventListener('keydown', (e) => {
     const listaItens = document.querySelectorAll('#contentList .item');
     const botoesCat = document.querySelectorAll('.cat-btn');
-    const containerPlayer = document.getElementById('player-container');
+
+    // Impede que as setas rolem a página do navegador (comportamento padrão)
+    if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
+        e.preventDefault();
+    }
 
     switch (e.key) {
         case 'ArrowUp':
-            if (areaAtual === 'LISTA' && focoIndex === 0) {
-                mudarArea('CATEGORIA', botoesCat[0]);
+            if (areaAtual === 'LISTA') {
+                if (focoIndex > 0) {
+                    focoIndex--;
+                    atualizarFoco(listaItens);
+                } else {
+                    mudarArea('CATEGORIA', botoesCat[0]);
+                }
             }
             break;
 
@@ -34,43 +43,27 @@ document.addEventListener('keydown', (e) => {
                 mudarArea('LISTA');
             }
             break;
-
+            
         case 'Enter':
-            if (areaAtual === 'CATEGORIA') {
-                document.activeElement.click();
-            } else if (areaAtual === 'LISTA') {
-                listaItens[focoIndex].click();
-                clickCount++;
-                if (clickCount === 2) {
-                    toggleFullScreen();
-                    clickCount = 0;
-                } else {
-                    setTimeout(() => clickCount = 0, 500);
-                }
-            }
+            // ... (sua lógica de click atual)
             break;
     }
 });
 
 function mudarArea(novaArea, elementoFoco = null) {
     areaAtual = novaArea;
-    document.querySelectorAll('.item, .cat-btn').forEach(el => el.classList.remove('focused'));
+    // Limpa todos os focos
+    document.querySelectorAll('.item, .cat-btn, #player-container').forEach(el => el.classList.remove('focused'));
     
     if (areaAtual === 'LISTA') {
-        focoIndex = 0;
         const itens = document.querySelectorAll('#contentList .item');
-        if(itens.length > 0) itens[0].classList.add('focused');
+        if(itens.length > 0) {
+            focoIndex = 0; // Sempre reseta pro topo ao voltar
+            itens[0].classList.add('focused');
+        }
     } else if (areaAtual === 'CATEGORIA') {
         elementoFoco.classList.add('focused');
-        elementoFoco.focus();
     } else if (areaAtual === 'PLAYER') {
         document.getElementById('player-container').classList.add('focused');
     }
-}
-
-function atualizarFoco(lista) {
-    lista.forEach((item, idx) => {
-        item.classList.toggle('focused', idx === focoIndex);
-        if (idx === focoIndex) item.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    });
 }
