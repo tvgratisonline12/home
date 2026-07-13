@@ -5,11 +5,12 @@ let clickCount = 0;
 document.addEventListener('keydown', (e) => {
     const listaItens = document.querySelectorAll('#contentList .item');
     const botoesCat = document.querySelectorAll('.cat-btn');
+    const containerPlayer = document.getElementById('player-container');
 
     switch (e.key) {
         case 'ArrowUp':
             if (areaAtual === 'LISTA' && focoIndex === 0) {
-                mudarArea('CATEGORIA');
+                mudarArea('CATEGORIA', botoesCat[0]);
             }
             break;
 
@@ -39,30 +40,37 @@ document.addEventListener('keydown', (e) => {
                 document.activeElement.click();
             } else if (areaAtual === 'LISTA') {
                 listaItens[focoIndex].click();
-                
-                // Lógica de Double Click para Fullscreen
                 clickCount++;
                 if (clickCount === 2) {
                     toggleFullScreen();
                     clickCount = 0;
                 } else {
-                    setTimeout(() => clickCount = 0, 500); // Reseta se não apertar rápido
+                    setTimeout(() => clickCount = 0, 500);
                 }
             }
             break;
     }
 });
 
-function mudarArea(novaArea) {
+function mudarArea(novaArea, elementoFoco = null) {
     areaAtual = novaArea;
-    // Remove focos de tudo
     document.querySelectorAll('.item, .cat-btn').forEach(el => el.classList.remove('focused'));
     
     if (areaAtual === 'LISTA') {
         focoIndex = 0;
-        document.querySelectorAll('#contentList .item')[0].classList.add('focused');
+        const itens = document.querySelectorAll('#contentList .item');
+        if(itens.length > 0) itens[0].classList.add('focused');
     } else if (areaAtual === 'CATEGORIA') {
-        botoesCat[1].focus(); // Foca no botão da direita (próxima)
-        botoesCat[1].classList.add('focused');
+        elementoFoco.classList.add('focused');
+        elementoFoco.focus();
+    } else if (areaAtual === 'PLAYER') {
+        document.getElementById('player-container').classList.add('focused');
     }
+}
+
+function atualizarFoco(lista) {
+    lista.forEach((item, idx) => {
+        item.classList.toggle('focused', idx === focoIndex);
+        if (idx === focoIndex) item.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
 }
