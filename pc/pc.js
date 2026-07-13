@@ -106,18 +106,22 @@ if (qual === 'pl') {
             ${badgeHtml}
         `;
         
-        div.onclick = () => playCanal(item, div);
-        div.ondblclick = () => {
-            playCanal(item, div);
-            setTimeout(() => {
-                const c = document.getElementById('player-container');
-                if (c && !document.fullscreenElement) c.requestFullscreen();
-            }, 300);
-        };
+       
+div.onclick = () => {
+    if (qual === 'pl') {
+        // Abre o link diretamente no popup se for 'pl'
+        // Precisa recalcular a URL aqui ou passá-la como parâmetro
+        let urlPL = "https://jmp2.uk/plu-" + encodeURIComponent(item.logo) + ".m3u8";
+        abrirPopupNoContainer(urlPL);
         
-        l.appendChild(div);
-    });
-}
+        // Mantém o estilo de ativo na lista
+        document.querySelectorAll('.item').forEach(i => i.classList.remove('active'));
+        div.classList.add('active');
+    } else {
+        // Comportamento normal para os outros
+        playCanal(item, div);
+    }
+};
         
 // --- 3. LÓGICA DO PLAYER INTEGRADA ---
 let playerInstance = null; // Variável global de controle
@@ -162,23 +166,9 @@ if (qual === "rd") {
 }
 
 // --- 5. RENDERIZAÇÃO ---
-container.innerHTML = ""; // Limpa o player antes de renderizar
+container.innerHTML = ""; 
 
-if (qual === 'pl') {
-    // Tela de aviso para canais que precisam de link externo
-    container.innerHTML = `
-    <div id="aviso-pl" style="width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; background:linear-gradient(135deg, #1a1a1a 0%, #000 100%); color:white; text-align:center; padding:20px; box-sizing:border-box;">
-        <div id="welcome-title">Aviso Importante</div>
-       <div id="welcome-sub" style="animation: fadeIn 1s forwards 0.5s">Este canal Precisa Ser Aberto em um link.<br>
-                Externo para Funcionar Corretamente</div> <br><br>
-        
-        <button onclick="abrirPopupNoContainer('${urlVideo}')" style="padding: 15px 30px; background: #a855f7; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">
-            ABRIR CANAL
-        </button>
-    </div>
-`;
-} else if (['sd', 'ec'].includes(qual)) {
-    // Video.js para streamings diretos
+if (['sd', 'ec'].includes(qual)) {
     container.innerHTML = `<video id="video-player" class="video-js vjs-big-play-centered" controls autoplay playsinline style="width:100%;height:100%;"></video>`;
     
     playerInstance = videojs('video-player', {
@@ -190,7 +180,7 @@ if (qual === 'pl') {
         }]
     });
 } else {
-    // Iframe para o restante (RD, EB e outros)
+    // Iframe para RD, EB e outros
     container.innerHTML = `<iframe id="videoIframe" src="${urlVideo}" allow="autoplay; fullscreen" style="width:100%;height:100%;border:none;"></iframe>`;
 }
 
