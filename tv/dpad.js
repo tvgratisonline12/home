@@ -1,4 +1,4 @@
-let areaAtual = 'LISTA';
+let areaAtual = 'LISTA'; // Áreas: 'CATEGORIA', 'LISTA', 'PLAYER'
 let focoIndex = 0;
 let clickCount = 0;
 
@@ -6,8 +6,7 @@ document.addEventListener('keydown', (e) => {
     const listaItens = document.querySelectorAll('#contentList .item');
     const botoesCat = document.querySelectorAll('.cat-btn');
 
-    // Impede que as setas rolem a página do navegador (comportamento padrão)
-    if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
+    if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Enter'].includes(e.key)) {
         e.preventDefault();
     }
 
@@ -18,7 +17,7 @@ document.addEventListener('keydown', (e) => {
                     focoIndex--;
                     atualizarFoco(listaItens);
                 } else {
-                    mudarArea('CATEGORIA', botoesCat[0]);
+                    mudarArea('CATEGORIA');
                 }
             }
             break;
@@ -33,7 +32,11 @@ document.addEventListener('keydown', (e) => {
             break;
 
         case 'ArrowRight':
-            if (areaAtual === 'LISTA' || areaAtual === 'CATEGORIA') {
+            if (areaAtual === 'CATEGORIA') {
+                // Navega entre botões de categoria ou vai pro player
+                if (document.activeElement === botoesCat[0]) botoesCat[1].focus();
+                else mudarArea('PLAYER');
+            } else if (areaAtual === 'LISTA') {
                 mudarArea('PLAYER');
             }
             break;
@@ -41,29 +44,49 @@ document.addEventListener('keydown', (e) => {
         case 'ArrowLeft':
             if (areaAtual === 'PLAYER') {
                 mudarArea('LISTA');
+            } else if (areaAtual === 'CATEGORIA') {
+                if (document.activeElement === botoesCat[1]) botoesCat[0].focus();
             }
             break;
-            
+
         case 'Enter':
-            // ... (sua lógica de click atual)
+            if (areaAtual === 'CATEGORIA') {
+                document.activeElement.click();
+            } else if (areaAtual === 'LISTA') {
+                clickCount++;
+                if (clickCount === 2) {
+                    listaItens[focoIndex].click(); // Abre
+                    toggleFullScreen();           // Fullscreen
+                    clickCount = 0;
+                } else {
+                    listaItens[focoIndex].click(); // Apenas abre
+                    setTimeout(() => clickCount = 0, 500);
+                }
+            } else if (areaAtual === 'PLAYER') {
+                toggleFullScreen();
+            }
             break;
     }
 });
 
-function mudarArea(novaArea, elementoFoco = null) {
+function mudarArea(novaArea) {
     areaAtual = novaArea;
-    // Limpa todos os focos
     document.querySelectorAll('.item, .cat-btn, #player-container').forEach(el => el.classList.remove('focused'));
     
     if (areaAtual === 'LISTA') {
         const itens = document.querySelectorAll('#contentList .item');
-        if(itens.length > 0) {
-            focoIndex = 0; // Sempre reseta pro topo ao voltar
-            itens[0].classList.add('focused');
-        }
+        if(itens.length > 0) itens[0].classList.add('focused');
     } else if (areaAtual === 'CATEGORIA') {
-        elementoFoco.classList.add('focused');
+        document.querySelectorAll('.cat-btn')[0].classList.add('focused');
+        document.querySelectorAll('.cat-btn')[0].focus();
     } else if (areaAtual === 'PLAYER') {
         document.getElementById('player-container').classList.add('focused');
     }
+}
+
+function atualizarFoco(lista) {
+    lista.forEach((item, idx) => {
+        item.classList.toggle('focused', idx === focoIndex);
+        if (idx === focoIndex) item.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
 }
