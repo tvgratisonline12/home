@@ -43,17 +43,23 @@ main{flex-grow:1;display:flex;align-items:center;justify-content:center;padding:
     50%, 95% { opacity: 0; visibility: hidden; }
     100% { opacity: 1; visibility: visible; }
 }
-.item { padding: 10px; cursor: pointer; border: 2px solid transparent; }
-.item.focus { 
-    background-color: #a855f7 !important; 
-    color: white; 
-    border: 2px solid #fff;
-    outline: none;
-}
+
 .grid-apps { 
     display: flex; justify-content: center; gap: 40px; margin-top: 30px; flex-wrap: wrap; 
 }
+/* Destaque para o item selecionado via controle */
+#contentList .item.focused {
+    outline: 3px solid #a855f7 !important;
+    background-color: rgba(168, 85, 247, 0.2);
+    transform: scale(1.02);
+    transition: transform 0.2s;
+}
 
+/* Garante que o scroll acompanhe o foco */
+#contentList {
+    overflow-y: auto;
+    height: 100vh;
+}
 .rec-card { display: flex; flex-direction: column; align-items: center; width: 140px; }
 
 .rec-disp { font-size: 0.95rem; color: #a855f7; font-weight: 900; text-transform: uppercase; margin-bottom: 15px; }
