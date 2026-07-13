@@ -1,23 +1,28 @@
-let areaAtual = 'LISTA';
+let areaAtual = 'LISTA'; 
 let focoIndex = 0;
 let clickCount = 0;
 
 document.addEventListener('keydown', (e) => {
     const listaItens = document.querySelectorAll('#contentList .item');
     const botoesCat = document.querySelectorAll('.cat-btn');
-    
-    // Tratamento especial para o botão dentro do player (tipo PL)
     const btnPl = document.querySelector('#aviso-pl button');
-    if (btnPl && areaAtual === 'PLAYER') {
-        if (['Enter', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
+
+    // Se estiver no botão PL, intercepta as teclas para não mover o foco para fora
+    if (btnPl && document.activeElement === btnPl) {
+        if (['ArrowUp', 'ArrowDown', 'ArrowRight'].includes(e.key)) {
             e.preventDefault();
-            btnPl.focus();
-            if (e.key === 'Enter') btnPl.click();
+            return;
+        }
+        if (e.key === 'ArrowLeft') {
+            e.preventDefault();
+            mudarArea('LISTA');
             return;
         }
     }
 
-    if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Enter'].includes(e.key)) e.preventDefault();
+    if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Enter'].includes(e.key)) {
+        e.preventDefault();
+    }
 
     switch (e.key) {
         case 'ArrowUp':
@@ -36,11 +41,10 @@ document.addEventListener('keydown', (e) => {
 
         case 'ArrowRight':
             if (areaAtual === 'CATEGORIA') {
-                // Alterna entre botão 0 (prev) e 1 (next)
                 if (document.activeElement === botoesCat[0]) {
-                    botoesCat[1].focus();
                     botoesCat[0].classList.remove('focused');
                     botoesCat[1].classList.add('focused');
+                    botoesCat[1].focus();
                 } else {
                     mudarArea('PLAYER');
                 }
@@ -50,26 +54,21 @@ document.addEventListener('keydown', (e) => {
             break;
 
         case 'ArrowLeft':
-            // NOVO: Escape forçado se estiver no botão do player
-            const btnPlFocado = document.querySelector('#aviso-pl button');
-            if (btnPlFocado && document.activeElement === btnPlFocado) {
-                mudarArea('LISTA');
-            } 
-            // Lógica original para as outras áreas
-            else if (areaAtual === 'PLAYER') {
+            if (areaAtual === 'PLAYER') {
                 mudarArea('LISTA');
             } else if (areaAtual === 'CATEGORIA') {
                 if (document.activeElement === botoesCat[1]) {
-                    botoesCat[0].focus();
                     botoesCat[1].classList.remove('focused');
                     botoesCat[0].classList.add('focused');
+                    botoesCat[0].focus();
                 }
             }
             break;
 
         case 'Enter':
-            if (areaAtual === 'CATEGORIA') document.activeElement.click();
-            else if (areaAtual === 'LISTA') {
+            if (areaAtual === 'CATEGORIA') {
+                document.activeElement.click();
+            } else if (areaAtual === 'LISTA') {
                 clickCount++;
                 listaItens[focoIndex].click();
                 if (clickCount === 2) { toggleFullScreen(); clickCount = 0; }
@@ -84,23 +83,29 @@ document.addEventListener('keydown', (e) => {
 
 function mudarArea(novaArea) {
     areaAtual = novaArea;
+    
+    // Reseta focos visuais e retira foco de elementos internos (iframe/botões)
     document.querySelectorAll('.item, .cat-btn, #player-container').forEach(el => el.classList.remove('focused'));
+    if (document.activeElement) document.activeElement.blur();
     
     if (areaAtual === 'LISTA') {
         const itens = document.querySelectorAll('#contentList .item');
         if(itens.length > 0) {
-            itens[0].classList.add('focused');
             focoIndex = 0;
+            itens[0].classList.add('focused');
+            document.body.focus();
         }
     } else if (areaAtual === 'CATEGORIA') {
         const cat0 = document.querySelectorAll('.cat-btn')[0];
         cat0.classList.add('focused');
         cat0.focus();
     } else if (areaAtual === 'PLAYER') {
-        document.getElementById('player-container').classList.add('focused');
-        // Se for o aviso PL, foca no botão de abrir
         const btnPl = document.querySelector('#aviso-pl button');
-        if (btnPl) btnPl.focus();
+        if (btnPl) {
+            btnPl.focus();
+        } else {
+            document.getElementById('player-container').classList.add('focused');
+        }
     }
 }
 
