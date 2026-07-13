@@ -103,6 +103,7 @@ if (qual === 'pl') {
         div.innerHTML = `
             <span class="channel-number">${(idx + 1).toString().padStart(2, '0')}</span>
             <span>${item.canal || "Canal"}${plIcon}</span>
+            ${badgeHtml}
         `;
         
         div.onclick = () => playCanal(item, div);
@@ -141,49 +142,77 @@ async function playCanal(c, el) {
     }
     
     const container = document.getElementById("player");
-    container.innerHTML = ""; 
+    container.innerHTML = "";
+    // --- 4. FORMAÇÃO DA URL E LÓGICA DE RENDERIZAÇÃO ---
+let urlVideo;
 
-    // --- 4. FORMAÇÃO DA URL ---
-    let urlVideo;
-    if (qual === "rd") {
-        urlVideo = "https://redecanaistv.uk/player3/ch.php?canal=" + c.logo;
-    } else if (qual === "ec") {
-        urlVideo = "https://open.tvgratis.workers.dev/" + encodeURIComponent(c.logo) + "/index.m3u8";
-    } else if (qual === "eb") {
-        urlVideo = "https://open.tvgratis.workers.dev/?url=https://ww4.embedtv.lat/" + encodeURIComponent(c.logo);
-    } else if (qual === "sd") {
-        urlVideo = c.logo + ".m3u8";
-    } else if (qual === "pl") {
-        urlVideo = "https://jmp2.uk/plu-" + encodeURIComponent(c.logo) + ".m3u8";
-    } else {
-        urlVideo = c.logo;
-    }
+// Define a URL baseada na qualidade
+if (qual === "rd") {
+    urlVideo = "https://redecanaistv.uk/player3/ch.php?canal=" + c.logo;
+} else if (qual === "ec") {
+    urlVideo = "https://open.tvgratis.workers.dev/" + encodeURIComponent(c.logo) + "/index.m3u8";
+} else if (qual === "eb") {
+    urlVideo = "https://open.tvgratis.workers.dev/?url=https://ww4.embedtv.lat/" + encodeURIComponent(c.logo);
+} else if (qual === "sd") {
+    urlVideo = c.logo + ".m3u8";
+} else if (qual === "pl") {
+    urlVideo = "https://jmp2.uk/plu-" + encodeURIComponent(c.logo) + ".m3u8";
+} else {
+    urlVideo = c.logo; // Fallback para outros casos
+}
 
-    // --- 5. RENDERIZAÇÃO (Agora com o fluxo corrigido) ---
-    // Removemos o } que estava causando erro aqui
-    if (['sd', 'ec', 'pl'].includes(qual)) {
-        // Video.js para streamings diretos
-        container.innerHTML = `<video id="video-player" class="video-js vjs-big-play-centered" controls autoplay playsinline style="width:100%;height:100%;"></video>`;
+// --- 5. RENDERIZAÇÃO ---
+container.innerHTML = ""; // Limpa o player antes de renderizar
+
+if (qual === 'pl') {
+    // Tela de aviso para canais que precisam de link externo
+    container.innerHTML = `
+    <div id="aviso-pl" style="width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; background:linear-gradient(135deg, #1a1a1a 0%, #000 100%); color:white; text-align:center; padding:20px; box-sizing:border-box;">
+        <div id="welcome-title">Aviso Importante</div>
+       <div id="welcome-sub" style="animation: fadeIn 1s forwards 0.5s">Este canal Precisa Ser Aberto em um link.<br>
+                Externo para Funcionar Corretamente</div> <br><br>
         
-        playerInstance = videojs('video-player', {
-            autoplay: true,
-            controls: true,
-            sources: [{ 
-                src: urlVideo, 
-                type: 'application/x-mpegURL' 
-            }]
-        });
-    } else {
-        // Iframe para o restante (RD, EB e outros)
-        container.innerHTML = `<iframe id="videoIframe" src="${urlVideo}" allow="autoplay; fullscreen" style="width:100%;height:100%;border:none;"></iframe>`;
-    }
+        <button onclick="abrirPopupNoContainer('${urlVideo}')" style="padding: 15px 30px; background: #a855f7; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">
+            ABRIR CANAL
+        </button>
+    </div>
+`;
+} else if (['sd', 'ec'].includes(qual)) {
+    // Video.js para streamings diretos
+    container.innerHTML = `<video id="video-player" class="video-js vjs-big-play-centered" controls autoplay playsinline style="width:100%;height:100%;"></video>`;
+    
+    playerInstance = videojs('video-player', {
+        autoplay: true,
+        controls: true,
+        sources: [{ 
+            src: urlVideo, 
+            type: 'application/x-mpegURL' 
+        }]
+    });
+} else {
+    // Iframe para o restante (RD, EB e outros)
+    container.innerHTML = `<iframe id="videoIframe" src="${urlVideo}" allow="autoplay; fullscreen" style="width:100%;height:100%;border:none;"></iframe>`;
+}
 
-    // --- 6. GERENCIAMENTO DE OVERLAY (Forçado a sumir) ---
-    const overlay = document.getElementById('iframe-overlay');
-    if (overlay) {
+    // --- 6. GERENCIAMENTO DE OVERLAY ---
+const overlay = document.getElementById('iframe-overlay');
+if (overlay) {
+    clearTimeout(overlayTimeout);
+
+    // Lista de qualidades que exigem tratamento especial
+    const qualidadesComOverlay = [ 'ec', 'eb', 'sd'];
+
+    if (['ec', 'eb', 'sd'].includes(qual)) {
+        // Regra para outros tipos que precisam de overlay fixo
+        overlay.style.setProperty('display', 'block', 'important');
+    } 
+    else {
+        // SE NÃO FOR NENHUMA DAS QUALIDADES ACIMA:
+        // O overlay é removido/escondido permanentemente para este canal
         overlay.style.setProperty('display', 'none', 'important');
     }
-} 
+}
+}
 // --- 4. FUNÇÕES DE SUPORTE ---
 function clearPlayer() {
     const p = document.getElementById("player");
