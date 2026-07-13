@@ -8,11 +8,11 @@ let overlayTimeout;
 async function carregarCanaisJSON() {
     try {
         const urls = [
-            'rd.json',
-            'eb.json',
-            'cx.json',
-             'ec.json',
-             'pl.json'
+            'jsons/rd.json',
+            'jsons/eb.json',
+            'jsons/cx.json',
+             'jsons/ec.json',
+             'jsons/pl.json'
      
         ];
 
@@ -167,16 +167,16 @@ container.innerHTML = ""; // Limpa o player antes de renderizar
 if (qual === 'pl') {
     // Tela de aviso para canais que precisam de link externo
     container.innerHTML = `
-         <div id="aviso-pl" style="width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; background:linear-gradient(135deg, #1a1a1a 0%, #000 100%); color:white; text-align:center; padding:20px; box-sizing:border-box;">
-            <div id="welcome-title">Aviso Importante</div>
-            <div id="welcome-sub" style="animation: fadeIn 1s forwards 0.5s">Este canal Precisa Ser Aberto em um link.<br>
+    <div id="aviso-pl" style="width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; background:linear-gradient(135deg, #1a1a1a 0%, #000 100%); color:white; text-align:center; padding:20px; box-sizing:border-box;">
+        <div id="welcome-title">Aviso Importante</div>
+       <div id="welcome-sub" style="animation: fadeIn 1s forwards 0.5s">Este canal Precisa Ser Aberto em um link.<br>
                 Externo para Funcionar Corretamente</div> <br><br>
         
-            <a href="${urlVideo}" target="_blank" style="padding: 15px 30px; background: #a855f7; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; font-family: sans-serif; transition: 0.3s; cursor: pointer;">
-                ABRIR CANAL
-            </a>
-    
-    `;
+        <button onclick="abrirPopupNoContainer('${urlVideo}')" style="padding: 15px 30px; background: #a855f7; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">
+            ABRIR CANAL
+        </button>
+    </div>
+`;
 } else if (['sd', 'ec'].includes(qual)) {
     // Video.js para streamings diretos
     container.innerHTML = `<video id="video-player" class="video-js vjs-big-play-centered" controls autoplay playsinline style="width:100%;height:100%;"></video>`;
@@ -245,10 +245,10 @@ function iniciarTelaInicial() {
                     <div id="welcome-title" style="font-size: 1.8rem;">RECOMENDAÇÃO DE NAVEGADOR</div>
                     <div id="welcome-sub" style="animation: fadeIn 1s forwards 0.5s; font-size: 1rem;">Para uma experiência sem anúncios e travamentos</div>
                     <div class="grid-apps">
-                        ${renderItemRec('Android TV', 'browser.jpg', 'Browser Here')}
-                        ${renderItemRec('Windows', 'brave.jpg', 'Brave')}
-                        ${renderItemRec('Android', 'brave.jpg', 'Brave')}
-                        ${renderItemRec('Ios', 'brave.jpg', 'Brave')}
+                        ${renderItemRec('Android TV', 'imagens/browser.jpg', 'Browser Here')}
+                        ${renderItemRec('Windows', 'imagens/brave.jpg', 'Brave')}
+                        ${renderItemRec('Android', 'imagens/brave.jpg', 'Brave')}
+                        ${renderItemRec('Ios', 'imagens/brave.jpg', 'Brave')}
                     </div>
                 </div>
 
@@ -299,6 +299,23 @@ function exibirAvisoBonito() {
     `;
     playerContainer.appendChild(aviso);
     setTimeout(() => { if (aviso) aviso.remove(); }, 3000);
+}
+
+function abrirPopupNoContainer(url) {
+    const container = document.getElementById('player');
+    const rect = container.getBoundingClientRect();
+    
+    // TAMANHO E POSICAO POP UP
+    const top = window.screenY + rect.top;
+    const left = window.screenX + rect.left;
+    const largura = rect.width;
+    const altura = rect.height;
+    
+    window.open(
+        url, 
+        'JanelaCanal', 
+        `width=${largura},height=${altura},top=${top},left=${left},toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=yes`
+    );
 }
 
 // --- 5. NAVEGAÇÃO DAS CATEGORIAS ---
