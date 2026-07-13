@@ -44,6 +44,12 @@ function renderList() {
         l.appendChild(div);
     });
 }
+focoIndex = -1; 
+    const listaItens = document.querySelectorAll('#contentList .item');
+    if (listaItens.length > 0) {
+        focoIndex = 0;
+        listaItens[0].classList.add('focused');
+    }
 
 // --- 3. LÓGICA DO PLAYER (Mantendo suas regras) ---
 async function playCanal(c, el) {
