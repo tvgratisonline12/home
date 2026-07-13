@@ -8,11 +8,11 @@ let overlayTimeout;
 async function carregarCanaisJSON() {
     try {
         const urls = [
-            'rd.json',
-            'eb.json',
-            'cx.json',
-             'ec.json',
-             'pl.json'
+            'jsons/rd.json',
+            'jsons/eb.json',
+            'jsons/cx.json',
+             'jsons/ec.json',
+             'jsons/pl.json'
      
         ];
 
