@@ -45,3 +45,8 @@ main { flex-grow: 1; display: flex; align-items: center; justify-content: center
 
 /* Animações */
 @keyframes noise { 0% { transform: translate(0,0); } 10% { transform: translate(-5px,-5px); } 100% { transform: translate(0,0); } }
+
+#aviso-pl button:focus {
+    outline: 3px solid white !important;
+    background-color: #7e22ce !important; /* Um tom de roxo mais escuro para indicar o foco */
+}
