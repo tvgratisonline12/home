@@ -1,119 +1,292 @@
-// --- VARIÁVEIS GLOBAIS ---
 let canaisRaw = [];
 let categorias = [];
 let categoriaAtual = 'Todos';
 let indiceCategoria = 0;
-let indiceSelecao = 0;
-let focoAtual = 'categoria'; // 'categoria', 'lista', ou 'player'
-let playerInstance = null;
 let overlayTimeout;
 
-// --- 1. CARREGAMENTO JSON ---
+// --- 1. CARREGAMENTO DO JSON ---
 async function carregarCanaisJSON() {
-    const urls = ['../jsons/rd.json', '../jsons/eb.json', '../jsons/cx.json', '../jsons/ec.json', '../jsons/pl.json'];
     try {
+        const urls = [
+            '../jsons/rd.json',
+            '../jsons/eb.json',
+            '../jsons/cx.json',
+             '../jsons/ec.json',
+             '../jsons/pl.json'
+     
+        ];
+
         const resultados = await Promise.allSettled(urls.map(url => fetch(url)));
-        canaisRaw = resultados
-            .filter(res => res.status === 'fulfilled' && res.value.ok)
-            .map(res => res.value.json())
-            .flat();
+
+        const dadosValidos = [];
+        for (const res of resultados) {
+            if (res.status === 'fulfilled' && res.value.ok) {
+                try {
+                    const json = await res.value.json();
+                    dadosValidos.push(json);
+                } catch (e) {
+                    console.warn("Erro ao processar JSON de uma fonte:", e);
+                }
+            }
+        }
+
+        if (dadosValidos.length === 0) {
+            throw new Error("Nenhuma fonte de canais está disponível.");
+        }
+
+        canaisRaw = dadosValidos.flat();
+        canaisRaw.sort((a, b) => (a.canal || "").localeCompare(b.canal || ""));
 
         const s = new Set(['Todos']);
-        canaisRaw.forEach(c => (c.categorias || []).forEach(cat => s.add(cat)));
+        canaisRaw.forEach(c => { 
+            if (c.categorias && Array.isArray(c.categorias)) {
+                c.categorias.forEach(cat => s.add(cat));
+            }
+        });
         categorias = Array.from(s);
         
         renderList();
-    } catch (e) { console.error("Erro ao carregar:", e); }
+    } catch (error) {
+        console.error("Erro crítico:", error);
+        const contentList = document.getElementById('contentList');
+        if (contentList) contentList.innerHTML = `<div class="item" style="color:red; text-align:center;">Nenhum canal disponível no momento.</div>`;
+    }
 }
 
-// --- 2. RENDERIZAÇÃO ---
+// --- 2. RENDERIZAÇÃO DA LISTA ---
 function renderList() {
-    const l = document.getElementById('contentList');
     const catDisplay = document.getElementById("categoriaAtual");
     if (catDisplay) catDisplay.innerText = categoriaAtual;
+    
+    const l = document.getElementById('contentList');
     if (!l) return;
+
+    const inputBusca = document.getElementById('filter');
+    const termo = inputBusca ? inputBusca.value.toLowerCase() : "";
+    
     l.innerHTML = '';
     
-    const lista = canaisRaw.filter(c => categoriaAtual === "Todos" || (c.categorias || []).includes(categoriaAtual));
+    const lista = canaisRaw.filter(c => {
+        const matchCategoria = categoriaAtual === "Todos" || (c.categorias || []).includes(categoriaAtual);
+        const matchBusca = (c.canal || "").toLowerCase().includes(termo);
+        return matchCategoria && matchBusca;
+    });
     
     lista.forEach((item, idx) => {
         const div = document.createElement('div');
         div.className = 'item';
-        div.innerHTML = `<span>${(idx + 1).toString().padStart(2, '0')} - ${item.canal}</span>`;
+        
+        const qual = String(item.qualidade || "").toLowerCase();
+        let badgeHtml = '';
+        if (['rd', 'ad'].includes(qual)) {
+            badgeHtml = '';
+        }
+        let plIcon = '';
+
+if (qual === 'pl') {
+    plIcon = `
+    <svg xmlns="http://www.w3.org/2000/svg"
+         width="14"
+         height="14"
+         viewBox="0 0 24 24"
+         fill="none"
+         stroke="#2196F3"
+         stroke-width="2.2"
+         stroke-linecap="round"
+         stroke-linejoin="round"
+         style="vertical-align:middle;margin-left:6px;">
+        <path d="M14 3h7v7"/>
+        <path d="M10 14L21 3"/>
+        <path d="M21 14v7H3V3h7"/>
+    </svg>`;
+}
+        div.innerHTML = `
+            <span class="channel-number">${(idx + 1).toString().padStart(2, '0')}</span>
+            <span>${item.canal || "Canal"}${plIcon}</span>
+            ${badgeHtml}
+        `;
+        
         div.onclick = () => playCanal(item, div);
+        div.ondblclick = () => {
+            playCanal(item, div);
+            setTimeout(() => {
+                const c = document.getElementById('player-container');
+                if (c && !document.fullscreenElement) c.requestFullscreen();
+            }, 300);
+        };
+        
         l.appendChild(div);
     });
 }
-focoIndex = -1; 
-    const listaItens = document.querySelectorAll('#contentList .item');
-    if (listaItens.length > 0) {
-        focoIndex = 0;
-        listaItens[0].classList.add('focused');
-    }
+        
+// --- 3. LÓGICA DO PLAYER INTEGRADA ---
+let playerInstance = null; // Variável global de controle
 
-// --- 3. LÓGICA DO PLAYER (Mantendo suas regras) ---
 async function playCanal(c, el) {
     const qual = String(c.qualidade || "").toLowerCase();
+    
+    // 1. Limpeza de elementos da tela inicial e avisos
+    ['noise-container', 'tv-static', 'welcome-screen', 'aviso-bonito'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.remove();
+    });
+    
+    // 2. Estado visual da lista
     document.querySelectorAll('.item').forEach(i => i.classList.remove('active'));
     if (el) el.classList.add('active');
-
-    if (playerInstance) { playerInstance.dispose(); playerInstance = null; }
+    
+    // 3. Destruir player anterior para evitar conflito de memória
+    if (playerInstance) { 
+        playerInstance.dispose(); 
+        playerInstance = null; 
+    }
+    
     const container = document.getElementById("player");
-    
-    let urlVideo = qual === "rd" ? "https://redecanaistv.uk/player3/ch.php?canal=" + c.logo :
-                   qual === "ec" ? "https://open.tvgratis.workers.dev/" + encodeURIComponent(c.logo) + "/index.m3u8" :
-                   qual === "eb" ? "https://open.tvgratis.workers.dev/?url=https://ww4.embedtv.lat/" + encodeURIComponent(c.logo) :
-                   qual === "sd" ? c.logo + ".m3u8" :
-                   qual === "pl" ? "https://jmp2.uk/plu-" + encodeURIComponent(c.logo) + ".m3u8" : c.logo;
+    container.innerHTML = "";
+    // --- 4. FORMAÇÃO DA URL E LÓGICA DE RENDERIZAÇÃO ---
+let urlVideo;
 
-    if (qual === 'pl') {
-        container.innerHTML = `<div id="aviso-pl">Aviso: Canal precisa de link externo. <button onclick="window.open('${urlVideo}')">ABRIR</button></div>`;
-    } else if (['sd', 'ec'].includes(qual)) {
-        container.innerHTML = `<video id="video-player" class="video-js" controls autoplay playsinline></video>`;
-        playerInstance = videojs('video-player', { autoplay: true, sources: [{ src: urlVideo, type: 'application/x-mpegURL' }] });
-    } else {
-        container.innerHTML = `<iframe id="videoIframe" src="${urlVideo}" allow="autoplay; fullscreen"></iframe>`;
-    }
-    
-    focoAtual = 'player';
+// Define a URL baseada na qualidade
+if (qual === "rd") {
+    urlVideo = "https://redecanaistv.uk/player3/ch.php?canal=" + c.logo;
+} else if (qual === "ec") {
+    urlVideo = "https://open.tvgratis.workers.dev/" + encodeURIComponent(c.logo) + "/index.m3u8";
+} else if (qual === "eb") {
+    urlVideo = "https://open.tvgratis.workers.dev/?url=https://ww4.embedtv.lat/" + encodeURIComponent(c.logo);
+} else if (qual === "sd") {
+    urlVideo = c.logo + ".m3u8";
+} else if (qual === "pl") {
+    urlVideo = "https://jmp2.uk/plu-" + encodeURIComponent(c.logo) + ".m3u8";
+} else {
+    urlVideo = c.logo; // Fallback para outros casos
 }
 
-// --- 4. CONTROLE DPAD ---
-document.addEventListener('keydown', (e) => {
-    if(['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Enter'].includes(e.key)) e.preventDefault();
+// --- 5. RENDERIZAÇÃO ---
+container.innerHTML = ""; // Limpa o player antes de renderizar
 
-    switch(e.key) {
-        case 'ArrowUp': 
-            if(focoAtual === 'lista' && indiceSelecao > 0) { indiceSelecao--; atualizarFoco(); }
-            else if(focoAtual === 'lista') { focoAtual = 'categoria'; atualizarFoco(); }
-            break;
-        case 'ArrowDown':
-            if(focoAtual === 'categoria') { focoAtual = 'lista'; indiceSelecao = 0; atualizarFoco(); }
-            else if(focoAtual === 'lista' && indiceSelecao < document.querySelectorAll('.item').length - 1) { indiceSelecao++; atualizarFoco(); }
-            break;
-        case 'ArrowRight':
-            if(focoAtual === 'categoria') { indiceCategoria = (indiceCategoria + 1) % categorias.length; categoriaAtual = categorias[indiceCategoria]; renderList(); }
-            else if(focoAtual === 'lista') { focoAtual = 'player'; }
-            break;
-        case 'ArrowLeft':
-            if(focoAtual === 'categoria') { indiceCategoria = (indiceCategoria - 1 + categorias.length) % categorias.length; categoriaAtual = categorias[indiceCategoria]; renderList(); }
-            else if(focoAtual === 'player') { focoAtual = 'lista'; atualizarFoco(); }
-            break;
-        case 'Enter':
-            if(focoAtual === 'lista') document.querySelectorAll('.item')[indiceSelecao].click();
-            break;
-    }
-});
-
-function atualizarFoco() {
-    document.querySelectorAll('.item, #categoriaAtual').forEach(el => el.classList.remove('focus'));
-    if (focoAtual === 'lista') {
-        const itens = document.querySelectorAll('.item');
-        itens[indiceSelecao]?.classList.add('focus');
-        itens[indiceSelecao]?.scrollIntoView({ block: 'center' });
-    } else if (focoAtual === 'categoria') {
-        document.getElementById('categoriaAtual')?.classList.add('focus');
-    }
+if (qual === 'pl') {
+    // Tela de aviso para canais que precisam de link externo
+    container.innerHTML = `
+    <div id="aviso-pl" style="width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; background:linear-gradient(135deg, #1a1a1a 0%, #000 100%); color:white; text-align:center; padding:20px; box-sizing:border-box;">
+        <div id="welcome-title">Aviso Importante</div>
+       <div id="welcome-sub" style="animation: fadeIn 1s forwards 0.5s">Este canal Precisa Ser Aberto em um link.<br>
+                Externo para Funcionar Corretamente</div> <br><br>
+        
+        <button onclick="abrirPopupNoContainer('${urlVideo}')" style="padding: 15px 30px; background: #a855f7; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">
+            ABRIR CANAL
+        </button>
+    </div>
+`;
+} else if (['sd', 'ec'].includes(qual)) {
+    // Video.js para streamings diretos
+    container.innerHTML = `<video id="video-player" class="video-js vjs-big-play-centered" controls autoplay playsinline style="width:100%;height:100%;"></video>`;
+    
+    playerInstance = videojs('video-player', {
+        autoplay: true,
+        controls: true,
+        sources: [{ 
+            src: urlVideo, 
+            type: 'application/x-mpegURL' 
+        }]
+    });
+} else {
+    // Iframe para o restante (RD, EB e outros)
+    container.innerHTML = `<iframe id="videoIframe" src="${urlVideo}" allow="autoplay; fullscreen" style="width:100%;height:100%;border:none;"></iframe>`;
 }
 
-window.onload = () => { carregarCanaisJSON(); atualizarFoco(); };
+    // --- 6. GERENCIAMENTO DE OVERLAY ---
+const overlay = document.getElementById('iframe-overlay');
+if (overlay) {
+    clearTimeout(overlayTimeout);
+
+    // Lista de qualidades que exigem tratamento especial
+    const qualidadesComOverlay = [ 'ec', 'eb', 'sd'];
+
+    if (['ec', 'eb', 'sd'].includes(qual)) {
+        // Regra para outros tipos que precisam de overlay fixo
+        overlay.style.setProperty('display', 'block', 'important');
+    } 
+    else {
+        // SE NÃO FOR NENHUMA DAS QUALIDADES ACIMA:
+        // O overlay é removido/escondido permanentemente para este canal
+        overlay.style.setProperty('display', 'none', 'important');
+    }
+}
+}
+// --- 4. FUNÇÕES DE SUPORTE ---
+function clearPlayer() {
+    const p = document.getElementById("player");
+    if (p) p.innerHTML = "";
+}
+
+function iniciarTelaInicial() {
+    const p = document.getElementById('player');
+    if (!p) return;
+
+    p.innerHTML = `
+        <div id="noise-container"><div id="tv-static"></div></div>
+        <div id="welcome-screen" style="display:flex; align-items:center; justify-content:center; height:100%; width:100%;">
+            <img src="../imagens/imagem.png" alt="Bem-vindo" style="max-width: 80%; max-height: 80%; object-fit: contain; pointer-events: none;">
+        </div>
+    `;
+}
+
+function renderItemRec(nome, icon, disp) {
+    return `
+        <div class="rec-card">
+            <div class="rec-disp">${disp}</div>
+            <img src="${icon}" class="rec-icon" onerror="this.style.display='none'">
+            <div class="rec-nome">${nome}</div>
+        </div>
+    `;
+}
+
+function renderItemRec(nome, icon, disp) {
+    return `
+        <div style="display:inline-block; margin: 15px; text-align: center;">
+            <img src="${icon}" style="width: 40px; height: 40px; border-radius: 8px;">
+            <div style="font-size: 0.65rem; color: #a855f7; font-weight: bold; margin-top: 5px; text-transform: uppercase;">${disp}</div>
+            <div style="font-size: 0.8rem; font-weight: bold;">${nome}</div>
+        </div>
+    `;
+}
+
+function abrirPopupNoContainer(url) {
+    const container = document.getElementById('player');
+    const rect = container.getBoundingClientRect();
+    
+    // TAMANHO E POSICAO POP UP
+    const top = window.screenY + rect.top;
+    const left = window.screenX + rect.left;
+    const largura = rect.width;
+    const altura = rect.height;
+    
+    window.open(
+        url, 
+        'JanelaCanal', 
+        `width=${largura},height=${altura},top=${top},left=${left},toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=yes`
+    );
+}
+
+// --- 5. NAVEGAÇÃO DAS CATEGORIAS ---
+function proximaCategoria() {
+    if (categorias.length === 0) return;
+
+    indiceCategoria = (indiceCategoria + 1) % categorias.length;
+    categoriaAtual = categorias[indiceCategoria];
+    renderList();
+}
+
+function categoriaAnterior() {
+    if (categorias.length === 0) return;
+
+    indiceCategoria = (indiceCategoria - 1 + categorias.length) % categorias.length;
+    categoriaAtual = categorias[indiceCategoria];
+    renderList();
+}
+
+// --- INICIALIZAÇÃO ---
+window.onload = function() {
+    carregarCanaisJSON();
+    iniciarTelaInicial();
+};
