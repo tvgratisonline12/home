@@ -63,20 +63,27 @@ document.addEventListener('keydown', (e) => {
             if (areaAtual === 'CATEGORIA') {
                 document.activeElement.click();
             } else if (areaAtual === 'LISTA') {
-                // Verifica se já estamos no canal que está tocando
-                const jaEstaTocando = (selecionadoIndex === focoIndex);
-                
-                if (jaEstaTocando) {
-                    // Se já toca, apenas coloca em tela cheia
-                    toggleFullScreen();
-                } else {
-                    // Se é um canal novo, reproduz
+                const canal = listaFiltrada[focoIndex];
+                const itemDiv = listaItens[focoIndex];
+
+                // 1. Se for um canal novo, carrega ele
+                if (selecionadoIndex !== focoIndex) {
                     selecionadoIndex = focoIndex;
-                    playCanal(listaFiltrada[focoIndex], listaItens[focoIndex]);
+                    playCanal(canal, itemDiv);
                     atualizarFoco(listaItens);
-                    
-                    // Opcional: Se quiser que entre em fullscreen automaticamente ao mudar de canal:
-                    // toggleFullScreen(); 
+                    clickCount = 0; // Reseta contador
+                } 
+                // 2. Se for o mesmo canal, gerencia Fullscreen
+                else {
+                    clickCount++;
+                    if (clickCount === 2) {
+                        toggleFullScreen();
+                        clickCount = 0;
+                    } else {
+                        // Clique único no canal já ativo: mantém ou entra em fullscreen
+                        toggleFullScreen(); 
+                        setTimeout(() => clickCount = 0, 500);
+                    }
                 }
             } else if (areaAtual === 'PLAYER') {
                 if (btnPl) btnPl.click();
