@@ -16,37 +16,47 @@
         }
 
         .header { text-align: center; }
-        .welcome-text { font-size: 1.2rem; font-weight: 400; letter-spacing: 0.3rem; text-transform: uppercase; color: var(--accent); }
-        .site-name-main { font-size: 3rem; font-weight: 900; letter-spacing: 0.1rem; color: #fff; }
-        .site-name-ext { font-size: 3rem; font-weight: 900; letter-spacing: 0.1rem; color: var(--green); }
+        .welcome-text { font-size: 1.2rem; font-weight: 400; letter-spacing: 0.2rem; text-transform: uppercase; color: var(--accent); }
+        .site-name-main { font-size: 2.5rem; font-weight: 900; color: #fff; }
+        .site-name-ext { font-size: 2.5rem; font-weight: 900; color: var(--green); }
 
-        .content-center { height: 280px; display: flex; align-items: center; justify-content: center; position: relative; }
-        
+        .content-center { height: 220px; display: flex; align-items: center; justify-content: center; position: relative; }
         .spin-container { position: absolute; }
-        .logo { width: 220px; animation: entrance 1s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        
+        /* Imagem proporcional */
+        .logo { width: 180px; animation: entrance 1s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
 
         .promo-container { position: absolute; text-align: center; opacity: 0; transition: opacity 0.6s ease; }
-        .promo-text { font-size: 5rem; font-weight: 900; line-height: 0.85; text-transform: uppercase; }
+        .promo-text { font-size: 3.5rem; font-weight: 900; line-height: 0.85; text-transform: uppercase; }
 
-        .actions { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; width: 95%; }
-        .action-group { display: flex; flex-direction: column; align-items: center; gap: 8px; }
-        .action-label { color: #fff; font-size: 0.7rem; letter-spacing: 0.2rem; opacity: 0.7; text-transform: uppercase; }
+        /* Grid de botões 2x2 */
+        .actions { 
+            display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; 
+            width: 90%; max-width: 400px; justify-items: center;
+        }
+        .action-group { display: flex; flex-direction: column; align-items: center; gap: 5px; width: 100%; }
+        .action-label { color: #fff; font-size: 0.6rem; letter-spacing: 0.1rem; opacity: 0.7; text-transform: uppercase; }
 
         .btn { 
-            padding: 14px 30px; border: 2px solid; border-radius: 12px;
+            padding: 10px 10px; border: 2px solid; border-radius: 10px;
             background: transparent; font-weight: 700; cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); font-size: 0.9rem; width: 160px;
-            white-space: nowrap; text-transform: uppercase; letter-spacing: 0.1rem;
+            transition: all 0.3s; font-size: 0.8rem; width: 100%;
             text-decoration: none; display: flex; align-items: center; justify-content: center;
         }
         .btn-green { border-color: var(--green); color: var(--green); }
-        .btn-green:hover { background: var(--green); color: #000; box-shadow: 0 0 20px rgba(0, 255, 136, 0.4); }
         .btn-purple { border-color: var(--accent); color: var(--accent); }
-        .btn-purple:hover { background: var(--accent); color: #fff; box-shadow: 0 0 20px rgba(138, 43, 226, 0.4); }
 
         @keyframes entrance {
-            0% { transform: scale(0.5) rotate(0deg); filter: blur(10px); opacity: 0; }
-            100% { transform: scale(1) rotate(360deg); filter: blur(0px); opacity: 1; }
+            0% { transform: scale(0.5); filter: blur(10px); opacity: 0; }
+            100% { transform: scale(1); filter: blur(0px); opacity: 1; }
+        }
+
+        /* Ajustes específicos para telas muito pequenas */
+        @media (max-height: 600px) {
+            .site-name-main, .site-name-ext { font-size: 2rem; }
+            .promo-text { font-size: 2.5rem; }
+            .content-center { height: 150px; }
+            .logo { width: 120px; }
         }
     </style>
 </head>
@@ -72,22 +82,10 @@
     </div>
 
     <div class="actions">
-        <div class="action-group">
-            <span class="action-label">Baixar</span>
-            <a href="/download/android" class="btn btn-green">Android</a>
-        </div>
-        <div class="action-group">
-            <span class="action-label">Baixar</span>
-            <a href="/download/androidtv" class="btn btn-green">Android TV</a>
-        </div>
-        <div class="action-group">
-            <span class="action-label">Baixar</span>
-            <a href="/download/windows" class="btn btn-purple">Windows</a>
-        </div>
-        <div class="action-group">
-            <span class="action-label">Assistir</span>
-            <a href="/player" class="btn btn-purple">Web Player</a>
-        </div>
+        <div class="action-group"><span class="action-label">Baixar</span><a href="/download/android" class="btn btn-green">Android</a></div>
+        <div class="action-group"><span class="action-label">Baixar</span><a href="/download/androidtv" class="btn btn-green">Android TV</a></div>
+        <div class="action-group"><span class="action-label">Baixar</span><a href="/download/windows" class="btn btn-purple">Windows</a></div>
+        <div class="action-group"><span class="action-label">Assistir</span><a href="/player" class="btn btn-purple">Web Player</a></div>
     </div>
 
     <script>
@@ -99,18 +97,14 @@
         function runCycle() {
             logoBox.style.display = "block";
             promoBox.style.opacity = 0;
-            
             setTimeout(() => {
                 logoBox.style.display = "none";
                 promoBox.style.opacity = 1;
-                
                 topEl.innerText = "100%"; bottomEl.innerText = "GRÁTIS";
                 topEl.style.color = "var(--green)"; bottomEl.style.color = "var(--green)";
-                
                 setTimeout(() => {
                     topEl.innerText = "SEM"; bottomEl.innerText = "ANÚNCIOS";
                     topEl.style.color = "var(--accent)"; bottomEl.style.color = "var(--accent)";
-                    
                     setTimeout(runCycle, 3000);
                 }, 3000);
             }, 2500);
