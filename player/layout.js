@@ -8,11 +8,11 @@ let overlayTimeout;
 async function carregarCanaisJSON() {
     try {
         const urls = [
-            'jsons/rd.json',
-            'jsons/eb.json',
-            'jsons/cx.json',
-             'jsons/ec.json',
-             'jsons/pl.json'
+            '../jsons/rd.json',
+            '../jsons/eb.json',
+            '../jsons/cx.json',
+             '../jsons/ec.json',
+             '../jsons/pl.json'
      
         ];
 
@@ -245,10 +245,10 @@ function iniciarTelaInicial() {
                     <div id="welcome-title" style="font-size: 1.8rem;">RECOMENDAÇÃO DE NAVEGADOR</div>
                     <div id="welcome-sub" style="animation: fadeIn 1s forwards 0.5s; font-size: 1rem;">Para uma experiência sem anúncios e travamentos</div>
                     <div class="grid-apps">
-                        ${renderItemRec('Android TV', 'imagens/browser.jpg', 'Browser Here')}
-                        ${renderItemRec('Windows', 'imagens/brave.jpg', 'Brave')}
-                        ${renderItemRec('Android', 'imagens/brave.jpg', 'Brave')}
-                        ${renderItemRec('Ios', 'imagens/brave.jpg', 'Brave')}
+                        ${renderItemRec('Android TV', '../imagens/browser.jpg', 'Browser Here')}
+                        ${renderItemRec('Windows', '../imagens/brave.jpg', 'Brave')}
+                        ${renderItemRec('Android', '../imagens/brave.jpg', 'Brave')}
+                        ${renderItemRec('Ios', '../imagens/brave.jpg', 'Brave')}
                     </div>
                 </div>
 
