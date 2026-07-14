@@ -237,8 +237,7 @@ function iniciarTelaInicial() {
             <div id="container-alternante">
                 
                 <div class="bloco-slide" id="slide-1">
-                    <div id="welcome-title">TVGrátis.Online</div>
-                    <div id="welcome-sub" style="animation: fadeIn 1s forwards 0.5s">Escolha um canal para começar</div>
+                    <img src="../imagens/imagem.png" alt="Bem-vindo" style="max-width: 80%; max-height: 80%; object-fit: contain; pointer-events: none;">
                 </div>
 
                 <div class="bloco-slide" id="slide-2">
