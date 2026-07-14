@@ -1,6 +1,6 @@
 let areaAtual = 'LISTA';
 let focoIndex = 0;
-let selecionadoIndex = -1; // -1 significa que nada foi selecionado ainda
+let selecionadoIndex = -1; 
 let clickCount = 0;
 
 // Listener de captura: Intercepta o "Back" antes de chegar ao iframe
@@ -59,26 +59,33 @@ document.addEventListener('keydown', (e) => {
             }
             break;
 
-       case 'Enter':
+        case 'Enter':
             if (areaAtual === 'CATEGORIA') {
                 document.activeElement.click();
-            } else if (areaAtual === 'LISTA') {
-                const canalParaTocar = listaFiltrada[focoIndex];
-                const itemDiv = listaItens[focoIndex];
+            } 
+            else if (areaAtual === 'LISTA') {
+                const itemFocado = listaItens[focoIndex];
+                // Verifica a classe. Se o seu HTML for diferente, ajuste o nome aqui.
+                const ehQualidadePL = itemFocado.classList.contains('qual-pl');
 
-                // A LÓGICA AGORA É DIRETA:
-                // 1. Se for um canal novo, ele toca.
-                // 2. Se for o mesmo canal, ele tenta o fullscreen.
-                if (selecionadoIndex !== focoIndex) {
-                    selecionadoIndex = focoIndex;
-                    playCanal(canalParaTocar, itemDiv);
-                    atualizarFoco(listaItens);
-                    clickCount = 0;
+                if (focoIndex === selecionadoIndex) {
+                    // SE JÁ ESTÁ SELECIONADO:
+                    if (ehQualidadePL) {
+                        // BLOQUEIO TOTAL: Não faz nada, nem chama fullscreen, nem clica
+                        console.log("Canal PL bloqueado: Nenhuma ação realizada.");
+                    } else {
+                        // Se não for PL, executa o fullscreen
+                        toggleFullScreen();
+                    }
                 } else {
-                    // Já é o canal selecionado, então o Enter vira o comando de fullscreen
-                    toggleFullScreen();
+                    // SE NÃO ESTÁ SELECIONADO:
+                    // Carrega o canal normalmente
+                    selecionadoIndex = focoIndex;
+                    itemFocado.click();
+                    atualizarFoco(listaItens);
                 }
-            } else if (areaAtual === 'PLAYER') {
+            } 
+            else if (areaAtual === 'PLAYER') {
                 if (btnPl) btnPl.click();
                 else toggleFullScreen();
             }
@@ -94,7 +101,6 @@ function mudarArea(novaArea) {
     if (areaAtual === 'LISTA') {
         const itens = document.querySelectorAll('#contentList .item');
         if(itens.length > 0) {
-            // Se tiver algo selecionado, foca no selecionadoIndex, senão no 0
             focoIndex = (selecionadoIndex !== -1) ? selecionadoIndex : 0;
             itens[focoIndex].classList.add('focused');
             itens[focoIndex].scrollIntoView({ block: 'center' });
@@ -102,10 +108,13 @@ function mudarArea(novaArea) {
         }
     } else if (areaAtual === 'CATEGORIA') {
         const cat0 = document.querySelectorAll('.cat-btn')[0];
-        cat0.classList.add('focused');
-        cat0.focus();
+        if (cat0) {
+            cat0.classList.add('focused');
+            cat0.focus();
+        }
     } else if (areaAtual === 'PLAYER') {
-        document.getElementById('player-container').classList.add('focused');
+        const container = document.getElementById('player-container');
+        if (container) container.classList.add('focused');
         const btnPl = document.querySelector('#aviso-pl button');
         if (btnPl) btnPl.focus();
     }
@@ -113,8 +122,8 @@ function mudarArea(novaArea) {
 
 function atualizarFoco(lista) {
     lista.forEach((item, idx) => {
-        item.classList.toggle('focused', idx === focoIndex); // Cursor
-        item.classList.toggle('active', idx === selecionadoIndex); // Canal tocando
+        item.classList.toggle('focused', idx === focoIndex);
+        item.classList.toggle('active', idx === selecionadoIndex);
         if (idx === focoIndex) item.scrollIntoView({ behavior: 'smooth', block: 'center' });
     });
 }
