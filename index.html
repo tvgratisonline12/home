@@ -16,31 +16,32 @@
         }
 
         .header { text-align: center; }
-        .welcome-text { font-size: 1.2rem; font-weight: 400; letter-spacing: 0.2rem; text-transform: uppercase; color: var(--accent); }
-        .site-name-main { font-size: 2.5rem; font-weight: 900; color: #fff; }
-        .site-name-ext { font-size: 2.5rem; font-weight: 900; color: var(--green); }
+        .welcome-text { font-size: 1.1rem; font-weight: 400; letter-spacing: 0.15rem; text-transform: uppercase; color: var(--accent); }
+        .site-name-main { font-size: 2.2rem; font-weight: 900; color: #fff; }
+        .site-name-ext { font-size: 2.2rem; font-weight: 900; color: var(--green); }
 
-        .content-center { height: 220px; display: flex; align-items: center; justify-content: center; position: relative; }
-        .spin-container { position: absolute; }
-        
-        /* Imagem proporcional */
-        .logo { width: 180px; animation: entrance 1s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .content-center { height: 200px; display: flex; align-items: center; justify-content: center; position: relative; }
+        .logo { width: 160px; animation: entrance 1s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
 
         .promo-container { position: absolute; text-align: center; opacity: 0; transition: opacity 0.6s ease; }
-        .promo-text { font-size: 3.5rem; font-weight: 900; line-height: 0.85; text-transform: uppercase; }
+        .promo-text { font-size: 3.2rem; font-weight: 900; line-height: 0.85; text-transform: uppercase; }
 
-        /* Grid de botões 2x2 */
+        /* Grid de botões 2x2 com margens laterais */
         .actions { 
-            display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; 
-            width: 90%; max-width: 400px; justify-items: center;
+            display: grid; grid-template-columns: repeat(2, 1fr); 
+            gap: 12px; /* Espaço entre os itens */
+            width: 85%; /* Espaço lateral na tela */
+            max-width: 400px;
         }
-        .action-group { display: flex; flex-direction: column; align-items: center; gap: 5px; width: 100%; }
+        .action-group { display: flex; flex-direction: column; align-items: center; gap: 4px; }
         .action-label { color: #fff; font-size: 0.6rem; letter-spacing: 0.1rem; opacity: 0.7; text-transform: uppercase; }
 
+        /* Botões com padding reduzido */
         .btn { 
-            padding: 10px 10px; border: 2px solid; border-radius: 10px;
+            padding: 8px 5px; /* Padding interno menor */
+            border: 2px solid; border-radius: 8px;
             background: transparent; font-weight: 700; cursor: pointer;
-            transition: all 0.3s; font-size: 0.8rem; width: 100%;
+            transition: all 0.3s; font-size: 0.75rem; width: 100%;
             text-decoration: none; display: flex; align-items: center; justify-content: center;
         }
         .btn-green { border-color: var(--green); color: var(--green); }
@@ -49,14 +50,6 @@
         @keyframes entrance {
             0% { transform: scale(0.5); filter: blur(10px); opacity: 0; }
             100% { transform: scale(1); filter: blur(0px); opacity: 1; }
-        }
-
-        /* Ajustes específicos para telas muito pequenas */
-        @media (max-height: 600px) {
-            .site-name-main, .site-name-ext { font-size: 2rem; }
-            .promo-text { font-size: 2.5rem; }
-            .content-center { height: 150px; }
-            .logo { width: 120px; }
         }
     </style>
 </head>
@@ -70,9 +63,7 @@
     </div>
 
     <div class="content-center">
-        <div class="spin-container" id="logo-box">
-            <img src="imagem256.png" class="logo" alt="Logo">
-        </div>
+        <div class="spin-container" id="logo-box"><img src="imagem256.png" class="logo" alt="Logo"></div>
         <div class="promo-container" id="promo-box">
             <div class="promo-text">
                 <span id="top" style="color:var(--green)">100%</span><br>
@@ -83,9 +74,9 @@
 
     <div class="actions">
         <div class="action-group"><span class="action-label">Baixar</span><a href="/download/android" class="btn btn-green">Android</a></div>
-        <div class="action-group"><span class="action-label">Baixar</span><a href="/download/androidtv" class="btn btn-green">Android TV</a></div>
-        <div class="action-group"><span class="action-label">Baixar</span><a href="/download/windows" class="btn btn-purple">Windows</a></div>
-        <div class="action-group"><span class="action-label">Assistir</span><a href="/player" class="btn btn-purple">Web Player</a></div>
+        <div class="action-group"><span class="action-label">Baixar</span><button class="btn btn-green">Android TV</button></div>
+        <div class="action-group"><span class="action-label">Baixar</span><button class="btn btn-purple">Windows</button></div>
+        <div class="action-group"><span class="action-label">Assistir</span><button class="btn btn-purple">Web Player</button></div>
     </div>
 
     <script>
