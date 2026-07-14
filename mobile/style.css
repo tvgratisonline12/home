@@ -84,3 +84,27 @@ aside{order:2;width:100%;height:65dvh;border-right:none;border-top:2px solid var
     .rec-disp { font-size: 0.6rem !important; margin-bottom: 2px !important; }
     .rec-nome { font-size: 0.7rem !important; }
 }
+#welcome-screen {
+    position: absolute;
+    inset: 0;
+    z-index: 20;
+    background: #000;
+    /* Centralização perfeita */
+    display: flex;
+    align-items: center;    /* Vertical */
+    justify-content: center; /* Horizontal */
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
+#welcome-screen img {
+    /* Impede que a imagem ultrapasse o tamanho da tela */
+    max-width: 90%; 
+    max-height: 90%;
+    /* Garante que ela mantenha a proporção e não fique distorcida */
+    object-fit: contain;
+    /* Remove margens extras que podem deslocar a imagem */
+    margin: 0;
+    display: block;
+}
