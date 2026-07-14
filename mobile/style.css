@@ -12,7 +12,7 @@ body {
     font-family: 'Rajdhani', sans-serif;
     margin: 0;
     display: flex;
-    height: 100dvh; /* Usa a altura dinâmica do dispositivo */
+    height: 100dvh;
     overflow: hidden;
 }
 
@@ -20,6 +20,7 @@ body {
 ::-webkit-scrollbar-track { background: #111; }
 ::-webkit-scrollbar-thumb { background: var(--purple); border-radius: 10px; }
 
+/* Estrutura Principal */
 aside {
     width: 320px;
     background: var(--sidebar-bg);
@@ -40,6 +41,7 @@ main {
     overflow: hidden;
 }
 
+/* Player e Imagens */
 #player-container {
     width: 100%;
     height: 100%;
@@ -56,34 +58,6 @@ main {
     border: none;
     display: block;
 }
-
-.brand-container { border-bottom: 1px solid #222; padding: 15px 10px; text-align: center; }
-.search-box { padding: 15px; }
-.search-box input { width: 90%; background: #000; border: 1px solid #333; padding: 12px; color: var(--green); border-radius: 8px; outline: none; font-family: 'Rajdhani'; }
-
-.channel-list { overflow-y: auto; flex-grow: 1; }
-
-.item {
-    padding: 12px 15px;
-    margin: 5px 10px;
-    background: #1a1a1a;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    border-left: 4px solid transparent;
-    user-select: none;
-    transition: .2s;
-}
-.item:hover { background: rgba(34,34,34,.7); transform: translateX(5px); }
-.item.active { border-left-color: var(--green); background: rgba(138,43,226,.15); color: var(--green); }
-
-.channel-number { min-width: 30px; font-size: 11px; color: var(--purple); margin-right: 12px; background: #000; padding: 2px 6px; border-radius: 4px; text-align: center; }
-
-/* Overlay e Tela Inicial */
-#iframe-overlay { position: absolute; inset: 0; z-index: 1500; background: transparent; cursor: default; }
 
 #welcome-screen {
     position: absolute;
@@ -103,21 +77,43 @@ main {
     max-width: 80%;
     max-height: 60%;
     object-fit: contain;
+    display: block;
     margin: 0 auto 20px auto;
 }
 
-#welcome-title { font-size: 48px; font-weight: 700; background: linear-gradient(90deg, #00ff88, #8a2be2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-#welcome-sub { margin-top: 20px; font-size: 20px; color: #fff; opacity: 0; animation: fadeIn 1s forwards 0.5s; }
+/* Lista de Canais */
+.channel-list {
+    overflow-y: auto;
+    flex: 1;
+    -webkit-overflow-scrolling: touch;
+}
 
-/* Animações e extras */
-@keyframes fadeIn { to { opacity: 1; } }
-#noise-container { display: none; position: absolute; inset: 0; z-index: 19; background: #000; overflow: hidden; pointer-events: none; }
-#tv-static { position: absolute; top:-50px; left:-50px; right:-50px; bottom:-50px; opacity:.15; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E"); animation:noise .2s linear infinite; }
-@keyframes noise { 0% { transform: translate(0,0); } 10% { transform: translate(-5px,-5px); } 100% { transform: translate(0,0); } }
+.item {
+    padding: 12px 15px;
+    margin: 5px 10px;
+    background: #1a1a1a;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    border-left: 4px solid transparent;
+    transition: .2s;
+}
 
-/* Mobile Responsivo */
+.item.active { border-left-color: var(--green); background: rgba(138,43,226,.15); color: var(--green); }
+
+/* Componentes de UI */
+.brand-container { border-bottom: 1px solid #222; padding: 15px 10px; text-align: center; }
+.categoria-header { display: flex; align-items: center; justify-content: space-between; padding: 10px; background: #151515; }
+.tituloCategoria { flex: 1; text-align: center; font-size: 22px; font-weight: bold; background: linear-gradient(90deg,#00ff88,#8a2be2); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.cat-btn { width: 38px; height: 38px; border-radius: 50%; border: 1px solid #8a2be2; background: #111; color: #00ff88; cursor: pointer; }
+
+/* Mobile */
 @media (max-width: 768px) {
     body { flex-direction: column; }
+    
     main { 
         order: 1; 
         height: 35vh; 
@@ -125,17 +121,17 @@ main {
         padding: 0; 
         flex-shrink: 0; 
     }
+    
     aside { 
         order: 2; 
         width: 100%; 
-        flex-grow: 1; /* Ocupa o restante do espaço */
-        height: auto; 
+        flex: 1; 
+        min-height: 0; 
         border-right: none; 
         border-top: 2px solid var(--purple); 
     }
+    
     .channel-list { 
         padding-bottom: 20px; 
     }
-    #welcome-title { font-size: 32px; }
-    #welcome-sub { font-size: 16px; }
 }
