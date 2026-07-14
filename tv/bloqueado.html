@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Sério mesmo?</title>
+    <style>
+        body { background: #000; color: #00ff88; font-family: 'Courier New', monospace; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; }
+        .spinner { border: 4px solid #333; border-top: 4px solid #8a2be2; border-radius: 50%; width: 40px; height: 40px; animation: spin 2s linear infinite; margin-bottom: 20px; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        h1 { font-size: 20px; text-transform: uppercase; }
+        #msg { margin-top: 20px; color: #fff; font-size: 16px; opacity: 0; transition: opacity 2s; }
+    </style>
+</head>
+<body>
+    <div class="spinner"></div>
+    <h1>Tentando bisbilhotar o código?</h1>
+    <div id="msg">Calma, estou gerando a senha da sua curiosidade... <br> (Mentira, você não vai ver nada aqui).</div>
+
+    <script>
+        // Simula um carregamento bem lento e frustrante
+        setTimeout(() => {
+            document.getElementById('msg').style.opacity = "1";
+        }, 5000);
+
+        setTimeout(() => {
+            document.querySelector('h1').innerText = "Achou que era hacker?";
+            document.getElementById('msg').innerHTML = "O meu código é mais privado que o seu histórico de navegação.<br>Tente novamente na próxima vida!";
+        }, 10000);
+    </script>
+</body>
+</html>
