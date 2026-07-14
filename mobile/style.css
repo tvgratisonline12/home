@@ -20,7 +20,7 @@ main{flex-grow:1;display:flex;align-items:center;justify-content:center;padding:
 .cat-btn{width:38px;height:38px;border-radius:50%;border:1px solid #8a2be2;background:#111;color:#00ff88;font-size:22px;cursor:pointer}
 .cat-btn:hover{background:#8a2be2;color:#fff}
 #iframe-overlay{position:absolute;inset:0;z-index:1500;background:transparent;cursor:default}
-#welcome-screen{position:absolute;inset:0;z-index:20;background:#000;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;padding:20px}
+#welcome-screen{position:absolute;inset:0;z-index:20;background:#000;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;}
 #welcome-title{font-size:48px;font-weight:700;background:linear-gradient(90deg,#00ff88,#8a2be2);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 #welcome-sub{margin-top:20px;font-size:20px;color:#fff;opacity:0}
 #noise-container{display:none;position:absolute;inset:0;z-index:19;background:#000;overflow:hidden;pointer-events:none}
@@ -56,6 +56,7 @@ main{flex-grow:1;display:flex;align-items:center;justify-content:center;padding:
 
 .rec-nome { font-size: 1.2rem; font-weight: 700; color: #fff; }
 @media (max-width:768px){
+.channel-list{margin-bottom:0px}
 body{flex-direction:column}
 main{order:1;height:35vh;width:100%;padding:0}
 aside{order:2;width:100%;height:65dvh;border-right:none;border-top:2px solid var(--purple)}
@@ -83,29 +84,4 @@ aside{order:2;width:100%;height:65dvh;border-right:none;border-top:2px solid var
     /* Ajusta as fontes para não ocuparem muito espaço */
     .rec-disp { font-size: 0.6rem !important; margin-bottom: 2px !important; }
     .rec-nome { font-size: 0.7rem !important; }
-}
-#welcome-screen {
-    position: absolute;
-    inset: 0;
-    z-index: 20;
-    background: #000;
-    /* Centralização perfeita */
-    display: flex;
-    align-items: center;    /* Vertical */
-    justify-content: center; /* Horizontal */
-    flex-direction: column;
-    width: 100%;
-    height: 100%;
-    padding:0px;
-}
-
-#welcome-screen img {
-    /* Impede que a imagem ultrapasse o tamanho da tela */
-    max-width: 90%; 
-    max-height: 90%;
-    /* Garante que ela mantenha a proporção e não fique distorcida */
-    object-fit: contain;
-    /* Remove margens extras que podem deslocar a imagem */
-    margin: 0;
-    display: block;
 }
