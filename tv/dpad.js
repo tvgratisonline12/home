@@ -59,31 +59,24 @@ document.addEventListener('keydown', (e) => {
             }
             break;
 
-        case 'Enter':
+       case 'Enter':
             if (areaAtual === 'CATEGORIA') {
                 document.activeElement.click();
             } else if (areaAtual === 'LISTA') {
-                const canal = listaFiltrada[focoIndex];
+                const canalParaTocar = listaFiltrada[focoIndex];
                 const itemDiv = listaItens[focoIndex];
 
-                // 1. Se for um canal novo, carrega ele
+                // A LÓGICA AGORA É DIRETA:
+                // 1. Se for um canal novo, ele toca.
+                // 2. Se for o mesmo canal, ele tenta o fullscreen.
                 if (selecionadoIndex !== focoIndex) {
                     selecionadoIndex = focoIndex;
-                    playCanal(canal, itemDiv);
+                    playCanal(canalParaTocar, itemDiv);
                     atualizarFoco(listaItens);
-                    clickCount = 0; // Reseta contador
-                } 
-                // 2. Se for o mesmo canal, gerencia Fullscreen
-                else {
-                    clickCount++;
-                    if (clickCount === 2) {
-                        toggleFullScreen();
-                        clickCount = 0;
-                    } else {
-                        // Clique único no canal já ativo: mantém ou entra em fullscreen
-                        toggleFullScreen(); 
-                        setTimeout(() => clickCount = 0, 500);
-                    }
+                    clickCount = 0;
+                } else {
+                    // Já é o canal selecionado, então o Enter vira o comando de fullscreen
+                    toggleFullScreen();
                 }
             } else if (areaAtual === 'PLAYER') {
                 if (btnPl) btnPl.click();
