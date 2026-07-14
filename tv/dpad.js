@@ -2,23 +2,23 @@ let areaAtual = 'LISTA';
 let focoIndex = 0;
 let clickCount = 0;
 
+// Listener de captura: Intercepta o "Back" antes do iframe
+window.addEventListener('keydown', (e) => {
+    if (e.key === 'Backspace' || e.key === 'Escape') {
+        e.preventDefault();
+        // Força a volta para a lista, independentemente de onde esteja o foco
+        mudarArea('LISTA');
+        
+        // Se houver um player de vídeo, você pode opcionalmente limpar o container
+        const player = document.getElementById("player");
+        if (player) player.innerHTML = ""; 
+    }
+}, true);
+
 document.addEventListener('keydown', (e) => {
     const listaItens = document.querySelectorAll('#contentList .item');
     const botoesCat = document.querySelectorAll('.cat-btn');
     const btnPl = document.querySelector('#aviso-pl button');
-
-    // Se estiver no botão PL, intercepta as teclas para não mover o foco para fora
-    if (btnPl && document.activeElement === btnPl) {
-        if (['ArrowUp', 'ArrowDown', 'ArrowRight'].includes(e.key)) {
-            e.preventDefault();
-            return;
-        }
-        if (e.key === 'ArrowLeft') {
-            e.preventDefault();
-            mudarArea('LISTA');
-            return;
-        }
-    }
 
     if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Enter'].includes(e.key)) {
         e.preventDefault();
@@ -54,6 +54,7 @@ document.addEventListener('keydown', (e) => {
             break;
 
         case 'ArrowLeft':
+            // Se estiver no botão PL dentro do player, sai para a LISTA
             if (areaAtual === 'PLAYER') {
                 mudarArea('LISTA');
             } else if (areaAtual === 'CATEGORIA') {
@@ -83,8 +84,7 @@ document.addEventListener('keydown', (e) => {
 
 function mudarArea(novaArea) {
     areaAtual = novaArea;
-    
-    // Reseta focos visuais e retira foco de elementos internos (iframe/botões)
+    // Tira foco de tudo e limpa as classes
     document.querySelectorAll('.item, .cat-btn, #player-container').forEach(el => el.classList.remove('focused'));
     if (document.activeElement) document.activeElement.blur();
     
@@ -100,12 +100,9 @@ function mudarArea(novaArea) {
         cat0.classList.add('focused');
         cat0.focus();
     } else if (areaAtual === 'PLAYER') {
+        document.getElementById('player-container').classList.add('focused');
         const btnPl = document.querySelector('#aviso-pl button');
-        if (btnPl) {
-            btnPl.focus();
-        } else {
-            document.getElementById('player-container').classList.add('focused');
-        }
+        if (btnPl) btnPl.focus();
     }
 }
 
