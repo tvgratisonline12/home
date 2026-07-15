@@ -33,7 +33,26 @@
         .modal-link { background: #000; padding: 10px; border-radius: 5px; margin: 15px 0; font-family: monospace; word-break: break-all; color: var(--green); }
         .btn-copy { background: var(--accent); color: #fff; border: none; padding: 10px; width: 100%; border-radius: 5px; cursor: pointer; margin-bottom: 10px; }
         .btn-download { background: var(--green); color: #000; border: none; padding: 15px; width: 100%; border-radius: 5px; font-weight: bold; cursor: pointer; }
+        /* Adicione ou substitua estas partes no seu CSS: */
 
+/* Efeito Hover para os Botões Principais */
+.btn:hover {
+    transform: scale(1.05); /* Leve aumento ao passar o mouse */
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+}
+
+/* Efeito Hover para os botões dentro do Modal */
+.btn-copy { 
+    background: var(--accent); color: #fff; border: none; padding: 10px; width: 100%; border-radius: 5px; cursor: pointer; margin-bottom: 10px;
+    transition: background 0.3s ease;
+}
+.btn-copy:hover { background: #6a1bb2; } /* Roxo mais escuro no hover */
+
+.btn-download { 
+    background: var(--green); color: #000; border: none; padding: 15px; width: 100%; border-radius: 5px; font-weight: bold; cursor: pointer;
+    transition: background 0.3s ease;
+}
+.btn-download:hover { background: #00cc6a; } /* Verde mais escuro no hover */
         @media (max-width: 768px) {
             .actions { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; width: 92%; margin: 0 auto; }
             .btn { width: 100%; padding: 10px 8px; font-size: 0.8rem; }
