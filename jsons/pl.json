@@ -1,6 +1,6 @@
 [
   {"canal": "A FEITICEIRA 24H", "logo": "631fa8dd7f25240007099a40", "qualidade": "pl", "categorias": ["Todos", "24 Horas"]},
-   {"canal": "ARNOLD 24H", "logo": "61f1d27a189ed10007b7393e", "qualidade": "pl", "categorias": ["Todos", "24 Horas"]},
+  {"canal": "ARNOLD 24H", "logo": "61f1d27a189ed10007b7393e", "qualidade": "pl", "categorias": ["Todos", "24 Horas"]},
   {"canal": "BOB ESPONJA 24H", "logo": "62545c0b002f4b0007688b61", "qualidade": "pl", "categorias": ["Todos", "24 Horas"]},
   {"canal": "CINE SUCESSOS", "logo": "5f120e94a5714d00074576a1", "qualidade": "pl", "categorias": ["Todos", "Filmes e Séries"]},
   {"canal": "CINE COMÉDIA", "logo": "5f12101f0b12f00007844c7c", "qualidade": "pl", "categorias": ["Todos", "Filmes e Séries"]},
@@ -12,6 +12,8 @@
   {"canal": "KENAN E KEL 24H", "logo": "5ffcc5130fd98c0007f2e216", "qualidade": "pl", "categorias": ["Todos", "24 Horas"]},
   {"canal": "MAC GAYVER", "logo": "63eb9dc84e83e70008abea92", "qualidade": "pl", "categorias": ["Todos", "24 Horas"]},
   {"canal": "MASTER CHEF 24H", "logo": "6077045b6031bd00078de127", "qualidade": "pl", "categorias": ["Todos", "24 Horas"]},
+  {"canal": "NICKELODEON CLÁSSICO", "logo": "6824ce10c5d53e1351ceb8d1", "qualidade": "pl", "categorias": ["Todos", "Infantil"]},
+  {"canal": "NICKELODEON TEEN", "logo": "60f5fabf0721880007cd50e3", "qualidade": "pl", "categorias": ["Todos", "Infantil"]},
   {"canal": "NICK TOONS", "logo": "645951c0e94c38000802d2cb", "qualidade": "pl", "categorias": ["Todos", "Infantil"]},
   {"canal": "NOVELAS 24H", "logo": "5f512365abe1f50007d3ff56", "qualidade": "pl", "categorias": ["Todos", "24 Horas"]},
   {"canal": "POPEYE 24H", "logo": "677d93f37bffa600080795e7", "qualidade": "pl", "categorias": ["Todos", "24 Horas"]},
@@ -20,6 +22,7 @@
   {"canal": "SOUTH PARK 24H", "logo": "65df71008b24c80008f04281", "qualidade": "pl", "categorias": ["Todos", "24 Horas"]},
   {"canal": "TOKUSATO", "logo": "5ff609de50ab210008025c1b", "qualidade": "pl", "categorias": ["Todos", "Filmes e Séries"]},
   {"canal": "TOPA OU NÃO TOPA 24H", "logo": "69fca82395df3283d2b60ef9", "qualidade": "pl", "categorias": ["Todos", "24 Horas"]},
+  {"canal": "TURMA DA MÔNICA 24H", "logo": "5f997e44949bc70007a6941e", "qualidade": "pl", "categorias": ["Todos", "24 Horas"]},
   {"canal": "UFC", "logo": "69a20556814d27f4ae630a92", "qualidade": "pl", "categorias": ["Todos", "Esportes"]},
   {"canal": "YUGI-OH 24H", "logo": "5f12136385bccc00070142ed", "qualidade": "pl", "categorias": ["Todos", "Infantil"]}
 ]
