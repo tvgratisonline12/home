@@ -48,24 +48,42 @@
         .btn-download { background: var(--green); color: #000; border: none; padding: 15px; width: 100%; border-radius: 5px; font-weight: bold; cursor: pointer; }
         /* Adicione ou substitua estas partes no seu CSS: */
 
-/* Efeito Hover para os Botões Principais */
-.btn:hover {
-    transform: scale(1.05); /* Leve aumento ao passar o mouse */
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
-}
+/* Efeito Hover para os Botões do Modal */
 
-/* Efeito Hover para os botões dentro do Modal */
+/* Botão COPIAR (Roxo) */
 .btn-copy { 
-    background: var(--accent); color: #fff; border: none; padding: 10px; width: 100%; border-radius: 5px; cursor: pointer; margin-bottom: 10px;
-    transition: background 0.3s ease;
+    background: transparent; 
+    color: var(--accent); 
+    border: 2px solid var(--accent); 
+    padding: 10px; 
+    width: 100%; 
+    border-radius: 8px; 
+    cursor: pointer; 
+    margin-bottom: 10px; 
+    font-weight: 700;
+    transition: all 0.3s ease;
 }
-.btn-copy:hover { background: #6a1bb2; } /* Roxo mais escuro no hover */
+.btn-copy:hover { 
+    background: var(--accent); 
+    color: #fff; 
+}
 
+/* Botão BAIXAR (Verde) */
 .btn-download { 
-    background: var(--green); color: #000; border: none; padding: 15px; width: 100%; border-radius: 5px; font-weight: bold; cursor: pointer;
-    transition: background 0.3s ease;
+    background: transparent; 
+    color: var(--green); 
+    border: 2px solid var(--green); 
+    padding: 15px; 
+    width: 100%; 
+    border-radius: 8px; 
+    font-weight: 700; 
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
-.btn-download:hover { background: #00cc6a; } /* Verde mais escuro no hover */
+.btn-download:hover { 
+    background: var(--green); 
+    color: #000; 
+}
         @media (max-width: 768px) {
             .actions { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; width: 92%; margin: 0 auto; }
             .btn { width: 100%; padding: 10px 8px; font-size: 0.8rem; }
