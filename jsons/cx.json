@@ -12,7 +12,7 @@
   {"canal": "REDE MANCHETE", "logo": "https://stmv1.srvif.com/tvserie/tvserie/playlist", "qualidade": "sd", "categorias": ["Todos", "Filmes e Séries"]},
   {"canal": "REDE MINAS", "logo": "https://8hzcavccys.zoeweb.tv/redeminas/ngrp:redeminas_all/chunklist_b1731072", "qualidade": "sd", "categorias": ["Todos", "Abertos"]},
   {"canal": "REDETV PR", "logo": "https://tv01.zas.media:1936/redetvparana/redetvparana/chunklist_w207761227", "qualidade": "sd", "categorias": ["Todos", "Abertos"]},
-  {"canal": "REDE VIDA", "logo": "https://d12e4o88jd8gex.cloudfront.net/out/v1/cea3de0b76ac4e82ab8ee0fd3f17ce12/index", "qualidade": "sd", "categorias": ["Todos", "Abertos"]},
+  {"canal": "REDE VIDA", "logo": "https://d12e4o88jd8gex.cloudfront.net/out/v1/cea3de0b76ac4e82ab8ee0fd3f17ce12/index", "qualidade": "", "categorias": ["Todos", "Abertos"]},
   {"canal": "RETRO CARTOON", "logo": "https://stmv1.video.brstream.com.br/retrotv/retrotv/chunklist_w329696462", "qualidade": "sd", "categorias": ["Todos", "Infantil"]},
   {"canal": "REVIVA TV", "logo": "https://stmv.webtvninjas.com.br/webtvni1/webtvni1/playlist", "qualidade": "sd", "categorias": ["Todos", "Filmes e Séries"]},
   {"canal": "RUNTIME AÇAO", "logo": "https://run-rt-ra.otteravision.com/run/rt_ra/rt_ra_720", "qualidade": "sd", "categorias": ["Todos", "Filmes e Séries"]},
