@@ -1,7 +1,7 @@
 [
   {"canal": "ADRENALINA PURA TV", "logo": "https://amg00740-sofa-amg00740c7-tcl-us-7126.playouts.now.amagi.tv/1080p-cc/index", "qualidade": "sd", "categorias": ["Todos", "Filmes e Séries"]},
   {"canal": "FIFA +", "logo": "https://e3be9ac5.wurl.com/master/f36d25e7e52f1ba8d7e56eb859c636563214f541/TEctYnJfRklGQVBsdXNQb3J0dWd1ZXNlX0hMUw/playlist", "qualidade": "sd", "categorias": ["Todos", "Esportes"]},
-  {"canal": "FIFA +", "logo": "https://tv.unisc.br/hls/test", "qualidade": "sd", "categorias": ["Todos", "Futura"]},
+  {"canal": "FUTURA", "logo": "https://tv.unisc.br/hls/test", "qualidade": "sd", "categorias": ["Todos", "Futura"]},
   {"canal": "GRJNGO", "logo": "https://amogonetworx-grjngo-1-eu.plex.wurl.tv/2000", "qualidade": "sd", "categorias": ["Todos", "Filmes e Séries"]},
   {"canal": "ISTV", "logo": "https://video10.logicahost.com.br/redeistv/redeistv/chunklist_w445873689", "qualidade": "sd", "categorias": ["Todos", "Abertos"]},
   {"canal": "JOVEM PAN NEWS", "logo": "https://amg01391-amg01391c3-tcl-spain-5038.playouts.now.amagi.tv/playlist1080-p", "qualidade": "sd", "categorias": ["Todos", "Notícias"]},
@@ -32,6 +32,6 @@
   {"canal": "TV DIÁRIO DO SERTÃO", "logo": "https://5ffab78b24f94.streamlock.net/pdsertaotv/pdsertaotv/chunklist_w554278987", "qualidade": "sd", "categorias": ["Todos", "Abertos"]},
   {"canal": "TV LOADING", "logo": "https://stmv1.srvif.com/loadingtv/loadingtv/playlist", "qualidade": "sd", "categorias": ["Todos", "Infantil"]},
   {"canal": "TV RECORDAÇÕES", "logo": "https://srv3.zcast.com.br/tvrecordacoes/tvrecordacoes/playlist", "qualidade": "sd", "categorias": ["Todos", "Abertos"]},
-  {"canal": "UFC", "logo": "https://aegis-cloudfront-1.tubi.video/a78ea283-8666-44a1-a0f6-fde5d229ac21/playlist", "qualidade": "sd", "categorias": ["Todos", "Esportes"]},
+  {"canal": "UFC", "logo": "https://aegis-cloudfront-1.tubi.video/a78ea283-8666-44a1-a0f6-fde5d229ac21/playlist.m3u8", "qualidade": "", "categorias": ["Todos", "Esportes"]},
   {"canal": "VINTAGE TV", "logo": "https://video01.brascast.com/rogerio7271/rogerio7271/playlist", "qualidade": "sd", "categorias": ["Todos", "Abertos"]}
 ]
