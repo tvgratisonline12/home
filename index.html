@@ -13,64 +13,63 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 
     <meta name="theme-color" content="#111111">
     <link rel="icon" href="imagens/favicon.ico">
     <style>
-        :root { --bg: #000; --accent: #8a2be2; --green: #00ff88; }
-        body { background: radial-gradient(circle at center, #1a1a2e 0%, #000 70%); color: #fff; font-family: 'Montserrat', sans-serif; margin: 0; height: 100vh; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: space-evenly; }
+    :root { --bg: #000; --accent: #8a2be2; --green: #00ff88; }
+    body { background: radial-gradient(circle at center, #1a1a2e 0%, #000 70%); color: #fff; font-family: 'Montserrat', sans-serif; margin: 0; height: 100vh; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: space-evenly; }
 
-        .header { text-align: center; }
-        .welcome-text { font-size: 1.2rem; font-weight: 400; letter-spacing: 0.3rem; text-transform: uppercase; color: var(--accent); }
-        .site-name-main { font-size: 3rem; font-weight: 900; letter-spacing: 0.1rem; color: #fff; }
-        .site-name-ext { font-size: 3rem; font-weight: 900; letter-spacing: 0.1rem; color: var(--green); }
+    .header { text-align: center; }
+    .welcome-text { font-size: 1.2rem; font-weight: 400; letter-spacing: 0.3rem; text-transform: uppercase; color: var(--accent); }
+    .site-name-main { font-size: 3rem; font-weight: 900; color: #fff; }
+    .site-name-ext { font-size: 3rem; font-weight: 900; color: var(--green); }
+    
+    .content-center { height: 280px; display: flex; align-items: center; justify-content: center; position: relative; }
+    .spin-container { position: absolute; }
+    .logo { width: 220px; animation: entrance 1s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+    
+    .promo-container { position: absolute; text-align: center; opacity: 0; transition: opacity 0.6s ease; }
+    .promo-text { font-size: 5rem; font-weight: 900; line-height: 0.85; text-transform: uppercase; }
 
-        .content-center { height: 280px; display: flex; align-items: center; justify-content: center; position: relative; }
-        
-        .spin-container { position: absolute; }
-        /* Logo com animação combinada: entrada + giro infinito */
-        .logo { width: 220px; animation: entrance 1s cubic-bezier(0.175, 0.885, 0.32, 1.275), spinPulse 6s infinite linear; }
-        
-        .promo-container { position: absolute; text-align: center; opacity: 0; transition: opacity 0.6s ease; }
-        .promo-text { font-size: 5rem; font-weight: 900; line-height: 0.85; text-transform: uppercase; }
+    .actions { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; width: 95%; }
+    .action-group { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+    .action-label { color: #fff; font-size: 0.7rem; letter-spacing: 0.2rem; opacity: 0.7; text-transform: uppercase; }
+    
+    .btn { padding: 14px 30px; border: 2px solid; border-radius: 12px; background: transparent; font-weight: 700; cursor: pointer; transition: all 0.3s ease; font-size: 0.9rem; width: 160px; text-decoration: none; display: flex; align-items: center; justify-content: center; text-transform: uppercase; }
+    .btn-green { border-color: var(--green); color: var(--green); }
+    .btn-green:hover { background: var(--green); color: #000; box-shadow: 0 0 20px rgba(0, 255, 136, 0.4); }
+    .btn-purple { border-color: var(--accent); color: var(--accent); }
+    .btn-purple:hover { background: var(--accent); color: #fff; box-shadow: 0 0 20px rgba(138, 43, 226, 0.4); }
 
-        .actions { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; width: 95%; margin-top: 20px;}
-        .action-group { display: flex; flex-direction: column; align-items: center; gap: 8px; }
-        .action-label { color: #fff; font-size: 0.7rem; letter-spacing: 0.2rem; opacity: 0.7; text-transform: uppercase; }
-        .btn { padding: 14px 30px; border: 2px solid; border-radius: 12px; background: transparent; font-weight: 700; cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); font-size: 0.9rem; width: 160px; white-space: nowrap; text-transform: uppercase; letter-spacing: 0.1rem; text-decoration: none; display: flex; align-items: center; justify-content: center; }
-        .btn-green { border-color: var(--green); color: var(--green); }
-        .btn-green:hover { background: var(--green); color: #000; box-shadow: 0 0 20px rgba(0, 255, 136, 0.4); }
-        .btn-purple { border-color: var(--accent); color: var(--accent); }
-        .btn-purple:hover { background: var(--accent); color: #fff; box-shadow: 0 0 20px rgba(138, 43, 226, 0.4); }
-        
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; z-index: 100; }
-        .modal-content { background: #0d0d17; padding: 25px; border-radius: 20px; width: 80%; max-width: 320px; text-align: center; border: 1px solid var(--accent); margin: auto; box-shadow: 0 0 30px rgba(138, 43, 226, 0.3);}
-        .modal-link { background: #000; padding: 12px; border-radius: 10px; margin: 15px 0; font-family: monospace; word-break: break-all; color: var(--green); border: 1px solid #333; font-size: 1.1em; }
-        
-        .btn-copy { background: transparent; color: var(--accent); border: 2px solid var(--accent); padding: 12px; width: 100%; border-radius: 10px; cursor: pointer; margin-bottom: 10px; font-weight: 700; font-size: 1em; }
-        .btn-download { background: transparent; color: var(--green); border: 2px solid var(--green); padding: 15px; width: 100%; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 1em; }
-        .btn-close { background:none; border:none; color:#666; margin-top:15px; cursor:pointer; font-size: 0.9em; }
-        
-        .dns-warning { background: rgba(255, 215, 0, 0.1); border: 1px solid #ffd700; color: #ffe066; padding: 10px 20px; border-radius: 50px; font-size: 0.8rem; display: flex; align-items: center; gap: 10px; margin-top: 30px; animation: fadeIn 1.5s ease; }
-        
-        /* RESPONSIVO */
-        @media (max-width: 768px) {
-            .site-name-main, .site-name-ext { font-size: 2rem; }
-            .logo { width: 140px; }
-            .promo-text { font-size: 3rem; }
-            .actions { display: grid !important; grid-template-columns: 1fr 1fr; gap: 10px; width: 95%; margin-top: 10px; }
-            .action-group { width: 100% !important; }
-            .btn { width: 100% !important; padding: 10px 2px !important; font-size: 0.75rem !important; }
-            
-            /* DNS mais para cima no mobile */
-            .dns-warning { font-size: 0.65rem; width: 90%; margin-top: 10px; }
-        }
+    .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; z-index: 100; }
+    .modal-content { background: #0d0d17; padding: 20px; border-radius: 15px; width: 80%; max-width: 320px; text-align: center; border: 1px solid var(--accent); }
+    .modal-link { background: #000; padding: 10px; border-radius: 5px; margin: 15px 0; font-family: monospace; word-break: break-all; color: var(--green); border: 1px solid #333; }
+    
+    .btn-copy { background: transparent; color: var(--accent); border: 2px solid var(--accent); padding: 10px; width: 100%; border-radius: 8px; cursor: pointer; margin-bottom: 10px; font-weight: 700; transition: 0.3s; }
+    .btn-copy:hover { background: var(--accent); color: #fff; }
+    .btn-download { background: transparent; color: var(--green); border: 2px solid var(--green); padding: 15px; width: 100%; border-radius: 8px; font-weight: 700; cursor: pointer; transition: 0.3s; }
+    .btn-download:hover { background: var(--green); color: #000; box-shadow: 0 0 20px rgba(0, 255, 136, 0.4); }
 
-        @keyframes entrance { 0% { transform: scale(0.5); filter: blur(10px); opacity: 0; } 100% { transform: scale(1); filter: blur(0px); opacity: 1; } }
-        @keyframes fadeIn { 0% { opacity: 0; transform: translateY(20px); } 100% { opacity: 1; transform: translateY(0); } }
-        @keyframes spinPulse { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-    </style>
+    .dns-warning { background: rgba(255, 215, 0, 0.1); border: 1px solid #ffd700; color: #ffe066; padding: 10px 20px; border-radius: 50px; font-size: 0.8rem; display: flex; align-items: center; gap: 10px; margin-top: 30px; animation: fadeIn 1.5s ease; }
+
+    @keyframes entrance {
+        0% { transform: scale(0.5) rotate(0deg); filter: blur(10px); opacity: 0; }
+        100% { transform: scale(1) rotate(360deg); filter: blur(0px); opacity: 1; }
+    }
+    
+    @keyframes fadeIn { 
+        0% { opacity: 0; transform: translateY(20px); } 
+        100% { opacity: 1; transform: translateY(0); } 
+    }
+
+    @media (max-width: 768px) {
+        .actions { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; width: 92%; }
+        .btn { width: 100%; padding: 10px 8px; font-size: 0.8rem; }
+    }
+</style>
 </head>
 <body>
 
@@ -80,39 +79,17 @@
     </div>
 
     <div class="content-center">
-        <div class="spin-container" id="logo-box">
-            <img src="imagem256.png" class="logo" alt="Logo">
-        </div>
+        <div class="spin-container" id="logo-box"><img src="imagem256.png" class="logo" alt="Logo"></div>
         <div class="promo-container" id="promo-box">
-            <div class="promo-text">
-                <span id="top" style="color:var(--green)">100%</span><br>
-                <span id="bottom" style="color:var(--green)">GRÁTIS</span>
-            </div>
+            <div class="promo-text"><span id="top" style="color:var(--green)">100%</span><br><span id="bottom" style="color:var(--green)">GRÁTIS</span></div>
         </div>
     </div>
 
     <div class="actions">
-        <div class="action-group">
-            <span class="action-label">Baixar</span>
-            <button onclick="openModal('http://aftv.news/9321815')" class="btn btn-green">Android</button>
-        </div>
-        <div class="action-group">
-            <span class="action-label">Baixar</span>
-            <button onclick="openModal('http://aftv.news/2502762')" class="btn btn-green">Android TV</button>
-        </div>
-        <div class="action-group">
-            <span class="action-label">Baixar</span>
-            <button onclick="openModal('http://aftv.news/9338681')" class="btn btn-purple">Windows</button>
-        </div>
-        <div class="action-group">
-            <span class="action-label">Assistir</span>
-            <a href="/player" class="btn btn-purple">Web Player</a>
-        </div>
-    </div>
-
-    <div class="dns-warning">
-        <span class="dns-icon">⚠️</span>
-        <span>Se algum canal não abrir, tente configurar o DNS Google: <strong>8.8.8.8</strong></span>
+        <div class="action-group"><span class="action-label">Baixar</span><button onclick="openModal('http://aftv.news/9321815')" class="btn btn-green">Android</button></div>
+        <div class="action-group"><span class="action-label">Baixar</span><button onclick="openModal('http://aftv.news/2502762')" class="btn btn-green">Android TV</button></div>
+        <div class="action-group"><span class="action-label">Baixar</span><button onclick="openModal('http://aftv.news/9338681')" class="btn btn-purple">Windows</button></div>
+        <div class="action-group"><span class="action-label">Assistir</span><a href="/player" class="btn btn-purple">Web Player</a></div>
     </div>
 
     <div id="modal" class="modal">
@@ -121,39 +98,52 @@
             <div id="link-display" class="modal-link"></div>
             <button class="btn-copy" onclick="copyLink()">COPIAR LINK</button>
             <button class="btn-download" onclick="downloadNow()">BAIXAR AGORA</button>
-            <button class="btn-close" onclick="closeModal()">FECHAR</button>
+            <button style="background:none; border:none; color:#666; margin-top:15px; cursor:pointer;" onclick="closeModal()">FECHAR</button>
         </div>
     </div>
-
+    <div class="dns-warning">
+        <span class="dns-icon">⚠️</span>
+        <span>Se algum canal não abrir, tente configurar o DNS Google: <strong>8.8.8.8</strong></span>
+    </div>
     <script>
         let currentLink = "";
+
         function openModal(link) {
             currentLink = link;
             document.getElementById('link-display').innerText = currentLink;
             document.getElementById('modal').style.display = 'flex';
         }
+
         function closeModal() { document.getElementById('modal').style.display = 'none'; }
+        
         function copyLink() {
-            navigator.clipboard.writeText(currentLink).then(() => { alert("Link copiado!"); });
+            navigator.clipboard.writeText(currentLink);
+            alert("Link copiado!");
         }
+
         function downloadNow() { window.location.href = currentLink; }
 
+        // Script original do loop
         const logoBox = document.getElementById('logo-box');
         const promoBox = document.getElementById('promo-box');
         const topEl = document.getElementById('top');
         const bottomEl = document.getElementById('bottom');
-        
-        function runCycle() {
+       
+            function runCycle() {
             logoBox.style.display = "block";
             promoBox.style.opacity = 0;
+            
             setTimeout(() => {
                 logoBox.style.display = "none";
                 promoBox.style.opacity = 1;
+                
                 topEl.innerText = "100%"; bottomEl.innerText = "GRÁTIS";
                 topEl.style.color = "var(--green)"; bottomEl.style.color = "var(--green)";
+                
                 setTimeout(() => {
                     topEl.innerText = "SEM"; bottomEl.innerText = "ANÚNCIOS";
                     topEl.style.color = "var(--accent)"; bottomEl.style.color = "var(--accent)";
+                    
                     setTimeout(runCycle, 3000);
                 }, 3000);
             }, 2500);
