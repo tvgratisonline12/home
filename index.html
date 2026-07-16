@@ -14,7 +14,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
 
     <meta name="theme-color" content="#111111">
     <link rel="icon" href="imagens/favicon.ico">
@@ -30,29 +29,21 @@
         .content-center { height: 280px; display: flex; align-items: center; justify-content: center; position: relative; }
         
         .spin-container { position: absolute; }
-        .logo { width: 220px; animation: entrance 1s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        /* Logo com animação combinada: entrada + giro infinito */
+        .logo { width: 220px; animation: entrance 1s cubic-bezier(0.175, 0.885, 0.32, 1.275), spinPulse 6s infinite linear; }
         
         .promo-container { position: absolute; text-align: center; opacity: 0; transition: opacity 0.6s ease; }
         .promo-text { font-size: 5rem; font-weight: 900; line-height: 0.85; text-transform: uppercase; }
 
-        /* Botões */
         .actions { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; width: 95%; margin-top: 20px;}
         .action-group { display: flex; flex-direction: column; align-items: center; gap: 8px; }
         .action-label { color: #fff; font-size: 0.7rem; letter-spacing: 0.2rem; opacity: 0.7; text-transform: uppercase; }
-        .btn { 
-            padding: 14px 30px; border: 2px solid; border-radius: 12px;
-            background: transparent; font-weight: 700; cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); font-size: 0.9rem; width: 160px;
-            white-space: nowrap; text-transform: uppercase; letter-spacing: 0.1rem;
-            text-decoration: none; display: flex; align-items: center; justify-content: center;
-        }
-        
+        .btn { padding: 14px 30px; border: 2px solid; border-radius: 12px; background: transparent; font-weight: 700; cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); font-size: 0.9rem; width: 160px; white-space: nowrap; text-transform: uppercase; letter-spacing: 0.1rem; text-decoration: none; display: flex; align-items: center; justify-content: center; }
         .btn-green { border-color: var(--green); color: var(--green); }
         .btn-green:hover { background: var(--green); color: #000; box-shadow: 0 0 20px rgba(0, 255, 136, 0.4); }
         .btn-purple { border-color: var(--accent); color: var(--accent); }
         .btn-purple:hover { background: var(--accent); color: #fff; box-shadow: 0 0 20px rgba(138, 43, 226, 0.4); }
         
-        /* MODAL */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; z-index: 100; }
         .modal-content { background: #0d0d17; padding: 25px; border-radius: 20px; width: 80%; max-width: 320px; text-align: center; border: 1px solid var(--accent); margin: auto; box-shadow: 0 0 30px rgba(138, 43, 226, 0.3);}
         .modal-link { background: #000; padding: 12px; border-radius: 10px; margin: 15px 0; font-family: monospace; word-break: break-all; color: var(--green); border: 1px solid #333; font-size: 1.1em; }
@@ -63,29 +54,22 @@
         
         .dns-warning { background: rgba(255, 215, 0, 0.1); border: 1px solid #ffd700; color: #ffe066; padding: 10px 20px; border-radius: 50px; font-size: 0.8rem; display: flex; align-items: center; gap: 10px; margin-top: 30px; animation: fadeIn 1.5s ease; }
         
-        /* RESPONSIVO CORRIGIDO */
+        /* RESPONSIVO */
         @media (max-width: 768px) {
             .site-name-main, .site-name-ext { font-size: 2rem; }
             .logo { width: 140px; }
             .promo-text { font-size: 3rem; }
-            
-            .actions { 
-                display: grid !important; 
-                grid-template-columns: 1fr 1fr; 
-                gap: 10px; 
-                width: 95%; 
-            }
+            .actions { display: grid !important; grid-template-columns: 1fr 1fr; gap: 10px; width: 95%; margin-top: 10px; }
             .action-group { width: 100% !important; }
-            .btn { 
-                width: 100% !important; 
-                padding: 10px 2px !important; 
-                font-size: 0.75rem !important; 
-            }
-            .dns-warning { font-size: 0.65rem; width: 90%; }
+            .btn { width: 100% !important; padding: 10px 2px !important; font-size: 0.75rem !important; }
+            
+            /* DNS mais para cima no mobile */
+            .dns-warning { font-size: 0.65rem; width: 90%; margin-top: 10px; }
         }
 
         @keyframes entrance { 0% { transform: scale(0.5); filter: blur(10px); opacity: 0; } 100% { transform: scale(1); filter: blur(0px); opacity: 1; } }
         @keyframes fadeIn { 0% { opacity: 0; transform: translateY(20px); } 100% { opacity: 1; transform: translateY(0); } }
+        @keyframes spinPulse { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
