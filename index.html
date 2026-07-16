@@ -115,6 +115,32 @@
             50% { transform: rotate(180deg) scale(1.05); } /* Ligeiro pulso no meio */
             100% { transform: rotate(360deg) scale(1); }
         }
+        /* Responsivo */
+@media (max-width: 768px) {
+    .site-name-main { font-size: 2.2rem; }
+    .site-name-ext { font-size: 2.2rem; }
+    .logo { width: 160px; }
+    .promo-text { font-size: 3.5rem; }
+    
+    /* Ajustes para 2 botões por linha */
+    .actions { 
+        display: grid; 
+        grid-template-columns: repeat(2, 1fr); 
+        gap: 15px; 
+        width: 90%; 
+        margin: 10px auto; 
+    }
+    .action-group { width: 100%; }
+    .btn { 
+        width: 100%; 
+        padding: 12px 5px; 
+        font-size: 0.75rem; /* Fonte levemente reduzida para caber */
+        white-space: nowrap;
+    }
+    .action-label { font-size: 0.6rem; }
+    
+    .dns-warning { font-size: 0.7rem; width: 90%; text-align: center; justify-content: center; margin-top: 20px;}
+}
     </style>
 </head>
 <body>
