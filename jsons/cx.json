@@ -32,5 +32,6 @@
   {"canal": "TV DIÁRIO DO SERTÃO", "logo": "https://5ffab78b24f94.streamlock.net/pdsertaotv/pdsertaotv/chunklist_w554278987", "qualidade": "sd", "categorias": ["Todos", "Abertos"]},
   {"canal": "TV LOADING", "logo": "https://stmv1.srvif.com/loadingtv/loadingtv/playlist", "qualidade": "sd", "categorias": ["Todos", "Infantil"]},
   {"canal": "TV RECORDAÇÕES", "logo": "https://srv3.zcast.com.br/tvrecordacoes/tvrecordacoes/playlist", "qualidade": "sd", "categorias": ["Todos", "Abertos"]},
+  {"canal": "UFC", "logo": "https://aegis-cloudfront-1.tubi.video/a78ea283-8666-44a1-a0f6-fde5d229ac21/playlist", "qualidade": "sd", "categorias": ["Todos", "Esportes"]},
   {"canal": "VINTAGE TV", "logo": "https://video01.brascast.com/rogerio7271/rogerio7271/playlist", "qualidade": "sd", "categorias": ["Todos", "Abertos"]}
 ]
