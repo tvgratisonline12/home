@@ -66,13 +66,16 @@
     }
 
     @media (max-width: 768px) {
-        .actions { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; width: 92%; }
-        .btn { width: 100%; padding: 10px 8px; font-size: 0.8rem; }
-        .dns-warning { margin-top:-10px; }
-        .content-center { margin-top:-15px; margin-bottom:-15px; }
-        .site-name-main { font-size: 2.5rem; font-weight: 900; color: #fff; }
-        .site-name-ext { font-size: 2.5rem; font-weight: 900; color: var(--green); }
-        .promo-text { font-size: 4.5rem; font-weight: 900; line-height: 0.85; text-transform: uppercase; }
+@media (max-width:768px){
+
+.actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px; width:92%;}
+.action-group{width:100%;}
+.btn{ width:100%; box-sizing:border-box;padding:12px 10px;}
+.dns-warning { margin-top:-10px; }
+.content-center { margin-top:-15px; margin-bottom:-15px; }
+.site-name-main { font-size: 2.5rem; font-weight: 900; color: #fff; }
+.site-name-ext { font-size: 2.5rem; font-weight: 900; color: var(--green); }
+.promo-text { font-size: 4.5rem; font-weight: 900; line-height: 0.85; text-transform: uppercase; }
     }
 </style>
 </head>
