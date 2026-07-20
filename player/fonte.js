@@ -65,7 +65,7 @@ window.renderList = function() {
         // --- Novo Badge de Fonte ---
         const fonte = estilosFonte[qual];
         const badgeFonte = fonte ? `
-            <span style="font-size: 8px; font-weight: 800; background: ${fonte.cor}; color: white; padding: 2px 6px; border-radius: 10px; text-transform: uppercase; margin-left: 10px; opacity: 0.9;">
+            <span style="font-size: 8px; font-weight: 800; background: ${fonte.cor}; color: white; padding: 2px 6px; border-radius: 3px; text-transform: uppercase; margin-left:auto; margin-right: 10px; opacity: 0.9;">
                 ${fonte.label}
             </span>` : '';
         
