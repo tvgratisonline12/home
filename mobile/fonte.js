@@ -1,12 +1,13 @@
-
+// fonte.js
 
 // Mapeamento das qualidades para os badges e categorias
 const estilosFonte = {
-    'rd': { label: 'Fonte 1', cor: '#ef4444', categoria: 'Fonte 1' },
-    'eb': { label: 'Fonte 2', cor: '#3b82f6', categoria: 'Fonte 2' },
-    'ec': { label: 'Fonte 3', cor: '#22c55e', categoria: 'Fonte 3' },
-    'sd': { label: 'Fonte 4', cor: '#f59e0b', categoria: 'Fonte 4' },
-    'pl': { label: 'Fonte 5', cor: '#a855f7', categoria: 'Fonte 5' }
+    'rd': { label: 'F1', cor: '#ef4444', categoria: 'Fonte 1' },
+    'eb': { label: 'F2', cor: '#3b82f6', categoria: 'Fonte 2' },
+    'ec': { label: 'F3', cor: '#22c55e', categoria: 'Fonte 3' },
+    'sd': { label: 'F4', cor: '#f59e0b', categoria: 'Fonte 4' },
+    'pl': { label: 'F5', cor: '#a855f7', categoria: 'Fonte 5' },
+    '':   { label: 'F6', cor: '#8a2be2', categoria: 'Fonte 6' },
 };
 
 // Sobrescreve a renderização original para injetar badges e filtro inteligente
@@ -65,7 +66,7 @@ window.renderList = function() {
         // --- Novo Badge de Fonte ---
         const fonte = estilosFonte[qual];
         const badgeFonte = fonte ? `
-            <span style="font-size: 8px; font-weight: 800; background: ${fonte.cor}; color: white; padding: 2px 6px; border-radius: 3px; text-transform: uppercase; margin-left:auto; margin-right: 10px; opacity: 0.9;">
+            <span style="font-size: 8px; font-weight: 800; background: #000; box-shadow: 0 0 0 1px ${fonte.cor}; color: #019f95; padding: 2px 6px; border-radius: 3px; text-transform: uppercase; margin-left:auto; margin-right: 0px; opacity: 0.9;">
                 ${fonte.label}
             </span>` : '';
         
