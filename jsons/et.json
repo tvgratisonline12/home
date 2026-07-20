@@ -41,6 +41,7 @@
   {"canal": "ESPN 4", "logo": "espn4", "qualidade": "et", "categorias": ["Todos", "Esportes"]},
   {"canal": "ESPN 5", "logo": "espn5", "qualidade": "et", "categorias": ["Todos", "Esportes"]},
   {"canal": "ESPN 6", "logo": "espn6", "qualidade": "et", "categorias": ["Todos", "Esportes"]},
+  {"canal": "GE TV", "logo": "getv", "qualidade": "et", "categorias": ["Todos", "Esportes"]},
   {"canal": "FOOD NETWORK", "logo": "foodnetwork", "qualidade": "et", "categorias": ["Todos", "Lifestyle"]},
   {"canal": "GLOBO AM", "logo": "globoam", "qualidade": "et", "categorias": ["Todos", "Abertos"]},
   {"canal": "GLOBO CE", "logo": "globoce", "qualidade": "et", "categorias": ["Todos", "Abertos"]},
