@@ -2,42 +2,55 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Player RDCanais</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste Autoplay Player</title>
     <style>
-        body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; }
-        #container { width: 100%; height: 100vh; }
+        body { margin: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; background: #1a1a1a; }
+        iframe { width: 80%; height: 60vh; border: 2px solid #333; }
+        .controls { margin-top: 20px; color: white; }
     </style>
 </head>
 <body>
 
-    <div id="container">
-        <iframe 
-            id="playerIframe"
-            src="https://rdcanais.net/tooncast" 
-            style="width:100%; height:100%;" 
-            frameborder="0" 
-            allow="autoplay; encrypted-media; fullscreen" 
-            allowfullscreen>
-        </iframe>
+    <!-- Testando com o parâmetro autoplay=1 sugerido -->
+    <iframe 
+        id="meuPlayer"
+        src="https://pescaplay.store/sattv/player.php?id=VFJVVFZfSEQ=&autoplay=1" 
+        allow="autoplay; fullscreen" 
+        allowfullscreen>
+    </iframe>
+
+    <div class="controls">
+        <p>Se o vídeo não começar, clique no iframe ou no botão abaixo:</p>
+        <button onclick="tentarDarPlay()">Forçar Play no Iframe</button>
     </div>
 
     <script>
-        const iframe = document.getElementById('playerIframe');
-
-        // Tentativa de Autoplay (depende da interação inicial do usuário com a página)
-        window.addEventListener('click', () => {
-            console.log("Usuário interagiu, tentando disparar play...");
-            
-            // Nota: Se o domínio do iframe for diferente, 
-            // esta linha abaixo gerará um erro de segurança (CORS/Same-Origin Policy)
+        function tentarDarPlay() {
+            const iframe = document.getElementById('meuPlayer');
             try {
+                // Tenta acessar o DOM interno do iframe
                 const doc = iframe.contentDocument || iframe.contentWindow.document;
-                const playBtn = doc.querySelector('.player-play-button') || doc.querySelector('#player-control');
-                if (playBtn) playBtn.click();
+                
+                // Seletores comuns para players baseados em JS (Video.js, Plyr, etc)
+                const btnPlay = doc.querySelector('.vjs-big-play-button') || 
+                                doc.querySelector('.player-play-button') || 
+                                doc.querySelector('.play-btn');
+                
+                if (btnPlay) {
+                    btnPlay.click();
+                }
+
+                // Tenta forçar o método .play() no elemento de vídeo
+                const video = doc.querySelector('video');
+                if (video) {
+                    video.muted = false; // Necessário para autoplay em alguns navegadores
+                    video.play().catch(e => console.log("Bloqueado pelo navegador:", e));
+                }
             } catch (e) {
-                console.warn("Acesso ao conteúdo do iframe bloqueado por segurança (política de mesma origem).");
+                console.warn("Acesso ao conteúdo do iframe bloqueado por CORS. O site de destino não permite injeção externa.");
             }
-        }, { once: true });
+        }
     </script>
 </body>
 </html>
