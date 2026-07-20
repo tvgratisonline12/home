@@ -8,6 +8,7 @@ const estilosFonte = {
     'sd': { label: 'F4', cor: '#f59e0b', categoria: 'Fonte 4' },
     'pl': { label: 'F5', cor: '#a855f7', categoria: 'Fonte 5' },
     '':   { label: 'F6', cor: '#ffffff', categoria: 'Fonte 6' },
+    'et': { label: 'F7', cor: '#ff69b4', categoria: 'Fonte 7' },
 };
 
 // Sobrescreve a renderização original para injetar badges e filtro inteligente
