@@ -12,7 +12,8 @@ async function carregarCanaisJSON() {
             '../jsons/eb.json',
             '../jsons/cx.json',
              '../jsons/ec.json',
-             '../jsons/pl.json'
+             '../jsons/pl.json',
+            '../jsons/et.json'
      
         ];
 
@@ -157,6 +158,8 @@ if (qual === "rd") {
     urlVideo = c.logo + ".m3u8";
 } else if (qual === "pl") {
     urlVideo = "https://jmp2.uk/plu-" + encodeURIComponent(c.logo) + ".m3u8";
+} else if (qual === "et") {
+    urlVideo = "https://sinalpublicoetv.vercel.app/?id=" + encodeURIComponent(c.logo);
 } else {
     urlVideo = c.logo; // Fallback para outros casos
 }
@@ -200,9 +203,9 @@ if (overlay) {
     clearTimeout(overlayTimeout);
 
     // Lista de qualidades que exigem tratamento especial
-    const qualidadesComOverlay = [ 'ec', 'eb', 'sd'];
+    const qualidadesComOverlay = [ 'ec', 'eb','et', 'sd'];
 
-    if (['ec', 'eb', 'sd'].includes(qual)) {
+    if (['ec', 'eb', 'et','sd'].includes(qual)) {
         // Regra para outros tipos que precisam de overlay fixo
         overlay.style.setProperty('display', 'block', 'important');
     } 
