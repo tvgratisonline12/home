@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Player RDCanais</title>
+    <style>
+        body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; }
+        #container { width: 100%; height: 100vh; }
+    </style>
+</head>
+<body>
+
+    <div id="container">
+        <iframe 
+            id="playerIframe"
+            src="https://rdcanais.net/tooncast" 
+            style="width:100%; height:100%;" 
+            frameborder="0" 
+            allow="autoplay; encrypted-media; fullscreen" 
+            allowfullscreen>
+        </iframe>
+    </div>
+
+    <script>
+        const iframe = document.getElementById('playerIframe');
+
+        // Tentativa de Autoplay (depende da interação inicial do usuário com a página)
+        window.addEventListener('click', () => {
+            console.log("Usuário interagiu, tentando disparar play...");
+            
+            // Nota: Se o domínio do iframe for diferente, 
+            // esta linha abaixo gerará um erro de segurança (CORS/Same-Origin Policy)
+            try {
+                const doc = iframe.contentDocument || iframe.contentWindow.document;
+                const playBtn = doc.querySelector('.player-play-button') || doc.querySelector('#player-control');
+                if (playBtn) playBtn.click();
+            } catch (e) {
+                console.warn("Acesso ao conteúdo do iframe bloqueado por segurança (política de mesma origem).");
+            }
+        }, { once: true });
+    </script>
+</body>
+</html>
