@@ -12,7 +12,8 @@ async function carregarCanaisJSON() {
             '../jsons/eb.json',
             '../jsons/cx.json',
              '../jsons/ec.json',
-             '../jsons/pl.json'
+             '../jsons/pl.json',
+             '../jsons/et.json'
      
         ];
 
@@ -157,6 +158,8 @@ if (qual === "rd") {
     urlVideo = c.logo + ".m3u8";
 } else if (qual === "pl") {
     urlVideo = "https://jmp2.uk/plu-" + encodeURIComponent(c.logo) + ".m3u8";
+} else if (qual === "et") {
+    urlVideo = "https://sinalpublicoetv.vercel.app/?id=" + encodeURIComponent(c.logo);
 } else {
     urlVideo = c.logo; // Fallback para outros casos
 }
@@ -200,7 +203,7 @@ if (overlay) {
     clearTimeout(overlayTimeout);
 
     // Lista de qualidades que exigem tratamento especial
-    const qualidadesComOverlay = ['rd', 'ad', 'ec', 'eb', 'sd'];
+    const qualidadesComOverlay = ['rd', 'ad', 'ec', 'eb','et', 'sd'];
 
     if (['rd', 'ad'].includes(qual)) {
         // Regra para RD/AD: Remove o overlay e agenda a volta dele
@@ -210,7 +213,7 @@ if (overlay) {
             overlay.style.setProperty('display', 'block', 'important'); 
         }, 15000);
     } 
-    else if (['ec', 'eb', 'sd'].includes(qual)) {
+    else if (['ec', 'eb','et', 'sd'].includes(qual)) {
         // Regra para outros tipos que precisam de overlay fixo
         overlay.style.setProperty('display', 'block', 'important');
     } 
@@ -237,7 +240,7 @@ function iniciarTelaInicial() {
             <div id="container-alternante">
                 
                 <div class="bloco-slide" id="slide-1">
-                    <img src="../imagens/imagem.png" alt="Bem-vindo" style="max-width: 80%; max-height: 80%; object-fit: contain; pointer-events: none;">
+                    <img src="https://tvgratis.online/imagens/imagem.png" alt="Bem-vindo" style="max-width: 80%; max-height: 80%; object-fit: contain; pointer-events: none;">
                 </div>
 
                 <div class="bloco-slide" id="slide-2">
