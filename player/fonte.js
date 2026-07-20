@@ -2,11 +2,11 @@
 
 // Mapeamento das qualidades para os badges e categorias
 const estilosFonte = {
-    'rd': { label: 'Fonte 1', cor: '#ef4444', categoria: 'Fonte 1' },
-    'eb': { label: 'Fonte 2', cor: '#3b82f6', categoria: 'Fonte 2' },
-    'ec': { label: 'Fonte 3', cor: '#22c55e', categoria: 'Fonte 3' },
-    'sd': { label: 'Fonte 4', cor: '#f59e0b', categoria: 'Fonte 4' },
-    'pl': { label: 'Fonte 5', cor: '#a855f7', categoria: 'Fonte 5' }
+    'rd': { label: 'Fonte 1', cor: '#111', categoria: 'Fonte 1' },
+    'eb': { label: 'Fonte 2', cor: '#111', categoria: 'Fonte 2' },
+    'ec': { label: 'Fonte 3', cor: '#111', categoria: 'Fonte 3' },
+    'sd': { label: 'Fonte 4', cor: '#111', categoria: 'Fonte 4' },
+    'pl': { label: 'Fonte 5', cor: '#111', categoria: 'Fonte 5' }
 };
 
 // Sobrescreve a renderização original para injetar badges e filtro inteligente
