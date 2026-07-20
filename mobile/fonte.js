@@ -1,4 +1,4 @@
-// fonte.js
+
 
 // Mapeamento das qualidades para os badges e categorias
 const estilosFonte = {
