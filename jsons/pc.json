@@ -6,12 +6,12 @@
   {"canal": "BAND SP", "logo": "https://pescaplay.store/multtv/player.php?id=45b7ac6f-9c71-41d6-8dd5-fabeee65f4b1", "qualidade": "", "categorias": ["Todos", "Abertos"]},
   {"canal": "CINEMAX", "logo": "https://pescaplay.store/sattv/player.php?id=Q0lORU1BWA==", "qualidade": "", "categorias": ["Todos", "Filmes e Séries"]},
   {"canal": "CULTURA", "logo": "https://pescaplay.store/sattv/player.php?id=VFZfQ1VMVFVSQV9IRA==", "qualidade": "", "categorias": ["Todos", "Abertos"]},
-  {"canal": "ESPN", "logo": "https://esportesplayer.top/espn.php?id=1", "qualidade": "", "categorias": ["Todos", "Esportes"]},
-  {"canal": "ESPN 2", "logo": "https://esportesplayer.top/espn.php?id=2", "qualidade": "", "categorias": ["Todos", "Esportes"]},
-  {"canal": "ESPN 3", "logo": "https://esportesplayer.top/espn.php?id=3", "qualidade": "", "categorias": ["Todos", "Esportes"]},
-  {"canal": "ESPN 4", "logo": "https://esportesplayer.top/espn.php?id=4", "qualidade": "", "categorias": ["Todos", "Esportes"]},
-  {"canal": "ESPN 5", "logo": "https://esportesplayer.top/espn.php?id=5", "qualidade": "", "categorias": ["Todos", "Esportes"]},
-  {"canal": "ESPN 6", "logo": "https://esportesplayer.top/espn.php?id=6", "qualidade": "", "categorias": ["Todos", "Esportes"]},
+  {"canal": "ESPN", "logo": "https://esportesplayer.top/espn.php?id=1", "qualidade": "pl", "categorias": ["Todos", "Esportes"]},
+  {"canal": "ESPN 2", "logo": "https://esportesplayer.top/espn.php?id=2", "qualidade": "pl", "categorias": ["Todos", "Esportes"]},
+  {"canal": "ESPN 3", "logo": "https://esportesplayer.top/espn.php?id=3", "qualidade": "pl", "categorias": ["Todos", "Esportes"]},
+  {"canal": "ESPN 4", "logo": "https://esportesplayer.top/espn.php?id=4", "qualidade": "pl", "categorias": ["Todos", "Esportes"]},
+  {"canal": "ESPN 5", "logo": "https://esportesplayer.top/espn.php?id=5", "qualidade": "pl", "categorias": ["Todos", "Esportes"]},
+  {"canal": "ESPN 6", "logo": "https://esportesplayer.top/espn.php?id=6", "qualidade": "pl", "categorias": ["Todos", "Esportes"]},
   {"canal": "HBO", "logo": "https://pescaplay.store/sattv/player.php?id=SEJP", "qualidade": "", "categorias": ["Todos", "Filmes e Séries"]},
   {"canal": "HBO 2", "logo": "https://pescaplay.store/sattv/player.php?id=SEJPMg==", "qualidade": "", "categorias": ["Todos", "Filmes e Séries"]},
   {"canal": "HBO FAMILY", "logo": "https://pescaplay.store/sattv/player.php?id=SEJPX0ZBTUlMWQ==", "qualidade": "", "categorias": ["Todos", "Filmes e Séries"]},
@@ -25,5 +25,6 @@
   {"canal": "SONY MOVIES", "https://pescaplay.store/sattv/player.php?id=U09OWV9NT1ZJRVM=": "sonymovies", "qualidade": "", "ategorias": ["Todos", "Filmes e Séries"]},
   {"canal": "TV BRASIL", "logo": "https://pescaplay.store/multtv/player.php?id=7e64e31d-2cf4-49b0-811d-7da2ce6954cc", "qualidade": "", "categorias": ["Todos", "Abertos"]},
   {"canal": "WARNER", "logo": "https://pescaplay.store/sattv/player.php?id=V0FSTkVSX0hE", "qualidade": "", "categorias": ["Todos", "Filmes e Séries"]},
-  {"canal": "WOOHOO", "logo": "https://pescaplay.store/b-cdn/player.php?id=V09PSE9PX1RL", "qualidade": "", "categorias": ["Todos", "Esportes"]}
+  {"canal": "WOOHOO", "logo": "https://pescaplay.store/b-cdn/player.php?id=V09PSE9PX1RL", "qualidade": "", "categorias": ["Todos", "Esportes"]},
+  {"canal": "XPORTS", "logo": "https://esportesplayer.top/espn.php?id=8", "qualidade": "pl", "categorias": ["Todos", "Esportes"]}
 ]
