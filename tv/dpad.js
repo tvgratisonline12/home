@@ -66,28 +66,34 @@ document.addEventListener('keydown', (e) => {
             else if (areaAtual === 'LISTA') {
                 const itemFocado = listaItens[focoIndex];
                 
-                // Aplicando as mesmas condições para PL e PC
                 const ehQualidadePL = itemFocado.classList.contains('qual-pl');
                 const ehQualidadePC = itemFocado.classList.contains('qual-pc');
                 const bloquearFullscreen = ehQualidadePL || ehQualidadePC;
 
                 if (focoIndex === selecionadoIndex) {
-                    // SE JÁ ESTÁ SELECIONADO:
                     if (bloquearFullscreen) {
                         console.log("Canal PL/PC bloqueado: Nenhuma ação realizada.");
                     } else {
                         toggleFullScreen();
                     }
                 } else {
-                    // SE NÃO ESTÁ SELECIONADO:
                     selecionadoIndex = focoIndex;
                     itemFocado.click();
                     atualizarFoco(listaItens);
                 }
             } 
             else if (areaAtual === 'PLAYER') {
-                if (btnPl) btnPl.click();
-                else toggleFullScreen();
+                if (btnPl) {
+                    // Força a abertura em uma nova guia igual aos canais PL/PC
+                    const linkUrl = btnPl.getAttribute('data-url') || btnPl.href;
+                    if (linkUrl && linkUrl !== '#') {
+                        window.open(linkUrl, '_blank');
+                    } else {
+                        btnPl.click();
+                    }
+                } else {
+                    toggleFullScreen();
+                }
             }
             break;
     }
