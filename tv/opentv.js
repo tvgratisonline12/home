@@ -13,8 +13,8 @@ async function carregarCanaisJSON() {
             '../jsons/cx.json',
              '../jsons/ec.json',
              '../jsons/pl.json',
-            '../jsons/et.json',
-            '../jsons/pc.json'
+            '../jsons/et.json'
+            
      
         ];
 
