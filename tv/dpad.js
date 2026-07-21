@@ -18,7 +18,6 @@ document.addEventListener('keydown', (e) => {
     const listaItens = document.querySelectorAll('#contentList .item');
     const botoesCat = document.querySelectorAll('.cat-btn');
     const btnPl = document.querySelector('#aviso-pl button');
-    const btnPc = document.querySelector('#aviso-pc button');
 
     if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Enter'].includes(e.key)) {
         e.preventDefault();
@@ -46,31 +45,7 @@ document.addEventListener('keydown', (e) => {
                     botoesCat[1].classList.add('focused');
                     botoesCat[1].focus();
                 } else mudarArea('PLAYER');
-            } else if (areaAtual === 'LISTA') {
-                const itemFocado = listaItens[focoIndex];
-                const ehQualidadePL = itemFocado && itemFocado.classList.contains('qual-pl');
-                const ehQualidadePC = itemFocado && itemFocado.classList.contains('qual-pc');
-
-                // Se for PL ou PC, foca especificamente no botão correto e vai para a área PLAYER
-                if (ehQualidadePL || ehQualidadePC) {
-                    const botaoAlvo = ehQualidadePC ? (btnPc || document.querySelector('#aviso-pc button, #aviso-pl button')) : btnPl;
-                    
-                    areaAtual = 'PLAYER';
-                    document.querySelectorAll('.item, .cat-btn, #player-container').forEach(el => el.classList.remove('focused'));
-                    if (document.activeElement) document.activeElement.blur();
-                    
-                    const container = document.getElementById('player-container');
-                    if (container) container.classList.add('focused');
-
-                    if (botaoAlvo) {
-                        botaoAlvo.focus();
-                    } else if (btnPl) {
-                        btnPl.focus();
-                    }
-                } else {
-                    mudarArea('PLAYER');
-                }
-            }
+            } else if (areaAtual === 'LISTA') mudarArea('PLAYER');
             break;
 
         case 'ArrowLeft':
@@ -90,41 +65,29 @@ document.addEventListener('keydown', (e) => {
             } 
             else if (areaAtual === 'LISTA') {
                 const itemFocado = listaItens[focoIndex];
-                
+                // Verifica a classe. Se o seu HTML for diferente, ajuste o nome aqui.
                 const ehQualidadePL = itemFocado.classList.contains('qual-pl');
-                const ehQualidadePC = itemFocado.classList.contains('qual-pc');
-                const bloquearFullscreen = ehQualidadePL || ehQualidadePC;
 
                 if (focoIndex === selecionadoIndex) {
-                    if (bloquearFullscreen) {
-                        console.log("Canal PL/PC bloqueado: Nenhuma ação realizada.");
+                    // SE JÁ ESTÁ SELECIONADO:
+                    if (ehQualidadePL) {
+                        // BLOQUEIO TOTAL: Não faz nada, nem chama fullscreen, nem clica
+                        console.log("Canal PL bloqueado: Nenhuma ação realizada.");
                     } else {
+                        // Se não for PL, executa o fullscreen
                         toggleFullScreen();
                     }
                 } else {
+                    // SE NÃO ESTÁ SELECIONADO:
+                    // Carrega o canal normalmente
                     selecionadoIndex = focoIndex;
                     itemFocado.click();
                     atualizarFoco(listaItens);
                 }
             } 
             else if (areaAtual === 'PLAYER') {
-                const botaoAtivo = document.activeElement;
-                const itemFocado = listaItens[focoIndex];
-                const ehPC = itemFocado && itemFocado.classList.contains('qual-pc');
-                const botaoAlvoEspec = ehPC ? (btnPc || btnPl) : btnPl;
-                
-                const alvoFinal = (botaoAtivo && (botaoAtivo.tagName === 'BUTTON' || botaoAtivo.hasAttribute('data-url') || botaoAtivo.href)) ? botaoAtivo : botaoAlvoEspec;
-
-                if (alvoFinal) {
-                    const linkUrl = alvoFinal.getAttribute('data-url') || alvoFinal.href;
-                    if (linkUrl && linkUrl !== '#') {
-                        window.open(linkUrl, '_blank');
-                    } else {
-                        alvoFinal.click();
-                    }
-                } else {
-                    toggleFullScreen();
-                }
+                if (btnPl) btnPl.click();
+                else toggleFullScreen();
             }
             break;
     }
@@ -152,11 +115,8 @@ function mudarArea(novaArea) {
     } else if (areaAtual === 'PLAYER') {
         const container = document.getElementById('player-container');
         if (container) container.classList.add('focused');
-        const itemFocado = document.querySelectorAll('#contentList .item')[focoIndex];
-        const ehPC = itemFocado && itemFocado.classList.contains('qual-pc');
-        const btnAlvo = ehPC ? (document.querySelector('#aviso-pc button') || document.querySelector('#aviso-pl button')) : document.querySelector('#aviso-pl button');
-        
-        if (btnAlvo) btnAlvo.focus();
+        const btnPl = document.querySelector('#aviso-pl button');
+        if (btnPl) btnPl.focus();
     }
 }
 
