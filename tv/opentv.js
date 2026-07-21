@@ -85,7 +85,7 @@ function renderList() {
         }
         let plIcon = '';
 
-if (['pl', 'pc'].includes(qual)) {
+if (['pl', 'pc'].includes(qual) {
     plIcon = `
     <svg xmlns="http://www.w3.org/2000/svg"
          width="14"
