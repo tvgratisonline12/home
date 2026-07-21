@@ -65,21 +65,21 @@ document.addEventListener('keydown', (e) => {
             } 
             else if (areaAtual === 'LISTA') {
                 const itemFocado = listaItens[focoIndex];
-                // Verifica a classe. Se o seu HTML for diferente, ajuste o nome aqui.
+                
+                // Aplicando as mesmas condições para PL e PC
                 const ehQualidadePL = itemFocado.classList.contains('qual-pl');
+                const ehQualidadePC = itemFocado.classList.contains('qual-pc');
+                const bloquearFullscreen = ehQualidadePL || ehQualidadePC;
 
                 if (focoIndex === selecionadoIndex) {
                     // SE JÁ ESTÁ SELECIONADO:
-                    if (ehQualidadePL) {
-                        // BLOQUEIO TOTAL: Não faz nada, nem chama fullscreen, nem clica
-                        console.log("Canal PL bloqueado: Nenhuma ação realizada.");
+                    if (bloquearFullscreen) {
+                        console.log("Canal PL/PC bloqueado: Nenhuma ação realizada.");
                     } else {
-                        // Se não for PL, executa o fullscreen
                         toggleFullScreen();
                     }
                 } else {
                     // SE NÃO ESTÁ SELECIONADO:
-                    // Carrega o canal normalmente
                     selecionadoIndex = focoIndex;
                     itemFocado.click();
                     atualizarFoco(listaItens);
