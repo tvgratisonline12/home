@@ -168,7 +168,7 @@ if (qual === "rd") {
 // --- 5. RENDERIZAÇÃO ---
 container.innerHTML = ""; // Limpa o player antes de renderizar
 
-if (qual === 'pl') {
+if (qual === 'pl','pc') {
     // Tela de aviso para canais que precisam de link externo
     container.innerHTML = `
     <div id="aviso-pl" style="width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; background:linear-gradient(135deg, #1a1a1a 0%, #000 100%); color:white; text-align:center; padding:20px; box-sizing:border-box;">
