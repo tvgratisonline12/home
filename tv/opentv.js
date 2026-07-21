@@ -159,6 +159,8 @@ if (qual === "rd") {
     urlVideo = c.logo + ".m3u8";
 } else if (qual === "pl") {
     urlVideo = "https://jmp2.uk/plu-" + encodeURIComponent(c.logo) + ".m3u8";
+} else if (qual === "pc") {
+        urlVideo = c.logo;
 } else if (qual === "et") {
     urlVideo = "https://sinalpublicoetv.vercel.app/?id=" + encodeURIComponent(c.logo);
 } else {
