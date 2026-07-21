@@ -60,12 +60,12 @@ async function handleHTMLProxy(request, url) {
 
 // --- Lógica do Worker de Stream (Headers/CORS) ---
 async function handleStreamProxy(request, url) {
-  const targetHost = '2606.cdn10embed.xyz';
+  const targetHost = '1907.cdn11embed.xyz';
   const targetUrl = 'https://' + targetHost + url.pathname + url.search;
 
   const headers = new Headers(request.headers);
-  headers.set('Referer', 'https://12embeddecanais.xyz/');
-  headers.set('Origin', 'https://12embeddecanais.xyz/');
+  headers.set('Referer', 'https://1607embcanais.xyz/');
+  headers.set('Origin', 'https://1607embcanais.xyz/');
   headers.delete('Host');
 
   const response = await fetch(targetUrl, {
