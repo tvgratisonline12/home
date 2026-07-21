@@ -16,7 +16,7 @@
   {"canal": "REDETV!", "logo": "https://pescaplay.store/multtv/player.php?id=87ba9525-2bda-470b-bfd8-6b3977e9c73c", "qualidade": "pc", "categorias": ["Todos", "Abertos"]},
   {"canal": "SABOR & ARTE", "logo": "https://pescaplay.store/multtv/player.php?id=e84000f0-93c6-4fa2-9cfd-7d63de016ca0", "qualidade": "pc", "categorias": ["Todos", "Lifestyle"]},
   {"canal": "SONY", "logo": "https://pescaplay.store/sattv/player.php?id=U09OWV9IRA==", "qualidade": "pc", "categorias": ["Todos", "Filmes e Séries"]},
-  {"canal": "SONY MOVIES", "https://pescaplay.store/sattv/player.php?id=U09OWV9NT1ZJRVM=": "sonymovies", "qualidade": "pc", "ategorias": ["Todos", "Filmes e Séries"]},
+  {"canal": "SONY MOVIES","logo": "https://pescaplay.store/sattv/player.php?id=U09OWV9NT1ZJRVM=", "qualidade": "pc", "ategorias": ["Todos", "Filmes e Séries"]},
   {"canal": "TV BRASIL", "logo": "https://pescaplay.store/multtv/player.php?id=7e64e31d-2cf4-49b0-811d-7da2ce6954cc", "qualidade": "pc", "categorias": ["Todos", "Abertos"]},
   {"canal": "WARNER", "logo": "https://pescaplay.store/sattv/player.php?id=V0FSTkVSX0hE", "qualidade": "pc", "categorias": ["Todos", "Filmes e Séries"]},
   {"canal": "WOOHOO", "logo": "https://pescaplay.store/b-cdn/player.php?id=V09PSE9PX1RL", "qualidade": "pc", "categorias": ["Todos", "Esportes"]},
