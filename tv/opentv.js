@@ -85,7 +85,7 @@ function renderList() {
         }
         let plIcon = '';
 
-if (['pl', 'pc'].includes(qual)) {
+if (qual === 'pl') {
     plIcon = `
     <svg xmlns="http://www.w3.org/2000/svg"
          width="14"
@@ -159,8 +159,6 @@ if (qual === "rd") {
     urlVideo = c.logo + ".m3u8";
 } else if (qual === "pl") {
     urlVideo = "https://jmp2.uk/plu-" + encodeURIComponent(c.logo) + ".m3u8";
-} else if (qual === "pc") {
-        urlVideo = c.logo;
 } else if (qual === "et") {
     urlVideo = "https://sinalpublicoetv.vercel.app/?id=" + encodeURIComponent(c.logo);
 } else {
@@ -170,7 +168,7 @@ if (qual === "rd") {
 // --- 5. RENDERIZAÇÃO ---
 container.innerHTML = ""; // Limpa o player antes de renderizar
 
-if (['pl', 'pc'].includes(qual)) {
+if (qual === 'pl') {
     // Tela de aviso para canais que precisam de link externo
     container.innerHTML = `
     <div id="aviso-pl" style="width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; background:linear-gradient(135deg, #1a1a1a 0%, #000 100%); color:white; text-align:center; padding:20px; box-sizing:border-box;">
