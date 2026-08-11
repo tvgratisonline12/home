@@ -160,7 +160,7 @@ if (qual === "rd") {
 } else if (qual === "pl") {
     urlVideo = "https://jmp2.uk/plu-" + encodeURIComponent(c.logo) + ".m3u8";
 } else if (qual === "et") {
-    urlVideo = "https://sinalpublicoetv.vercel.app/?id=" + encodeURIComponent(c.logo);    
+    urlVideo = "https://open.tvgratis.workers.dev/https://sinalpublicoetv.vercel.app/?id=" + encodeURIComponent(c.logo);    
 } else {
     urlVideo = c.logo; // Fallback para outros casos
 }
