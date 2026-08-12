@@ -1,0 +1,305 @@
+#EXTM3U
+#EXTINF:-1 tvg-id="A&E" group-title="Filmes e Séries",A&E
+https://open.tvgratis.workers.dev/aee/index.m3u8
+#EXTINF:-1 tvg-id="ADRENALINA PURA TV" group-title="Filmes e Séries",ADRENALINA PURA TV
+https://amg00740-sofa-amg00740c7-tcl-us-7126.playouts.now.amagi.tv/1080p-cc/index.m3u8
+#EXTINF:-1 tvg-id="ADULT SWIM" group-title="Filmes e Séries",ADULT SWIM
+https://open.tvgratis.workers.dev/adultswim/index.m3u8
+#EXTINF:-1 tvg-id="AMC" group-title="Filmes e Séries",AMC
+https://open.tvgratis.workers.dev/amc/index.m3u8
+#EXTINF:-1 tvg-id="AMC SÉRIES" group-title="Filmes e Séries",AMC SÉRIES
+https://open.tvgratis.workers.dev/amcseries/index.m3u8
+#EXTINF:-1 tvg-id="ANIMAL PLANET" group-title="Documentários",ANIMAL PLANET
+https://open.tvgratis.workers.dev/animalplanet/index.m3u8
+#EXTINF:-1 tvg-id="APPLE TV 1" group-title="Esportes",APPLE TV 1
+https://open.tvgratis.workers.dev/appletv01/index.m3u8
+#EXTINF:-1 tvg-id="APPLE TV 2" group-title="Esportes",APPLE TV 2
+https://open.tvgratis.workers.dev/appletv02/index.m3u8
+#EXTINF:-1 tvg-id="AXN" group-title="Filmes e Séries",AXN
+https://open.tvgratis.workers.dev/axn/index.m3u8
+#EXTINF:-1 tvg-id="BAND NEWS" group-title="Notícias",BAND NEWS
+https://open.tvgratis.workers.dev/bandnews/index.m3u8
+#EXTINF:-1 tvg-id="BAND SP" group-title="Abertos",BAND SP
+https://open.tvgratis.workers.dev/bandsp/index.m3u8
+#EXTINF:-1 tvg-id="BAND SPORTS" group-title="Esportes",BAND SPORTS
+https://open.tvgratis.workers.dev/bandsports/index.m3u8
+#EXTINF:-1 tvg-id="CARTOON NETWORK" group-title="Infantil",CARTOON NETWORK
+https://open.tvgratis.workers.dev/cartoonnetwork/index.m3u8
+#EXTINF:-1 tvg-id="CARTOONITO" group-title="Infantil",CARTOONITO
+https://open.tvgratis.workers.dev/cartoonito/index.m3u8
+#EXTINF:-1 tvg-id="CAZÉ TV 1" group-title="Esportes",CAZÉ TV 1
+https://open.tvgratis.workers.dev/cazetv/index.m3u8
+#EXTINF:-1 tvg-id="CAZÉ TV 2" group-title="Esportes",CAZÉ TV 2
+https://open.tvgratis.workers.dev/cazetv2/index.m3u8
+#EXTINF:-1 tvg-id="CAZÉ TV 3" group-title="Esportes",CAZÉ TV 3
+https://open.tvgratis.workers.dev/cazetv3/index.m3u8
+#EXTINF:-1 tvg-id="CINEMAX" group-title="Filmes e Séries",CINEMAX
+https://open.tvgratis.workers.dev/cinemax/index.m3u8
+#EXTINF:-1 tvg-id="CNN BRASIL" group-title="Notícias",CNN BRASIL
+https://open.tvgratis.workers.dev/cnnbrasil/index.m3u8
+#EXTINF:-1 tvg-id="COMBATE" group-title="Esportes",COMBATE
+https://open.tvgratis.workers.dev/combate/index.m3u8
+#EXTINF:-1 tvg-id="CULTURA" group-title="Abertos",CULTURA
+https://open.tvgratis.workers.dev/tvcultura/index.m3u8
+#EXTINF:-1 tvg-id="DAZN 1" group-title="Esportes",DAZN 1
+https://open.tvgratis.workers.dev/dazn/index.m3u8
+#EXTINF:-1 tvg-id="DISCOVERY CHANNEL" group-title="Documentários",DISCOVERY CHANNEL
+https://open.tvgratis.workers.dev/discoverychannel/index.m3u8
+#EXTINF:-1 tvg-id="DISCOVERY HOME & HEALTH" group-title="Lifestyle",DISCOVERY HOME & HEALTH
+https://open.tvgratis.workers.dev/discoveryhh/index.m3u8
+#EXTINF:-1 tvg-id="DISCOVERY ID" group-title="Documentários",DISCOVERY ID
+https://open.tvgratis.workers.dev/discoveryid/index.m3u8
+#EXTINF:-1 tvg-id="DISCOVERY KIDS" group-title="Infantil",DISCOVERY KIDS
+https://open.tvgratis.workers.dev/discoverykids/index.m3u8
+#EXTINF:-1 tvg-id="DISCOVERY SCIENCE" group-title="Documentários",DISCOVERY SCIENCE
+https://open.tvgratis.workers.dev/discoveryscience/index.m3u8
+#EXTINF:-1 tvg-id="DISCOVERY THEATER" group-title="Documentários",DISCOVERY THEATER
+https://open.tvgratis.workers.dev/discoverytheater/index.m3u8
+#EXTINF:-1 tvg-id="DISCOVERY TURBO" group-title="Documentários",DISCOVERY TURBO
+https://open.tvgratis.workers.dev/discoveryturbo/index.m3u8
+#EXTINF:-1 tvg-id="DISCOVERY WORLD" group-title="Documentários",DISCOVERY WORLD
+https://open.tvgratis.workers.dev/discoveryworld/index.m3u8
+#EXTINF:-1 tvg-id="DISNEY+ 1" group-title="Filmes e Séries",DISNEY+ 1
+https://open.tvgratis.workers.dev/disneyplus/index.m3u8
+#EXTINF:-1 tvg-id="DISNEY+ 2" group-title="Filmes e Séries",DISNEY+ 2
+https://open.tvgratis.workers.dev/disneyplus02/index.m3u8
+#EXTINF:-1 tvg-id="DISNEY+ 3" group-title="Filmes e Séries",DISNEY+ 3
+https://open.tvgratis.workers.dev/disneyplus03/index.m3u8
+#EXTINF:-1 tvg-id="DISNEY+ 4" group-title="Filmes e Séries",DISNEY+ 4
+https://open.tvgratis.workers.dev/disneyplus04/index.m3u8
+#EXTINF:-1 tvg-id="DISNEY+ 5" group-title="Filmes e Séries",DISNEY+ 5
+https://open.tvgratis.workers.dev/disneyplus05/index.m3u8
+#EXTINF:-1 tvg-id="DISNEY+ 6" group-title="Filmes e Séries",DISNEY+ 6
+https://open.tvgratis.workers.dev/disneyplus06/index.m3u8
+#EXTINF:-1 tvg-id="ESPN" group-title="Esportes",ESPN
+https://open.tvgratis.workers.dev/espn/index.m3u8
+#EXTINF:-1 tvg-id="ESPN 2" group-title="Esportes",ESPN 2
+https://open.tvgratis.workers.dev/espn2/index.m3u8
+#EXTINF:-1 tvg-id="ESPN 3" group-title="Esportes",ESPN 3
+https://open.tvgratis.workers.dev/espn3/index.m3u8
+#EXTINF:-1 tvg-id="ESPN 4" group-title="Esportes",ESPN 4
+https://open.tvgratis.workers.dev/espn4/index.m3u8
+#EXTINF:-1 tvg-id="ESPN 5" group-title="Esportes",ESPN 5
+https://open.tvgratis.workers.dev/espn5/index.m3u8
+#EXTINF:-1 tvg-id="ESPN 6" group-title="Esportes",ESPN 6
+https://open.tvgratis.workers.dev/espn6/index.m3u8
+#EXTINF:-1 tvg-id="FIFA +" group-title="Esportes",FIFA +
+https://e3be9ac5.wurl.com/master/f36d25e7e52f1ba8d7e56eb859c636563214f541/TEctYnJfRklGQVBsdXNQb3J0dWd1ZXNlX0hMUw/playlist.m3u8
+#EXTINF:-1 tvg-id="FOOD NETWORK" group-title="Lifestyle",FOOD NETWORK
+https://open.tvgratis.workers.dev/foodnetwork/index.m3u8
+#EXTINF:-1 tvg-id="FUTURA" group-title="Abertos",FUTURA
+https://tv.unisc.br/hls/test.m3u8
+#EXTINF:-1 tvg-id="GE TV" group-title="Esportes",GE TV
+https://open.tvgratis.workers.dev/getv/index.m3u8
+#EXTINF:-1 tvg-id="GLOBO DF" group-title="Abertos",GLOBO DF
+https://open.tvgratis.workers.dev/globodf/index.m3u8
+#EXTINF:-1 tvg-id="GLOBO ES" group-title="Abertos",GLOBO ES
+https://open.tvgratis.workers.dev/globoes/index.m3u8
+#EXTINF:-1 tvg-id="GLOBO MG" group-title="Abertos",GLOBO MG
+https://open.tvgratis.workers.dev/globomg/index.m3u8
+#EXTINF:-1 tvg-id="GLOBO NEWS" group-title="Notícias",GLOBO NEWS
+https://open.tvgratis.workers.dev/globonews/index.m3u8
+#EXTINF:-1 tvg-id="GLOBO RJ" group-title="Abertos",GLOBO RJ
+https://open.tvgratis.workers.dev/globorj/index.m3u8
+#EXTINF:-1 tvg-id="GLOBO RS" group-title="Abertos",GLOBO RS
+https://open.tvgratis.workers.dev/globors/index.m3u8
+#EXTINF:-1 tvg-id="GLOBO SP" group-title="Abertos",GLOBO SP
+https://open.tvgratis.workers.dev/globosp/index.m3u8
+#EXTINF:-1 tvg-id="GLOBOPLAY NOVELAS" group-title="Filmes e Séries",GLOBOPLAY NOVELAS
+https://open.tvgratis.workers.dev/globoplaynovelas/index.m3u8
+#EXTINF:-1 tvg-id="GLOOB" group-title="Infantil",GLOOB
+https://open.tvgratis.workers.dev/gloob/index.m3u8
+#EXTINF:-1 tvg-id="GLOOBINHO" group-title="Infantil",GLOOBINHO
+https://open.tvgratis.workers.dev/gloobinho/index.m3u8
+#EXTINF:-1 tvg-id="GNT" group-title="Lifestyle",GNT
+https://open.tvgratis.workers.dev/gnt/index.m3u8
+#EXTINF:-1 tvg-id="GRJNGO" group-title="Filmes e Séries",GRJNGO
+https://amogonetworx-grjngo-1-eu.plex.wurl.tv/2000.m3u8
+#EXTINF:-1 tvg-id="HBO" group-title="Filmes e Séries",HBO
+https://open.tvgratis.workers.dev/hbo/index.m3u8
+#EXTINF:-1 tvg-id="HBO 2" group-title="Filmes e Séries",HBO 2
+https://open.tvgratis.workers.dev/hbo2/index.m3u8
+#EXTINF:-1 tvg-id="HBO FAMILY" group-title="Filmes e Séries",HBO FAMILY
+https://open.tvgratis.workers.dev/hbofamily/index.m3u8
+#EXTINF:-1 tvg-id="HBO MAX 1" group-title="Filmes e Séries",HBO MAX 1
+https://open.tvgratis.workers.dev/max/index.m3u8
+#EXTINF:-1 tvg-id="HBO MAX 2" group-title="Filmes e Séries",HBO MAX 2
+https://open.tvgratis.workers.dev/max2/index.m3u8
+#EXTINF:-1 tvg-id="HBO MAX 3" group-title="Filmes e Séries",HBO MAX 3
+https://open.tvgratis.workers.dev/max3/index.m3u8
+#EXTINF:-1 tvg-id="HBO MAX 4" group-title="Filmes e Séries",HBO MAX 4
+https://open.tvgratis.workers.dev/max4/index.m3u8
+#EXTINF:-1 tvg-id="HBO MAX 5" group-title="Filmes e Séries",HBO MAX 5
+https://open.tvgratis.workers.dev/max5/index.m3u8
+#EXTINF:-1 tvg-id="HBO MAX 6" group-title="Filmes e Séries",HBO MAX 6
+https://open.tvgratis.workers.dev/max6/index.m3u8
+#EXTINF:-1 tvg-id="HBO MUNDI" group-title="Filmes e Séries",HBO MUNDI
+https://open.tvgratis.workers.dev/hbomundi/index.m3u8
+#EXTINF:-1 tvg-id="HBO PLUS" group-title="Filmes e Séries",HBO PLUS
+https://open.tvgratis.workers.dev/hboplus/index.m3u8
+#EXTINF:-1 tvg-id="HBO POP" group-title="Filmes e Séries",HBO POP
+https://open.tvgratis.workers.dev/hbopop/index.m3u8
+#EXTINF:-1 tvg-id="HBO SIGNATURE" group-title="Filmes e Séries",HBO SIGNATURE
+https://open.tvgratis.workers.dev/hbosignature/index.m3u8
+#EXTINF:-1 tvg-id="HBO XTREME" group-title="Filmes e Séries",HBO XTREME
+https://open.tvgratis.workers.dev/hboxtreme/index.m3u8
+#EXTINF:-1 tvg-id="HISTORY" group-title="Documentários",HISTORY
+https://open.tvgratis.workers.dev/history/index.m3u8
+#EXTINF:-1 tvg-id="HISTORY 2" group-title="Documentários",HISTORY 2
+https://open.tvgratis.workers.dev/history2/index.m3u8
+#EXTINF:-1 tvg-id="ISTV" group-title="Abertos",ISTV
+https://video10.logicahost.com.br/redeistv/redeistv/chunklist_w445873689.m3u8
+#EXTINF:-1 tvg-id="JOVEM PAN NEWS" group-title="Notícias",JOVEM PAN NEWS
+https://amg01391-amg01391c3-tcl-spain-5038.playouts.now.amagi.tv/playlist1080-p.m3u8
+#EXTINF:-1 tvg-id="MEGAPIX" group-title="Filmes e Séries",MEGAPIX
+https://open.tvgratis.workers.dev/megapix/index.m3u8
+#EXTINF:-1 tvg-id="MR BEAN 24H" group-title="24 Horas",MR BEAN 24H
+https://amg00627-amg00627c40-rakuten-uk-5725.playouts.now.amagi.tv/720p-vtt/index.m3u8
+#EXTINF:-1 tvg-id="MR BEAN CARTOON 24H" group-title="24 Horas",MR BEAN CARTOON 24H
+https://amg00627-banijay-amg00627c35-plex-us-4257.playouts.now.amagi.tv/1080p-cc-pt/index.m3u8
+#EXTINF:-1 tvg-id="MULTISHOW" group-title="Música",MULTISHOW
+https://open.tvgratis.workers.dev/multishow/index.m3u8
+#EXTINF:-1 tvg-id="NOSSO FUTEBOL" group-title="Esportes",NOSSO FUTEBOL
+https://open.tvgratis.workers.dev/nossofutebol/index.m3u8
+#EXTINF:-1 tvg-id="NSPORTS" group-title="Esportes",NSPORTS
+https://ogc-nsprt-tcl-roku-syndication.otteravision.com/ogc/nsprt/nsprt_720p.m3u8
+#EXTINF:-1 tvg-id="OFF" group-title="Esportes",OFF
+https://open.tvgratis.workers.dev/canaloff/index.m3u8
+#EXTINF:-1 tvg-id="PARAMOUNT+ 1" group-title="Filmes e Séries",PARAMOUNT+ 1
+https://open.tvgratis.workers.dev/paramountplus/index.m3u8
+#EXTINF:-1 tvg-id="PARAMOUNT+ 2" group-title="Filmes e Séries",PARAMOUNT+ 2
+https://open.tvgratis.workers.dev/paramountplus02/index.m3u8
+#EXTINF:-1 tvg-id="PLAY TV" group-title="Infantil",PLAY TV
+https://isaocorp.cloudecast.com/playtv/tracks-v1/index.fmp4.m3u8
+#EXTINF:-1 tvg-id="PREMIERE 2" group-title="Esportes",PREMIERE 2
+https://open.tvgratis.workers.dev/premiere2/index.m3u8
+#EXTINF:-1 tvg-id="PREMIERE 3" group-title="Esportes",PREMIERE 3
+https://open.tvgratis.workers.dev/premiere3/index.m3u8
+#EXTINF:-1 tvg-id="PREMIERE 4" group-title="Esportes",PREMIERE 4
+https://open.tvgratis.workers.dev/premiere4/index.m3u8
+#EXTINF:-1 tvg-id="PREMIERE 5" group-title="Esportes",PREMIERE 5
+https://open.tvgratis.workers.dev/premiere5/index.m3u8
+#EXTINF:-1 tvg-id="PREMIERE 6" group-title="Esportes",PREMIERE 6
+https://open.tvgratis.workers.dev/premiere6/index.m3u8
+#EXTINF:-1 tvg-id="PREMIERE 7" group-title="Esportes",PREMIERE 7
+https://open.tvgratis.workers.dev/premiere7/index.m3u8
+#EXTINF:-1 tvg-id="PREMIERE 8" group-title="Esportes",PREMIERE 8
+https://open.tvgratis.workers.dev/premiere8/index.m3u8
+#EXTINF:-1 tvg-id="PREMIERE CLUBES" group-title="Esportes",PREMIERE CLUBES
+https://open.tvgratis.workers.dev/premiereclubes/index.m3u8
+#EXTINF:-1 tvg-id="PRIME VIDEO 1" group-title="Filmes e Séries",PRIME VIDEO 1
+https://open.tvgratis.workers.dev/amazonprimevideo/index.m3u8
+#EXTINF:-1 tvg-id="PRIME VIDEO 2" group-title="Filmes e Séries",PRIME VIDEO 2
+https://open.tvgratis.workers.dev/amazonprimevideo02/index.m3u8
+#EXTINF:-1 tvg-id="PRIME VIDEO 3" group-title="Filmes e Séries",PRIME VIDEO 3
+https://open.tvgratis.workers.dev/amazonprimevideo03/index.m3u8
+#EXTINF:-1 tvg-id="PRIME VIDEO 4" group-title="Filmes e Séries",PRIME VIDEO 4
+https://open.tvgratis.workers.dev/amazonprimevideo04/index.m3u8
+#EXTINF:-1 tvg-id="PRIME VIDEO 5" group-title="Filmes e Séries",PRIME VIDEO 5
+https://open.tvgratis.workers.dev/amazonprimevideo05/index.m3u8
+#EXTINF:-1 tvg-id="RECORD DF" group-title="Abertos",RECORD DF
+https://open.tvgratis.workers.dev/recorddf/index.m3u8
+#EXTINF:-1 tvg-id="RECORD ES" group-title="Abertos",RECORD ES
+https://open.tvgratis.workers.dev/recordes/index.m3u8
+#EXTINF:-1 tvg-id="RECORD MG" group-title="Abertos",RECORD MG
+https://open.tvgratis.workers.dev/recordmg/index.m3u8
+#EXTINF:-1 tvg-id="RECORD NEWS" group-title="Notícias",RECORD NEWS
+https://open.tvgratis.workers.dev/recordnews/index.m3u8
+#EXTINF:-1 tvg-id="RECORD RJ" group-title="Abertos",RECORD RJ
+https://open.tvgratis.workers.dev/recordrj/index.m3u8
+#EXTINF:-1 tvg-id="RECORD SP" group-title="Abertos",RECORD SP
+https://open.tvgratis.workers.dev/recordsp/index.m3u8
+#EXTINF:-1 tvg-id="REDE BRASIL" group-title="Abertos",REDE BRASIL
+https://redebrasil.nuvemplay.live/hls/stream.m3u8
+#EXTINF:-1 tvg-id="REDE MANCHETE" group-title="Filmes e Séries",REDE MANCHETE
+https://stmv1.srvif.com/tvserie/tvserie/playlist.m3u8
+#EXTINF:-1 tvg-id="REDE MINAS" group-title="Abertos",REDE MINAS
+https://8hzcavccys.zoeweb.tv/redeminas/ngrp:redeminas_all/chunklist_b1731072.m3u8
+#EXTINF:-1 tvg-id="REDE VIDA" group-title="Abertos",REDE VIDA
+https://d12e4o88jd8gex.cloudfront.net/out/v1/cea3de0b76ac4e82ab8ee0fd3f17ce12/index.m3u8
+#EXTINF:-1 tvg-id="REDETV!" group-title="Abertos",REDETV!
+https://open.tvgratis.workers.dev/redetv/index.m3u8
+#EXTINF:-1 tvg-id="REDETV PR" group-title="Abertos",REDETV PR
+https://tv01.zas.media:1936/redetvparana/redetvparana/chunklist_w207761227.m3u8
+#EXTINF:-1 tvg-id="RETRO CARTOON" group-title="Infantil",RETRO CARTOON
+https://stmv1.video.brstream.com.br/retrotv/retrotv/chunklist_w329696462.m3u8
+#EXTINF:-1 tvg-id="REVIVA TV" group-title="Filmes e Séries",REVIVA TV
+https://stmv.webtvninjas.com.br/webtvni1/webtvni1/playlist.m3u8
+#EXTINF:-1 tvg-id="RUNTIME AÇAO" group-title="Filmes e Séries",RUNTIME AÇAO
+https://run-rt-ra.otteravision.com/run/rt_ra/rt_ra_720.m3u8
+#EXTINF:-1 tvg-id="RUNTIME COMÉDIA" group-title="Filmes e Séries",RUNTIME COMÉDIA
+https://run-rc-br.otteravision.com/run/rc_br/rc_br_720.m3u8
+#EXTINF:-1 tvg-id="RUNTIME CRIME" group-title="Filmes e Séries",RUNTIME CRIME
+https://run-cr-br.otteravision.com/run/cr_br/cr_br_720.m3u8
+#EXTINF:-1 tvg-id="RUNTIME FÁMILIA" group-title="Filmes e Séries",RUNTIME FÁMILIA
+https://run-rufb.otteravision.com/run/rufb/rufb_720.m3u8
+#EXTINF:-1 tvg-id="RUNTIME ROMANCE" group-title="Filmes e Séries",RUNTIME ROMANCE
+https://run-ro-br.otteravision.com/run/ro_br/ro_br_720.m3u8
+#EXTINF:-1 tvg-id="SBT INTERIOR" group-title="Abertos",SBT INTERIOR
+https://cdn.live.br1.jmvstream.com/w/LVW-10801/LVW10801_Xvg4R0u57n/chunklist.m3u8
+#EXTINF:-1 tvg-id="SBT RJ" group-title="Abertos",SBT RJ
+https://open.tvgratis.workers.dev/sbtrj/index.m3u8
+#EXTINF:-1 tvg-id="SBT SP" group-title="Abertos",SBT SP
+https://open.tvgratis.workers.dev/sbtsp/index.m3u8
+#EXTINF:-1 tvg-id="SBT TAILÂNDIA" group-title="Abertos",SBT TAILÂNDIA
+https://video05.logicahost.com.br/tvguajara/tvguajara/chunklist_w897727699.m3u8
+#EXTINF:-1 tvg-id="SESSÃO TRASH" group-title="Filmes e Séries",SESSÃO TRASH
+https://amg00711-zylo-amg00711c12-plex-us-8636.playouts.now.amagi.tv/playlist1080p.m3u8
+#EXTINF:-1 tvg-id="SONY" group-title="Filmes e Séries",SONY
+https://open.tvgratis.workers.dev/sonychannel/index.m3u8
+#EXTINF:-1 tvg-id="SPACE" group-title="Filmes e Séries",SPACE
+https://open.tvgratis.workers.dev/space/index.m3u8
+#EXTINF:-1 tvg-id="SPORTV 1" group-title="Esportes",SPORTV 1
+https://open.tvgratis.workers.dev/sportv/index.m3u8
+#EXTINF:-1 tvg-id="SPORTV 2" group-title="Esportes",SPORTV 2
+https://open.tvgratis.workers.dev/sportv2/index.m3u8
+#EXTINF:-1 tvg-id="SPORTV 3" group-title="Esportes",SPORTV 3
+https://open.tvgratis.workers.dev/sportv3/index.m3u8
+#EXTINF:-1 tvg-id="STRONGMAN CHAMPIONS LEAGUE" group-title="Esportes",STRONGMAN CHAMPIONS LEAGUE
+https://rightsboosterltd-scl-2-eu.rakuten.wurl.tv/playlist.m3u8
+#EXTINF:-1 tvg-id="STUDIO UNIVERSAL" group-title="Filmes e Séries",STUDIO UNIVERSAL
+https://open.tvgratis.workers.dev/studiouniversal/index.m3u8
+#EXTINF:-1 tvg-id="TELA BRASIL" group-title="Filmes e Séries",TELA BRASIL
+https://stmv.webtvninjas.com.br/mailson6054/mailson6054/playlist.m3u8
+#EXTINF:-1 tvg-id="TELECINE ACTION" group-title="Filmes e Séries",TELECINE ACTION
+https://open.tvgratis.workers.dev/tcaction/index.m3u8
+#EXTINF:-1 tvg-id="TELECINE CULT" group-title="Filmes e Séries",TELECINE CULT
+https://open.tvgratis.workers.dev/tccult/index.m3u8
+#EXTINF:-1 tvg-id="TELECINE FUN" group-title="Filmes e Séries",TELECINE FUN
+https://open.tvgratis.workers.dev/tcfun/index.m3u8
+#EXTINF:-1 tvg-id="TELECINE PIPOCA" group-title="Filmes e Séries",TELECINE PIPOCA
+https://open.tvgratis.workers.dev/tcpipoca/index.m3u8
+#EXTINF:-1 tvg-id="TELECINE PREMIUM" group-title="Filmes e Séries",TELECINE PREMIUM
+https://open.tvgratis.workers.dev/tcpremium/index.m3u8
+#EXTINF:-1 tvg-id="TELECINE TOUCH" group-title="Filmes e Séries",TELECINE TOUCH
+https://open.tvgratis.workers.dev/tctouch/index.m3u8
+#EXTINF:-1 tvg-id="TNT" group-title="Filmes e Séries",TNT
+https://open.tvgratis.workers.dev/tnt/index.m3u8
+#EXTINF:-1 tvg-id="TNT NOVELAS" group-title="Filmes e Séries",TNT NOVELAS
+https://open.tvgratis.workers.dev/tntnovelas/index.m3u8
+#EXTINF:-1 tvg-id="TNT SÉRIES" group-title="Filmes e Séries",TNT SÉRIES
+https://open.tvgratis.workers.dev/tntseries/index.m3u8
+#EXTINF:-1 tvg-id="TOONCAST" group-title="Infantil",TOONCAST
+https://open.tvgratis.workers.dev/tooncast/index.m3u8
+#EXTINF:-1 tvg-id="TV CLÁSSICOS" group-title="Filmes e Séries",TV CLÁSSICOS
+https://stmv2.painelvideocast.com.br/multicanais/multicanais/chunklist_w135864877.m3u8
+#EXTINF:-1 tvg-id="TV CLÁSSICOS" group-title="Abertos",TV CLÁSSICOS
+https://stmv1.srvif.com/tvserie/tvserie/playlist.m3u8
+#EXTINF:-1 tvg-id="TV CLÁSSICOS" group-title="Abertos",TV CLÁSSICOS
+http://45.190.28.50/TV_ESCOLA/index.m3u8
+#EXTINF:-1 tvg-id="TV DIÁRIO DO SERTÃO" group-title="Abertos",TV DIÁRIO DO SERTÃO
+https://5ffab78b24f94.streamlock.net/pdsertaotv/pdsertaotv/chunklist_w554278987.m3u8
+#EXTINF:-1 tvg-id="TV LOADING" group-title="Infantil",TV LOADING
+https://stmv1.srvif.com/loadingtv/loadingtv/playlist.m3u8
+#EXTINF:-1 tvg-id="TV RECORDAÇÕES" group-title="Abertos",TV RECORDAÇÕES
+https://srv3.zcast.com.br/tvrecordacoes/tvrecordacoes/playlist.m3u8
+#EXTINF:-1 tvg-id="UFC" group-title="Esportes",UFC
+https://aegis-cloudfront-1.tubi.video/a78ea283-8666-44a1-a0f6-fde5d229ac21/playlist.m3u8
+#EXTINF:-1 tvg-id="UNIVERSAL" group-title="Filmes e Séries",UNIVERSAL
+https://open.tvgratis.workers.dev/universaltv/index.m3u8
+#EXTINF:-1 tvg-id="VINTAGE TV" group-title="Abertos",VINTAGE TV
+https://video01.brascast.com/rogerio7271/rogerio7271/playlist.m3u8
+#EXTINF:-1 tvg-id="WARNER" group-title="Filmes e Séries",WARNER
+https://open.tvgratis.workers.dev/warner/index.m3u8
+#EXTINF:-1 tvg-id="XSPORTS" group-title="Esportes",XSPORTS
+https://open.tvgratis.workers.dev/xsports/index.m3u8
