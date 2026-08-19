@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Canais ESPN - Versões Mistas</title>
-    <!-- Importando o CSS e JS do Video.js (usado apenas nas versões 'ec') -->
+    <title>Canais ESPN - Mobile & TV</title>
+    <!-- Importando o CSS e JS do Video.js -->
     <link href="https://vjs.zencdn.net/8.10.0/video-js.css" rel="stylesheet" />
     <script src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; }
         body, html { width: 100%; height: 100%; background: #000; overflow: hidden; font-family: sans-serif; }
 
         /* Container do Player preenchendo 100% da tela */
@@ -39,6 +39,26 @@
             display: block;
         }
 
+        /* Botões de Navegação Lateral para Mobile / Toque */
+        .nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.4);
+            color: white;
+            border: none;
+            padding: 20px 15px;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 10001;
+            border-radius: 8px;
+            transition: background 0.3s;
+            outline: none;
+        }
+        .nav-btn:active { background: rgba(168, 85, 247, 0.7); }
+        #btn-prev { left: 10px; }
+        #btn-next { right: 10px; }
+
         /* Footer flutuante de largura total com animação de 5 segundos */
         #footer-info {
             position: absolute;
@@ -48,7 +68,7 @@
             background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.6));
             color: white;
             padding: 20px 30px;
-            font-size: 24px;
+            font-size: 22px;
             font-weight: bold;
             opacity: 0;
             transition: opacity 0.5s ease;
@@ -76,6 +96,10 @@
     <div id="player-container">
         <!-- Onde o player (Video.js ou Iframe) será injetado via JS -->
         <div id="player"></div>
+
+        <!-- Botões de Seta na Tela para Mobile -->
+        <button class="nav-btn" id="btn-prev" onclick="canalAnterior()">&#10094;</button>
+        <button class="nav-btn" id="btn-next" onclick="proximoCanal()">&#10095;</button>
         
         <!-- Footer Informativo do Canal -->
         <div id="footer-info">
@@ -105,11 +129,14 @@
         let playerInstance = null;
         let footerTimeout = null;
 
+        // Variáveis de controle para o gesto de toque (Swipe)
+        let touchStartX = 0;
+        let touchEndX = 0;
+
         // --- 1. LÓGICA DE REPRODUÇÃO INTELIGENTE ---
         async function playCanal(c) {
             const qual = String(c.qualidade || "").toLowerCase();
 
-            // Destruir instância anterior do Video.js se existir
             if (playerInstance) {
                 playerInstance.dispose();
                 playerInstance = null;
@@ -118,13 +145,10 @@
             const container = document.getElementById("player");
             container.innerHTML = "";
 
-            // Verifica o tipo de qualidade para decidir se usa o Video.js ou o Iframe Direto
             if (qual === "eb") {
-                // Link 'eb' já possui player embutido -> usa iframe direto
                 const urlVideo = "https://open.tvgratis.workers.dev/?url=https://ww4.embedtv.lat/" + encodeURIComponent(c.logo);
                 container.innerHTML = `<iframe src="${urlVideo}" allow="autoplay; fullscreen" style="width:100%;height:100%;border:none;"></iframe>`;
             } else {
-                // Link 'ec' -> usa o Video.js com o arquivo .m3u8
                 const urlVideo = "https://open.tvgratis.workers.dev/" + encodeURIComponent(c.logo) + "/index.m3u8";
                 container.innerHTML = `<video id="video-player" class="video-js vjs-big-play-centered" controls autoplay playsinline style="width:100%;height:100%;"></video>`;
                 
@@ -141,7 +165,6 @@
                 });
             }
 
-            // Exibe o footer informativo com o nome e a versão
             mostrarFooterCanal(c.canal, c.versao);
         }
 
@@ -162,22 +185,55 @@
             }, 5000);
         }
 
-        // --- 3. CONTROLE POR D-PAD / SETAS DO TECLADO ---
+        // --- 3. FUNÇÕES DE NAVEGAÇÃO ---
+        function proximoCanal() {
+            indiceCanalAtivo = (indiceCanalAtivo < canaisRaw.length - 1) ? indiceCanalAtivo + 1 : 0;
+            playCanal(canaisRaw[indiceCanalAtivo]);
+        }
+
+        function canalAnterior() {
+            indiceCanalAtivo = (indiceCanalAtivo > 0) ? indiceCanalAtivo - 1 : canaisRaw.length - 1;
+            playCanal(canaisRaw[indiceCanalAtivo]);
+        }
+
+        // --- 4. CONTROLE POR D-PAD / SETAS DO TECLADO ---
         window.addEventListener("keydown", (e) => {
             if (canaisRaw.length === 0) return;
 
             if (e.key === "ArrowUp" || e.key === "ArrowLeft") {
                 e.preventDefault();
-                indiceCanalAtivo = (indiceCanalAtivo > 0) ? indiceCanalAtivo - 1 : canaisRaw.length - 1;
-                playCanal(canaisRaw[indiceCanalAtivo]);
+                canalAnterior();
             } else if (e.key === "ArrowDown" || e.key === "ArrowRight") {
                 e.preventDefault();
-                indiceCanalAtivo = (indiceCanalAtivo < canaisRaw.length - 1) ? indiceCanalAtivo + 1 : 0;
-                playCanal(canaisRaw[indiceCanalAtivo]);
+                proximoCanal();
             }
         });
 
-        // --- 4. INICIALIZAÇÃO AUTOMÁTICA NO PRIMEIRO CANAL ---
+        // --- 5. SUPORTE A GESTOS DE TOQUE (SWIPE NA TELA) ---
+        const containerApp = document.getElementById('player-container');
+
+        containerApp.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        containerApp.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            tratarSwipe();
+        }, { passive: true });
+
+        function tratarSwipe() {
+            const limiteSwipe = 50; // Distância mínima em pixels para considerar um gesto
+            if (touchEndX < touchStartX - limiteSwipe) {
+                // Arrastou o dedo para a esquerda -> Próximo canal
+                proximoCanal();
+            }
+            if (touchEndX > touchStartX + limiteSwipe) {
+                // Arrastou o dedo para a direita -> Canal anterior
+                canalAnterior();
+            }
+        }
+
+        // --- 6. INICIALIZAÇÃO AUTOMÁTICA NO PRIMEIRO CANAL ---
         window.onload = function() {
             if (canaisRaw.length > 0) {
                 indiceCanalAtivo = 0;
