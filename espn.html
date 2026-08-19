@@ -3,247 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Canais ESPN - WebApp</title>
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            background-color: #121212;
-            color: #ffffff;
-            font-family: Arial, sans-serif;
-            display: flex;
-            height: 100vh;
-            overflow: hidden;
-        }
-
-        /* Área da Lista de Canais (Esquerda) */
-        .sidebar {
-            width: 300px;
-            background-color: #1e1e1e;
-            display: flex;
-            flex-direction: column;
-            border-right: 2px solid #333;
-        }
-
-        .header {
-            padding: 20px;
-            background-color: #d32f2f;
-            font-size: 1.2rem;
-            font-weight: bold;
-            text-align: center;
-        }
-
-        .channel-list {
-            list-style: none;
-            overflow-y: auto;
-            flex: 1;
-            padding: 10px;
-        }
-
-        .channel-item {
-            padding: 15px;
-            margin-bottom: 8px;
-            background-color: #2c2c2c;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: background-color 0.2s, transform 0.2s;
-            font-size: 1rem;
-        }
-
-        /* Estilo para o item focado via D-Pad ou Mouse */
-        .channel-item.selected {
-            background-color: #d32f2f;
-            font-weight: bold;
-            transform: scale(1.02);
-            outline: none;
-        }
-
-        /* Área do Player (Direita) */
-        .player-container {
-            flex: 1;
-            background-color: #000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-    </style>
-</head>
-<body>
-
-    <!-- Lista Lateral de Canais -->
-    <div class="sidebar">
-        <div class="header">Canais ESPN</div>
-        <ul id="channelList" class="channel-list"></ul>
-    </div>
-
-    <!-- Player de Vídeo -->
-    <div class="player-container">
-        <iframe id="videoPlayer" src="" allowfullscreen></iframe>
-    </div>
-
-    <script>
-        // Lista de canais fornecida
-        const canais = [
-            { "canal": "ESPN", "logo": "espn", "qualidade": "ec", "categorias": ["Todos", "Esportes"] },
-            { "canal": "ESPN 2", "logo": "espn2", "qualidade": "ec", "categorias": ["Todos", "Esportes"] },
-            { "canal": "ESPN 3", "logo": "espn3", "qualidade": "ec", "categorias": ["Todos", "Esportes"] },
-            { "canal": "ESPN 4", "logo": "espn4", "qualidade": "ec", "categorias": ["Todos", "Esportes"] },
-            { "canal": "ESPN 5", "logo": "espn5", "qualidade": "ec", "categorias": ["Todos", "Esportes"] },
-            { "canal": "ESPN 6", "logo": "espn6", "qualidade": "ec", "categorias": ["Todos", "Esportes"] }
-        ];
-
-        let currentIndex = 0;
-        const listElement = document.getElementById("channelList");
-        const videoPlayer = document.getElementById("videoPlayer");
-
-        // Renderizar a lista de canais na tela
-        function renderChannels() {
-            listElement.innerHTML = "";
-            canais.forEach((c, index) => {
-                const li = document.createElement("li");
-                li.className = `channel-item ${index === currentIndex ? 'selected' : ''}`;
-                li.textContent = c.canal;
-                li.onclick = () => {
-                    currentIndex = index;
-                    updateSelection();
-                    playChannel(c);
-                };
-                listElement.appendChild(li);
-            });
-        }
-
-        // Tocar o canal selecionado
-        function playChannel(c) {
-            const urlVideo = "https://redecanaistv.uk/player3/ch.php?canal=" + c.logo;
-            videoPlayer.src = urlVideo;
-        }
-
-        // Atualizar visualmente qual canal está selecionado
-        function updateSelection() {
-            const items = listElement.getElementsByClassName("channel-item");
-            for (let i = 0; i < items.length; i++) {
-                if (i === currentIndex) {
-                    items[i].classList.add("selected");
-                    items[i].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                } else {
-                    items[i].classList.remove("selected");
-                }
-            }
-        }
-
-        // Controle via Teclado / D-Pad (Android TV / Set-top boxes)
-        window.addEventListener("keydown", (e) => {
-            if (e.key === "ArrowUp") {
-                e.preventDefault();
-                if (currentIndex > 0) {
-                    currentIndex--;
-                    updateSelection();
-                }
-            } else if (e.key === "ArrowDown") {
-                e.preventDefault();
-                if (currentIndex < canais.length - 1) {
-                    currentIndex++;
-                    updateSelection();
-                }
-            } else if (e.key === "Enter" || e.keyCode === 13) {
-                e.preventDefault();
-                playChannel(canais[currentIndex]);
-            }
-        });
-
-        // Inicialização: Renderiza os canais e já inicia o primeiro tocando
-        renderChannels();
-        playChannel(canais[0]);
-    </script>
-</body>
-</html>
-Dicas para o APK (WebView):
-Certifique-se de habilitar o JavaScript (webView.getSettings().setJavaScriptEnabled(true)) e o suporte a DOM/Midia no código nativo do seu aplicativo Android.
-
-Como alguns sites de streaming utilizam tecnologias restritas ou bloqueiam iframes externos dependendo da origem, teste o comportamento do WebView no seu emulador ou dispositivo Android para garantir que o player abra corretamente.
-
-na verdade o link se forma assim urlVideo = "https://open.tvgratis.workers.dev/" + encodeURIComponent(c.logo) + "/index.m3u8"; , e nao quero menu lateral , e sim como se fosse um footer que abre junto com canal mostrando o nome do canal e fecha em 5 segundos , assim o canal ja abre 100% da tela
-
-Aqui está o código ajustado conforme suas novas especificações.
-
-O que mudou:
-Layout Fullscreen: O player de vídeo ocupa 100% da tela.
-
-Footer Dinâmico: Uma caixa informativa aparece no canto inferior esquerdo sempre que você troca de canal.
-
-Temporizador: O footer desaparece automaticamente após 5 segundos.
-
-Lógica de Link: Implementada exatamente como você solicitou ([https://open.tvgratis.workers.dev/](https://open.tvgratis.workers.dev/)...).
-
-Navegação: Use as teclas Cima/Baixo (ou Esquerda/Direita) para alternar entre os canais da lista.
-
-Seu arquivo index.html está pronto:
-
-Ícone do app HTML
-index
- HTML 
-Aberto
-Dica para o WebView no Android:
-Como você está usando um arquivo .m3u8 em um iframe, certifique-se de que o seu player interno (o destino desse iframe ou a implementação do seu WebView) suporte streaming HLS. Se a tela ficar preta, verifique se o seu WebView está configurado para aceitar conteúdo de mídia e se o iframe tem permissão para carregar a URL externa no arquivo AndroidManifest.xml (com usesCleartextTraffic se necessário, embora HTTPS seja preferencial).
-
-
-
-
-O Gemini é uma IA e pode cometer erros.
-
-Analisando
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WebPlayer</title>
+    <title>WebPlayer TV - Tela Cheia</title>
+    <!-- Incluindo a biblioteca Hls.js para reproduzir arquivos .m3u8 -->
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body, html { width: 100%; height: 100%; background: #000; overflow: hidden; font-family: sans-serif; }
         
+        /* Player ocupando 100% da tela */
         #videoPlayer {
             width: 100vw;
             height: 100vh;
-            border: none;
             display: block;
+            background: #000;
+            object-fit: contain;
         }
 
+        /* Footer de 100% de largura ou faixa na parte inferior */
         #footerInfo {
             position: absolute;
-            bottom: 20px;
-            left: 20px;
-            background: rgba(0, 0, 0, 0.7);
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.6));
             color: white;
-            padding: 15px 25px;
-            border-radius: 8px;
-            font-size: 20px;
+            padding: 20px 30px;
+            font-size: 24px;
             font-weight: bold;
             opacity: 0;
             transition: opacity 0.5s ease;
             pointer-events: none;
-            border-left: 5px solid #d32f2f;
+            border-top: 4px solid #d32f2f;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
 
         #footerInfo.show { opacity: 1; }
+        
+        .canal-badge {
+            background: #d32f2f;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 14px;
+            text-transform: uppercase;
+        }
     </style>
 </head>
 <body>
 
-    <iframe id="videoPlayer" src="" allowfullscreen></iframe>
-    <div id="footerInfo"></div>
+    <!-- Player de Vídeo Nativo -->
+    <video id="videoPlayer" autoplay playsinline></video>
+    
+    <!-- Footer Informativo -->
+    <div id="footerInfo">
+        <span id="canalNome">Carregando...</span>
+        <span class="canal-badge">Ao Vivo</span>
+    </div>
 
     <script>
+        // Lista fixa de canais ESPN configurada diretamente no código
         const canais = [
             { "canal": "ESPN", "logo": "espn" },
             { "canal": "ESPN 2", "logo": "espn2" },
@@ -255,39 +75,65 @@ Analisando
 
         let currentIndex = 0;
         let timer = null;
+        let hls = null;
 
-        const player = document.getElementById("videoPlayer");
+        const video = document.getElementById("videoPlayer");
         const footer = document.getElementById("footerInfo");
+        const canalNome = document.getElementById("canalNome");
 
         function playChannel(index) {
             const c = canais[index];
-            // Nova lógica de link fornecida
-            const urlVideo = "https://open.tvgratis.workers.dev/" + encodeURIComponent(c.logo) + "/index.m3u8";
-            player.src = urlVideo;
+            // Montagem da URL exatamente no formato solicitado
+            const urlVideo = "https://open.tvgratis.workers.dev/" + c.logo + "/index.m3u8";
 
-            // Exibir footer
-            footer.textContent = c.canal;
+            // Destruir instância anterior do HLS se existir
+            if (hls) {
+                hls.destroy();
+            }
+
+            if (Hls.isSupported()) {
+                hls = new Hls();
+                hls.loadSource(urlVideo);
+                hls.attachMedia(video);
+                hls.on(Hls.Events.MANIFEST_PARSED, () => {
+                    video.play().catch(e => console.log("Autoplay bloqueado pelo navegador:", e));
+                });
+            } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+                // Suporte nativo para plataformas Apple (Safari / iOS)
+                video.src = urlVideo;
+                video.addEventListener('loadedmetadata', () => {
+                    video.play().catch(e => console.log("Autoplay bloqueado:", e));
+                });
+            }
+
+            // Atualiza o texto e exibe o footer
+            canalNome.textContent = c.canal;
             footer.classList.add("show");
 
-            // Limpar timer anterior e esconder após 5s
+            // Oculta o footer automaticamente após 5 segundos
             clearTimeout(timer);
             timer = setTimeout(() => {
                 footer.classList.remove("show");
             }, 5000);
         }
 
+        // Navegação por D-Pad (Setas Cima/Baixo ou Esquerda/Direita)
         window.addEventListener("keydown", (e) => {
             if (e.key === "ArrowUp" || e.key === "ArrowLeft") {
+                e.preventDefault();
                 currentIndex = (currentIndex > 0) ? currentIndex - 1 : canais.length - 1;
                 playChannel(currentIndex);
             } else if (e.key === "ArrowDown" || e.key === "ArrowRight") {
+                e.preventDefault();
                 currentIndex = (currentIndex < canais.length - 1) ? currentIndex + 1 : 0;
                 playChannel(currentIndex);
             }
         });
 
-        // Iniciar
-        playChannel(0);
+        // Inicializa abrindo o primeiro canal (ESPN) automaticamente tocando em tela cheia
+        window.addEventListener("DOMContentLoaded", () => {
+            playChannel(0);
+        });
     </script>
 </body>
 </html>
