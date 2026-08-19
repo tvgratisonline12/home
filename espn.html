@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Canais ESPN - Mobile & TV</title>
+    <title>Canais ESPN - Opção 1 e Opção 2</title>
     <!-- Importando o CSS e JS do Video.js -->
     <link href="https://vjs.zencdn.net/8.10.0/video-js.css" rel="stylesheet" />
     <script src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
@@ -31,7 +31,7 @@
             background-color: #000 !important;
         }
 
-        /* Iframe para links que já possuem player embutido (eb) */
+        /* Iframe para links com player embutido */
         iframe {
             width: 100%;
             height: 100%;
@@ -109,27 +109,26 @@
     </div>
 
     <script>
-        // Lista com 2 versões (ec com Video.js e eb com iframe embutido) para cada canal ESPN
+        // Lista configurada com Opção 1 (Player) e Opção 2 (Embutido) para cada canal ESPN
         const canaisRaw = [
-            { "canal": "ESPN", "logo": "espn", "qualidade": "ec", "versao": "Opção 1 (Player EC)" },
-            { "canal": "ESPN", "logo": "espn", "qualidade": "eb", "versao": "Opção 2 (Embutido EB)" },
-            { "canal": "ESPN 2", "logo": "espn2", "qualidade": "ec", "versao": "Opção 1 (Player EC)" },
-            { "canal": "ESPN 2", "logo": "espn2", "qualidade": "eb", "versao": "Opção 2 (Embutido EB)" },
-            { "canal": "ESPN 3", "logo": "espn3", "qualidade": "ec", "versao": "Opção 1 (Player EC)" },
-            { "canal": "ESPN 3", "logo": "espn3", "qualidade": "eb", "versao": "Opção 2 (Embutido EB)" },
-            { "canal": "ESPN 4", "logo": "espn4", "qualidade": "ec", "versao": "Opção 1 (Player EC)" },
-            { "canal": "ESPN 4", "logo": "espn4", "qualidade": "eb", "versao": "Opção 2 (Embutido EB)" },
-            { "canal": "ESPN 5", "logo": "espn5", "qualidade": "ec", "versao": "Opção 1 (Player EC)" },
-            { "canal": "ESPN 5", "logo": "espn5", "qualidade": "eb", "versao": "Opção 2 (Embutido EB)" },
-            { "canal": "ESPN 6", "logo": "espn6", "qualidade": "ec", "versao": "Opção 1 (Player EC)" },
-            { "canal": "ESPN 6", "logo": "espn6", "qualidade": "eb", "versao": "Opção 2 (Embutido EB)" }
+            { "canal": "ESPN", "logo": "espn", "qualidade": "ec", "versao": "Opção 1" },
+            { "canal": "ESPN", "logo": "espn", "qualidade": "eb", "versao": "Opção 2" },
+            { "canal": "ESPN 2", "logo": "espn2", "qualidade": "ec", "versao": "Opção 1" },
+            { "canal": "ESPN 2", "logo": "espn2", "qualidade": "eb", "versao": "Opção 2" },
+            { "canal": "ESPN 3", "logo": "espn3", "qualidade": "ec", "versao": "Opção 1" },
+            { "canal": "ESPN 3", "logo": "espn3", "qualidade": "eb", "versao": "Opção 2" },
+            { "canal": "ESPN 4", "logo": "espn4", "qualidade": "ec", "versao": "Opção 1" },
+            { "canal": "ESPN 4", "logo": "espn4", "qualidade": "eb", "versao": "Opção 2" },
+            { "canal": "ESPN 5", "logo": "espn5", "qualidade": "ec", "versao": "Opção 1" },
+            { "canal": "ESPN 5", "logo": "espn5", "qualidade": "eb", "versao": "Opção 2" },
+            { "canal": "ESPN 6", "logo": "espn6", "qualidade": "ec", "versao": "Opção 1" },
+            { "canal": "ESPN 6", "logo": "espn6", "qualidade": "eb", "versao": "Opção 2" }
         ];
 
         let indiceCanalAtivo = 0;
         let playerInstance = null;
         let footerTimeout = null;
 
-        // Variáveis de controle para o gesto de toque (Swipe)
         let touchStartX = 0;
         let touchEndX = 0;
 
@@ -146,9 +145,11 @@
             container.innerHTML = "";
 
             if (qual === "eb") {
+                // Opção 2: Player embutido via iframe
                 const urlVideo = "https://open.tvgratis.workers.dev/?url=https://ww4.embedtv.lat/" + encodeURIComponent(c.logo);
                 container.innerHTML = `<iframe src="${urlVideo}" allow="autoplay; fullscreen" style="width:100%;height:100%;border:none;"></iframe>`;
             } else {
+                // Opção 1: Player de vídeo dedicado (.m3u8)
                 const urlVideo = "https://open.tvgratis.workers.dev/" + encodeURIComponent(c.logo) + "/index.m3u8";
                 container.innerHTML = `<video id="video-player" class="video-js vjs-big-play-centered" controls autoplay playsinline style="width:100%;height:100%;"></video>`;
                 
@@ -175,7 +176,7 @@
             const versaoSpan = document.getElementById('canalVersao');
             if (!footer || !nomeSpan || !versaoSpan) return;
 
-            nomeSpan.innerText = `${nomeCanal} - ${versaoCanal}`;
+            nomeSpan.innerText = `${nomeCanal} — ${versaoCanal}`;
             versaoSpan.innerText = "Ao Vivo";
             footer.classList.add('show');
 
@@ -185,7 +186,7 @@
             }, 5000);
         }
 
-        // --- 3. FUNÇÕES DE NAVEGAÇÃO ---
+        // --- 3. NAVEGAÇÃO ---
         function proximoCanal() {
             indiceCanalAtivo = (indiceCanalAtivo < canaisRaw.length - 1) ? indiceCanalAtivo + 1 : 0;
             playCanal(canaisRaw[indiceCanalAtivo]);
@@ -222,13 +223,11 @@
         }, { passive: true });
 
         function tratarSwipe() {
-            const limiteSwipe = 50; // Distância mínima em pixels para considerar um gesto
+            const limiteSwipe = 50;
             if (touchEndX < touchStartX - limiteSwipe) {
-                // Arrastou o dedo para a esquerda -> Próximo canal
                 proximoCanal();
             }
             if (touchEndX > touchStartX + limiteSwipe) {
-                // Arrastou o dedo para a direita -> Canal anterior
                 canalAnterior();
             }
         }
